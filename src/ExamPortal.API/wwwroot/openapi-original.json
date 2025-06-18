@@ -1,0 +1,1898 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Exam Portal API",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "/api"
+  } ],
+  "tags" : [ {
+    "description" : "Operations related to exams",
+    "name" : "Exam"
+  }, {
+    "description" : "Operations related to questions",
+    "name" : "Question"
+  }, {
+    "description" : "Operations related to question options",
+    "name" : "QuestionOption"
+  }, {
+    "description" : "Operations related to answers",
+    "name" : "Answer"
+  } ],
+  "paths" : {
+    "/exams" : {
+      "get" : {
+        "operationId" : "listExams",
+        "parameters" : [ {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageIndex",
+          "required" : false,
+          "schema" : {
+            "default" : 1,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageSize",
+          "required" : false,
+          "schema" : {
+            "default" : 10,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "title",
+          "required" : false,
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "startDateFrom",
+          "required" : false,
+          "schema" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "startDateTo",
+          "required" : false,
+          "schema" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "endDateFrom",
+          "required" : false,
+          "schema" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "endDateTo",
+          "required" : false,
+          "schema" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "createdBy",
+          "required" : false,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listExams_200_response"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "List all exams",
+        "tags" : [ "Exam" ]
+      },
+      "post" : {
+        "operationId" : "addExam",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExamCreate"
+              }
+            }
+          },
+          "description" : "Exam data to create",
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exam"
+                }
+              }
+            },
+            "description" : "Exam created"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Add a new exam",
+        "tags" : [ "Exam" ]
+      }
+    },
+    "/exams/{id}" : {
+      "delete" : {
+        "operationId" : "deleteExam",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Exam deleted"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Exam not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Delete an exam",
+        "tags" : [ "Exam" ]
+      },
+      "get" : {
+        "operationId" : "getExamById",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exam"
+                }
+              }
+            },
+            "description" : "Exam details"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Exam not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Get an exam by ID",
+        "tags" : [ "Exam" ]
+      },
+      "put" : {
+        "operationId" : "updateExam",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExamUpdate"
+              }
+            }
+          },
+          "description" : "Exam data to update",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exam"
+                }
+              }
+            },
+            "description" : "Exam updated"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Exam not found"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Update an existing exam",
+        "tags" : [ "Exam" ]
+      }
+    },
+    "/questions" : {
+      "get" : {
+        "operationId" : "listQuestions",
+        "parameters" : [ {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageIndex",
+          "required" : false,
+          "schema" : {
+            "default" : 1,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageSize",
+          "required" : false,
+          "schema" : {
+            "default" : 10,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listQuestions_200_response"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "List all questions",
+        "tags" : [ "Question" ]
+      },
+      "post" : {
+        "operationId" : "addQuestion",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuestionCreate"
+              }
+            }
+          },
+          "description" : "Question data to create",
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Question"
+                }
+              }
+            },
+            "description" : "Question created"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Add a new question",
+        "tags" : [ "Question" ]
+      }
+    },
+    "/questions/{id}" : {
+      "delete" : {
+        "operationId" : "deleteQuestion",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Question deleted"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Question not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Delete a question",
+        "tags" : [ "Question" ]
+      },
+      "get" : {
+        "operationId" : "getQuestionById",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Question"
+                }
+              }
+            },
+            "description" : "Question details"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Question not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Get a question by ID",
+        "tags" : [ "Question" ]
+      },
+      "put" : {
+        "operationId" : "updateQuestion",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuestionUpdate"
+              }
+            }
+          },
+          "description" : "Question data to update",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Question"
+                }
+              }
+            },
+            "description" : "Question updated"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Question not found"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Update an existing question",
+        "tags" : [ "Question" ]
+      }
+    },
+    "/question-options" : {
+      "get" : {
+        "operationId" : "listQuestionOptions",
+        "parameters" : [ {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageIndex",
+          "required" : false,
+          "schema" : {
+            "default" : 1,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageSize",
+          "required" : false,
+          "schema" : {
+            "default" : 10,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listQuestionOptions_200_response"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "List all question options",
+        "tags" : [ "QuestionOption" ]
+      },
+      "post" : {
+        "operationId" : "addQuestionOption",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuestionOptionCreate"
+              }
+            }
+          },
+          "description" : "Question option data to create",
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuestionOption"
+                }
+              }
+            },
+            "description" : "Question option created"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Add a new question option",
+        "tags" : [ "QuestionOption" ]
+      }
+    },
+    "/question-options/{id}" : {
+      "delete" : {
+        "operationId" : "deleteQuestionOption",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Question option deleted"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Question option not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Delete a question option",
+        "tags" : [ "QuestionOption" ]
+      },
+      "get" : {
+        "operationId" : "getQuestionOptionById",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuestionOption"
+                }
+              }
+            },
+            "description" : "Question option details"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Question option not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Get a question option by ID",
+        "tags" : [ "QuestionOption" ]
+      },
+      "put" : {
+        "operationId" : "updateQuestionOption",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuestionOptionUpdate"
+              }
+            }
+          },
+          "description" : "Question option data to update",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuestionOption"
+                }
+              }
+            },
+            "description" : "Question option updated"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Question option not found"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Update an existing question option",
+        "tags" : [ "QuestionOption" ]
+      }
+    },
+    "/answers" : {
+      "get" : {
+        "operationId" : "listAnswers",
+        "parameters" : [ {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageIndex",
+          "required" : false,
+          "schema" : {
+            "default" : 1,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "explode" : true,
+          "in" : "query",
+          "name" : "pageSize",
+          "required" : false,
+          "schema" : {
+            "default" : 10,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listAnswers_200_response"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "List all answers",
+        "tags" : [ "Answer" ]
+      },
+      "post" : {
+        "operationId" : "addAnswer",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AnswerCreate"
+              }
+            }
+          },
+          "description" : "Answer data to create",
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Answer"
+                }
+              }
+            },
+            "description" : "Answer created"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Add a new answer",
+        "tags" : [ "Answer" ]
+      }
+    },
+    "/answers/{id}" : {
+      "delete" : {
+        "operationId" : "deleteAnswer",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Answer deleted"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Answer not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Delete an answer",
+        "tags" : [ "Answer" ]
+      },
+      "get" : {
+        "operationId" : "getAnswerById",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Answer"
+                }
+              }
+            },
+            "description" : "Answer details"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Answer not found"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Get an answer by ID",
+        "tags" : [ "Answer" ]
+      },
+      "put" : {
+        "operationId" : "updateAnswer",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AnswerUpdate"
+              }
+            }
+          },
+          "description" : "Answer data to update",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Answer"
+                }
+              }
+            },
+            "description" : "Answer updated"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Answer not found"
+          },
+          "422" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Update an existing answer",
+        "tags" : [ "Answer" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "paging" : {
+        "example" : {
+          "totalRecords" : 100,
+          "pageIndex" : 1,
+          "totalPages" : 100,
+          "pageSize" : 10
+        },
+        "properties" : {
+          "pageIndex" : {
+            "example" : 1,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "pageSize" : {
+            "example" : 10,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "totalPages" : {
+            "example" : 100,
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "totalRecords" : {
+            "example" : 100,
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "Exam" : {
+        "example" : {
+          "updatedBy" : 5,
+          "endDate" : "2000-01-23T04:56:07.000+00:00",
+          "description" : "description",
+          "title" : "title",
+          "totalMarks" : 6,
+          "deletedBy" : 5,
+          "durationMinutes" : "durationMinutes",
+          "createdAt" : "2000-01-23T04:56:07.000+00:00",
+          "deletedAt" : "2000-01-23T04:56:07.000+00:00",
+          "isDeleted" : true,
+          "createdBy" : 1,
+          "id" : 0,
+          "startDate" : "2000-01-23T04:56:07.000+00:00",
+          "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+        },
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "durationMinutes" : {
+            "format" : "duration",
+            "type" : "string"
+          },
+          "totalMarks" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "startDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "endDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "readOnly" : true,
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "format" : "date-time",
+            "readOnly" : true,
+            "type" : "string"
+          },
+          "createdBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "updatedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "deletedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "deletedAt" : {
+            "format" : "date-time",
+            "nullable" : true,
+            "type" : "string"
+          },
+          "isDeleted" : {
+            "nullable" : true,
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "ExamCreate" : {
+        "example" : {
+          "durationMinutes" : "durationMinutes",
+          "endDate" : "2000-01-23T04:56:07.000+00:00",
+          "createdBy" : 6,
+          "description" : "description",
+          "title" : "title",
+          "totalMarks" : 0,
+          "startDate" : "2000-01-23T04:56:07.000+00:00"
+        },
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "durationMinutes" : {
+            "format" : "duration",
+            "type" : "string"
+          },
+          "totalMarks" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "startDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "endDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "durationMinutes", "endDate", "startDate", "title" ],
+        "type" : "object"
+      },
+      "ExamUpdate" : {
+        "example" : {
+          "durationMinutes" : "durationMinutes",
+          "updatedBy" : 1,
+          "endDate" : "2000-01-23T04:56:07.000+00:00",
+          "description" : "description",
+          "id" : 0,
+          "title" : "title",
+          "totalMarks" : 6,
+          "startDate" : "2000-01-23T04:56:07.000+00:00"
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "durationMinutes" : {
+            "format" : "duration",
+            "type" : "string"
+          },
+          "totalMarks" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "startDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "endDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "updatedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "durationMinutes", "endDate", "id", "startDate", "title" ],
+        "type" : "object"
+      },
+      "Question" : {
+        "example" : {
+          "createdAt" : "2000-01-23T04:56:07.000+00:00",
+          "updatedBy" : 5,
+          "isDeleted" : true,
+          "createdBy" : 5,
+          "difficultyLevel" : "difficultyLevel",
+          "examId" : 6,
+          "topic" : "topic",
+          "id" : 0,
+          "marks" : 1,
+          "questionType" : "questionType",
+          "questionText" : "questionText",
+          "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+        },
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "type" : "integer"
+          },
+          "examId" : {
+            "type" : "integer"
+          },
+          "questionText" : {
+            "type" : "string"
+          },
+          "questionType" : {
+            "type" : "string"
+          },
+          "marks" : {
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "readOnly" : true,
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "format" : "date-time",
+            "readOnly" : true,
+            "type" : "string"
+          },
+          "createdBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "updatedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "topic" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "difficultyLevel" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "isDeleted" : {
+            "nullable" : true,
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "QuestionCreate" : {
+        "example" : {
+          "createdBy" : 1,
+          "difficultyLevel" : "difficultyLevel",
+          "examId" : 0,
+          "topic" : "topic",
+          "marks" : 6,
+          "questionType" : "questionType",
+          "questionText" : "questionText"
+        },
+        "properties" : {
+          "examId" : {
+            "type" : "integer"
+          },
+          "questionText" : {
+            "type" : "string"
+          },
+          "questionType" : {
+            "type" : "string"
+          },
+          "marks" : {
+            "type" : "integer"
+          },
+          "topic" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "difficultyLevel" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "createdBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "examId", "marks", "questionText", "questionType" ],
+        "type" : "object"
+      },
+      "QuestionUpdate" : {
+        "example" : {
+          "updatedBy" : 5,
+          "difficultyLevel" : "difficultyLevel",
+          "examId" : 6,
+          "topic" : "topic",
+          "id" : 0,
+          "marks" : 1,
+          "questionType" : "questionType",
+          "questionText" : "questionText"
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "examId" : {
+            "type" : "integer"
+          },
+          "questionText" : {
+            "type" : "string"
+          },
+          "questionType" : {
+            "type" : "string"
+          },
+          "marks" : {
+            "type" : "integer"
+          },
+          "topic" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "difficultyLevel" : {
+            "nullable" : true,
+            "type" : "string"
+          },
+          "updatedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "examId", "id", "marks", "questionText", "questionType" ],
+        "type" : "object"
+      },
+      "QuestionOption" : {
+        "example" : {
+          "createdAt" : "2000-01-23T04:56:07.000+00:00",
+          "questionId" : 6,
+          "updatedBy" : 5,
+          "isDeleted" : true,
+          "createdBy" : 1,
+          "id" : 0,
+          "optionText" : "optionText",
+          "isCorrect" : true,
+          "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+        },
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "type" : "integer"
+          },
+          "questionId" : {
+            "type" : "integer"
+          },
+          "optionText" : {
+            "type" : "string"
+          },
+          "isCorrect" : {
+            "type" : "boolean"
+          },
+          "isDeleted" : {
+            "nullable" : true,
+            "type" : "boolean"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "readOnly" : true,
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "format" : "date-time",
+            "readOnly" : true,
+            "type" : "string"
+          },
+          "createdBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          },
+          "updatedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "QuestionOptionCreate" : {
+        "example" : {
+          "questionId" : 0,
+          "createdBy" : 6,
+          "optionText" : "optionText",
+          "isCorrect" : true
+        },
+        "properties" : {
+          "questionId" : {
+            "type" : "integer"
+          },
+          "optionText" : {
+            "type" : "string"
+          },
+          "isCorrect" : {
+            "type" : "boolean"
+          },
+          "createdBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "isCorrect", "optionText", "questionId" ],
+        "type" : "object"
+      },
+      "QuestionOptionUpdate" : {
+        "example" : {
+          "questionId" : 6,
+          "updatedBy" : 1,
+          "id" : 0,
+          "optionText" : "optionText",
+          "isCorrect" : true
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "questionId" : {
+            "type" : "integer"
+          },
+          "optionText" : {
+            "type" : "string"
+          },
+          "isCorrect" : {
+            "type" : "boolean"
+          },
+          "updatedBy" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "id", "isCorrect", "optionText", "questionId" ],
+        "type" : "object"
+      },
+      "Answer" : {
+        "example" : {
+          "questionId" : 6,
+          "id" : 0,
+          "selectedOptionId" : 1
+        },
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "type" : "integer"
+          },
+          "questionId" : {
+            "type" : "integer"
+          },
+          "selectedOptionId" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "AnswerCreate" : {
+        "example" : {
+          "questionId" : 0,
+          "selectedOptionId" : 6
+        },
+        "properties" : {
+          "questionId" : {
+            "type" : "integer"
+          },
+          "selectedOptionId" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "questionId" ],
+        "type" : "object"
+      },
+      "AnswerUpdate" : {
+        "example" : {
+          "questionId" : 6,
+          "id" : 0,
+          "selectedOptionId" : 1
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "questionId" : {
+            "type" : "integer"
+          },
+          "selectedOptionId" : {
+            "nullable" : true,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "id", "questionId" ],
+        "type" : "object"
+      },
+      "Error" : {
+        "example" : {
+          "code" : "code",
+          "message" : "message"
+        },
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "code", "message" ],
+        "type" : "object"
+      },
+      "listExams_200_response" : {
+        "example" : {
+          "exams" : [ {
+            "updatedBy" : 5,
+            "endDate" : "2000-01-23T04:56:07.000+00:00",
+            "description" : "description",
+            "title" : "title",
+            "totalMarks" : 6,
+            "deletedBy" : 5,
+            "durationMinutes" : "durationMinutes",
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "deletedAt" : "2000-01-23T04:56:07.000+00:00",
+            "isDeleted" : true,
+            "createdBy" : 1,
+            "id" : 0,
+            "startDate" : "2000-01-23T04:56:07.000+00:00",
+            "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+          }, {
+            "updatedBy" : 5,
+            "endDate" : "2000-01-23T04:56:07.000+00:00",
+            "description" : "description",
+            "title" : "title",
+            "totalMarks" : 6,
+            "deletedBy" : 5,
+            "durationMinutes" : "durationMinutes",
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "deletedAt" : "2000-01-23T04:56:07.000+00:00",
+            "isDeleted" : true,
+            "createdBy" : 1,
+            "id" : 0,
+            "startDate" : "2000-01-23T04:56:07.000+00:00",
+            "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+          } ],
+          "paging" : {
+            "totalRecords" : 100,
+            "pageIndex" : 1,
+            "totalPages" : 100,
+            "pageSize" : 10
+          }
+        },
+        "properties" : {
+          "paging" : {
+            "$ref" : "#/components/schemas/paging"
+          },
+          "exams" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Exam"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "listQuestions_200_response" : {
+        "example" : {
+          "questions" : [ {
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "updatedBy" : 5,
+            "isDeleted" : true,
+            "createdBy" : 5,
+            "difficultyLevel" : "difficultyLevel",
+            "examId" : 6,
+            "topic" : "topic",
+            "id" : 0,
+            "marks" : 1,
+            "questionType" : "questionType",
+            "questionText" : "questionText",
+            "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+          }, {
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "updatedBy" : 5,
+            "isDeleted" : true,
+            "createdBy" : 5,
+            "difficultyLevel" : "difficultyLevel",
+            "examId" : 6,
+            "topic" : "topic",
+            "id" : 0,
+            "marks" : 1,
+            "questionType" : "questionType",
+            "questionText" : "questionText",
+            "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+          } ],
+          "paging" : {
+            "totalRecords" : 100,
+            "pageIndex" : 1,
+            "totalPages" : 100,
+            "pageSize" : 10
+          }
+        },
+        "properties" : {
+          "paging" : {
+            "$ref" : "#/components/schemas/paging"
+          },
+          "questions" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Question"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "listQuestionOptions_200_response" : {
+        "example" : {
+          "paging" : {
+            "totalRecords" : 100,
+            "pageIndex" : 1,
+            "totalPages" : 100,
+            "pageSize" : 10
+          },
+          "questionOptions" : [ {
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "questionId" : 6,
+            "updatedBy" : 5,
+            "isDeleted" : true,
+            "createdBy" : 1,
+            "id" : 0,
+            "optionText" : "optionText",
+            "isCorrect" : true,
+            "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+          }, {
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "questionId" : 6,
+            "updatedBy" : 5,
+            "isDeleted" : true,
+            "createdBy" : 1,
+            "id" : 0,
+            "optionText" : "optionText",
+            "isCorrect" : true,
+            "updatedAt" : "2000-01-23T04:56:07.000+00:00"
+          } ]
+        },
+        "properties" : {
+          "paging" : {
+            "$ref" : "#/components/schemas/paging"
+          },
+          "questionOptions" : {
+            "items" : {
+              "$ref" : "#/components/schemas/QuestionOption"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "listAnswers_200_response" : {
+        "example" : {
+          "answers" : [ {
+            "questionId" : 6,
+            "id" : 0,
+            "selectedOptionId" : 1
+          }, {
+            "questionId" : 6,
+            "id" : 0,
+            "selectedOptionId" : 1
+          } ],
+          "paging" : {
+            "totalRecords" : 100,
+            "pageIndex" : 1,
+            "totalPages" : 100,
+            "pageSize" : 10
+          }
+        },
+        "properties" : {
+          "paging" : {
+            "$ref" : "#/components/schemas/paging"
+          },
+          "answers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Answer"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  }
+}

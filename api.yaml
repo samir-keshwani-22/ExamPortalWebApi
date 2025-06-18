@@ -1,0 +1,1062 @@
+openapi: 3.0.1
+info:
+  title: Exam Portal API
+  version: 1.0.0
+servers:
+  - url: /api
+
+tags:
+  - name: Exam
+    description: Operations related to exams
+  - name: Question
+    description: Operations related to questions
+  - name: QuestionOption
+    description: Operations related to question options
+  - name: Answer
+    description: Operations related to answers
+
+paths:
+  /exams:
+    post:
+      tags: [Exam]
+      summary: Add a new exam
+      operationId: addExam
+      requestBody:
+        description: Exam data to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExamCreate"
+        required: true
+      responses:
+        "201":
+          description: Exam created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exam"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags: [Exam]
+      summary: List all exams
+      operationId: listExams
+      parameters:
+        - name: pageIndex
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 10
+        - name: title
+          in: query
+          schema:
+            type: string
+            default: ""
+        - name: startDateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: startDateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: createdBy
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paging:
+                    $ref: "#/components/schemas/paging"
+                  exams:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Exam"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /exams/{id}:
+    get:
+      tags: [Exam]
+      summary: Get an exam by ID
+      operationId: getExamById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Exam details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exam"
+        "404":
+          description: Exam not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags: [Exam]
+      summary: Update an existing exam
+      operationId: updateExam
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        description: Exam data to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExamUpdate"
+        required: true
+      responses:
+        "200":
+          description: Exam updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exam"
+        "400":
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Exam not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags: [Exam]
+      summary: Delete an exam
+      operationId: deleteExam
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Exam deleted
+        "404":
+          description: Exam not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /questions:
+    post:
+      tags: [Question]
+      summary: Add a new question
+      operationId: addQuestion
+      requestBody:
+        description: Question data to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionCreate"
+        required: true
+      responses:
+        "201":
+          description: Question created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Question"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags: [Question]
+      summary: List all questions
+      operationId: listQuestions
+      parameters:
+        - name: pageIndex
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 10
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paging:
+                    $ref: "#/components/schemas/paging"
+                  questions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Question"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /questions/{id}:
+    get:
+      tags: [Question]
+      summary: Get a question by ID
+      operationId: getQuestionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Question details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Question"
+        "404":
+          description: Question not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags: [Question]
+      summary: Update an existing question
+      operationId: updateQuestion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        description: Question data to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionUpdate"
+        required: true
+      responses:
+        "200":
+          description: Question updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Question"
+        "400":
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Question not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags: [Question]
+      summary: Delete a question
+      operationId: deleteQuestion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Question deleted
+        "404":
+          description: Question not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /question-options:
+    post:
+      tags: [QuestionOption]
+      summary: Add a new question option
+      operationId: addQuestionOption
+      requestBody:
+        description: Question option data to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionOptionCreate"
+        required: true
+      responses:
+        "201":
+          description: Question option created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionOption"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags: [QuestionOption]
+      summary: List all question options
+      operationId: listQuestionOptions
+      parameters:
+        - name: pageIndex
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 10
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paging:
+                    $ref: "#/components/schemas/paging"
+                  questionOptions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/QuestionOption"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /question-options/{id}:
+    get:
+      tags: [QuestionOption]
+      summary: Get a question option by ID
+      operationId: getQuestionOptionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Question option details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionOption"
+        "404":
+          description: Question option not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags: [QuestionOption]
+      summary: Update an existing question option
+      operationId: updateQuestionOption
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        description: Question option data to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionOptionUpdate"
+        required: true
+      responses:
+        "200":
+          description: Question option updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionOption"
+        "400":
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Question option not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags: [QuestionOption]
+      summary: Delete a question option
+      operationId: deleteQuestionOption
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Question option deleted
+        "404":
+          description: Question option not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /answers:
+    post:
+      tags: [Answer]
+      summary: Add a new answer
+      operationId: addAnswer
+      requestBody:
+        description: Answer data to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnswerCreate"
+        required: true
+      responses:
+        "201":
+          description: Answer created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags: [Answer]
+      summary: List all answers
+      operationId: listAnswers
+      parameters:
+        - name: pageIndex
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 10
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paging:
+                    $ref: "#/components/schemas/paging"
+                  answers:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Answer"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /answers/{id}:
+    get:
+      tags: [Answer]
+      summary: Get an answer by ID
+      operationId: getAnswerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Answer details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "404":
+          description: Answer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags: [Answer]
+      summary: Update an existing answer
+      operationId: updateAnswer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        description: Answer data to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnswerUpdate"
+        required: true
+      responses:
+        "200":
+          description: Answer updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "400":
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Answer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags: [Answer]
+      summary: Delete an answer
+      operationId: deleteAnswer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Answer deleted
+        "404":
+          description: Answer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    paging:
+      type: object
+      properties:
+        pageIndex:
+          type: integer
+          format: int64
+          example: 1
+        pageSize:
+          type: integer
+          format: int64
+          example: 10
+        totalPages:
+          type: integer
+          format: int64
+          example: 100
+        totalRecords:
+          type: integer
+          format: int64
+          example: 100
+
+    Exam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        durationMinutes:
+          type: string
+          format: duration
+        totalMarks:
+          type: integer
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdBy:
+          type: integer
+          nullable: true
+        updatedBy:
+          type: integer
+          nullable: true
+        deletedBy:
+          type: integer
+          nullable: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        isDeleted:
+          type: boolean
+          nullable: true
+
+    ExamCreate:
+      type: object
+      required: [title, durationMinutes, startDate, endDate]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        durationMinutes:
+          type: string
+          format: duration
+        totalMarks:
+          type: integer
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+          nullable: true
+
+    ExamUpdate:
+      type: object
+      required: [id, title, durationMinutes, startDate, endDate]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        durationMinutes:
+          type: string
+          format: duration
+        totalMarks:
+          type: integer
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+          nullable: true
+
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        examId:
+          type: integer
+        questionText:
+          type: string
+        questionType:
+          type: string
+        marks:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdBy:
+          type: integer
+          nullable: true
+        updatedBy:
+          type: integer
+          nullable: true
+        topic:
+          type: string
+          nullable: true
+        difficultyLevel:
+          type: string
+          nullable: true
+        isDeleted:
+          type: boolean
+          nullable: true
+
+    QuestionCreate:
+      type: object
+      required: [examId, questionText, questionType, marks]
+      properties:
+        examId:
+          type: integer
+        questionText:
+          type: string
+        questionType:
+          type: string
+        marks:
+          type: integer
+        topic:
+          type: string
+          nullable: true
+        difficultyLevel:
+          type: string
+          nullable: true
+        createdBy:
+          type: integer
+          nullable: true
+
+    QuestionUpdate:
+      type: object
+      required: [id, examId, questionText, questionType, marks]
+      properties:
+        id:
+          type: integer
+        examId:
+          type: integer
+        questionText:
+          type: string
+        questionType:
+          type: string
+        marks:
+          type: integer
+        topic:
+          type: string
+          nullable: true
+        difficultyLevel:
+          type: string
+          nullable: true
+        updatedBy:
+          type: integer
+          nullable: true
+
+    QuestionOption:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        questionId:
+          type: integer
+        optionText:
+          type: string
+        isCorrect:
+          type: boolean
+        isDeleted:
+          type: boolean
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdBy:
+          type: integer
+          nullable: true
+        updatedBy:
+          type: integer
+          nullable: true
+
+    QuestionOptionCreate:
+      type: object
+      required: [questionId, optionText, isCorrect]
+      properties:
+        questionId:
+          type: integer
+        optionText:
+          type: string
+        isCorrect:
+          type: boolean
+        createdBy:
+          type: integer
+          nullable: true
+
+    QuestionOptionUpdate:
+      type: object
+      required: [id, questionId, optionText, isCorrect]
+      properties:
+        id:
+          type: integer
+        questionId:
+          type: integer
+        optionText:
+          type: string
+        isCorrect:
+          type: boolean
+        updatedBy:
+          type: integer
+          nullable: true
+
+    Answer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        questionId:
+          type: integer
+        selectedOptionId:
+          type: integer
+          nullable: true
+
+    AnswerCreate:
+      type: object
+      required: [questionId]
+      properties:
+        questionId:
+          type: integer
+        selectedOptionId:
+          type: integer
+          nullable: true
+
+    AnswerUpdate:
+      type: object
+      required: [id, questionId]
+      properties:
+        id:
+          type: integer
+        questionId:
+          type: integer
+        selectedOptionId:
+          type: integer
+          nullable: true
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
