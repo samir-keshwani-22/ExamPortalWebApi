@@ -2,6 +2,9 @@
   <ItemGroup>
     <ProjectReference Include="..\src\ExamPortal.API.Models\ExamPortal.API.Models.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

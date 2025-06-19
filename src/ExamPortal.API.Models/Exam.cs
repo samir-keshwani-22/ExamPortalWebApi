@@ -47,8 +47,8 @@ namespace ExamPortal.API.Models
         /// <summary>
         /// Gets or Sets DurationMinutes
         /// </summary>
-        [DataMember(Name="durationMinutes", EmitDefaultValue=false)]
-        public string DurationMinutes { get; set; }
+        [DataMember(Name="durationMinutes", EmitDefaultValue=true)]
+        public int DurationMinutes { get; set; }
 
         /// <summary>
         /// Gets or Sets TotalMarks
@@ -185,7 +185,7 @@ namespace ExamPortal.API.Models
                 ) && 
                 (
                     DurationMinutes == other.DurationMinutes ||
-                    DurationMinutes != null &&
+                    
                     DurationMinutes.Equals(other.DurationMinutes)
                 ) && 
                 (
@@ -256,7 +256,7 @@ namespace ExamPortal.API.Models
                     hashCode = hashCode * 59 + Title.GetHashCode();
                     if (Description != null)
                     hashCode = hashCode * 59 + Description.GetHashCode();
-                    if (DurationMinutes != null)
+                    
                     hashCode = hashCode * 59 + DurationMinutes.GetHashCode();
                     if (TotalMarks != null)
                     hashCode = hashCode * 59 + TotalMarks.GetHashCode();

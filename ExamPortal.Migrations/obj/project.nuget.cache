@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "D0vbB6/+5sIB8p5mPi+o4+nKv2QHkdxXpWVXX42rAtMbWJkTtm8idUxzE+IssIWxsbp3mEinTiSZgPgI8/N91g==",
+  "dgSpecHash": "u/pp2pWSMGsiXHmU/ZdhXt4Bb7544dP3M99598eBaAXOQeIpFResWqHSXfD3l3SxLhHl+UfQdDXYAy8/Q259Mw==",
   "success": true,
   "projectFilePath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pci137\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\pci137\\.nuget\\packages\\jsonsubtypes\\1.8.0\\jsonsubtypes.1.8.0.nupkg.sha512",
     "C:\\Users\\pci137\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.0-rc.1.21452.15\\microsoft.aspnetcore.jsonpatch.6.0.0-rc.1.21452.15.nupkg.sha512",
     "C:\\Users\\pci137\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.0-rc.1.21452.15\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.0-rc.1.21452.15.nupkg.sha512",

@@ -3,7 +3,7 @@ info:
   title: Exam Portal API
   version: 1.0.0
 servers:
-  - url: /api
+  - url: https://localhost:5001/api
 
 tags:
   - name: Exam
@@ -31,10 +31,6 @@ paths:
       responses:
         "201":
           description: Exam created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Exam"
         "400":
           description: Invalid input
           content:
@@ -169,10 +165,6 @@ paths:
       responses:
         "200":
           description: Exam updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Exam"
         "400":
           description: Invalid ID supplied
           content:
@@ -237,10 +229,6 @@ paths:
       responses:
         "201":
           description: Question created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Question"
         "400":
           description: Invalid input
           content:
@@ -345,10 +333,6 @@ paths:
       responses:
         "200":
           description: Question updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Question"
         "400":
           description: Invalid ID supplied
           content:
@@ -413,10 +397,6 @@ paths:
       responses:
         "201":
           description: Question option created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/QuestionOption"
         "400":
           description: Invalid input
           content:
@@ -521,10 +501,6 @@ paths:
       responses:
         "200":
           description: Question option updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/QuestionOption"
         "400":
           description: Invalid ID supplied
           content:
@@ -588,11 +564,7 @@ paths:
         required: true
       responses:
         "201":
-          description: Answer created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Answer"
+          description: Answer created successfully
         "400":
           description: Invalid input
           content:
@@ -696,11 +668,8 @@ paths:
         required: true
       responses:
         "200":
-          description: Answer updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Answer"
+          description: Answer updated successfully
+
         "400":
           description: Invalid ID supplied
           content:
@@ -784,7 +753,7 @@ components:
           type: string
           nullable: true
         durationMinutes:
-          type: string
+          type: integer
           format: duration
         totalMarks:
           type: integer
@@ -830,7 +799,7 @@ components:
           type: string
           nullable: true
         durationMinutes:
-          type: string
+          type: integer
           format: duration
         totalMarks:
           type: integer
@@ -847,17 +816,15 @@ components:
 
     ExamUpdate:
       type: object
-      required: [id, title, durationMinutes, startDate, endDate]
+      required: [title, durationMinutes, startDate, endDate]
       properties:
-        id:
-          type: integer
         title:
           type: string
         description:
           type: string
           nullable: true
         durationMinutes:
-          type: string
+          type: integer
           format: duration
         totalMarks:
           type: integer
@@ -934,10 +901,8 @@ components:
 
     QuestionUpdate:
       type: object
-      required: [id, examId, questionText, questionType, marks]
+      required: [examId, questionText, questionType, marks]
       properties:
-        id:
-          type: integer
         examId:
           type: integer
         questionText:
@@ -1002,10 +967,8 @@ components:
 
     QuestionOptionUpdate:
       type: object
-      required: [id, questionId, optionText, isCorrect]
+      required: [questionId, optionText, isCorrect]
       properties:
-        id:
-          type: integer
         questionId:
           type: integer
         optionText:
@@ -1040,10 +1003,8 @@ components:
 
     AnswerUpdate:
       type: object
-      required: [id, questionId]
+      required: [questionId]
       properties:
-        id:
-          type: integer
         questionId:
           type: integer
         selectedOptionId:

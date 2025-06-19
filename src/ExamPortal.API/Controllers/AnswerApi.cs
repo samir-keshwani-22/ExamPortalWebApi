@@ -34,7 +34,7 @@ namespace ExamPortal.API.Controllers
         /// Add a new answer
         /// </summary>
         /// <param name="answerCreate">Answer data to create</param>
-        /// <response code="201">Answer created</response>
+        /// <response code="201">Answer created successfully</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="0">Unexpected error</response>
@@ -43,7 +43,6 @@ namespace ExamPortal.API.Controllers
         [Consumes("application/json")]
         [ValidateModelState]
         [SwaggerOperation("AddAnswer")]
-        [SwaggerResponse(statusCode: 201, type: typeof(Answer), description: "Answer created")]
         [SwaggerResponse(statusCode: 400, type: typeof(Error), description: "Invalid input")]
         [SwaggerResponse(statusCode: 422, type: typeof(Error), description: "Validation exception")]
         [SwaggerResponse(statusCode: 0, type: typeof(Error), description: "Unexpected error")]
@@ -100,7 +99,7 @@ namespace ExamPortal.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="answerUpdate">Answer data to update</param>
-        /// <response code="200">Answer updated</response>
+        /// <response code="200">Answer updated successfully</response>
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Answer not found</response>
         /// <response code="422">Validation exception</response>
@@ -110,7 +109,6 @@ namespace ExamPortal.API.Controllers
         [Consumes("application/json")]
         [ValidateModelState]
         [SwaggerOperation("UpdateAnswer")]
-        [SwaggerResponse(statusCode: 200, type: typeof(Answer), description: "Answer updated")]
         [SwaggerResponse(statusCode: 400, type: typeof(Error), description: "Invalid ID supplied")]
         [SwaggerResponse(statusCode: 404, type: typeof(Error), description: "Answer not found")]
         [SwaggerResponse(statusCode: 422, type: typeof(Error), description: "Validation exception")]

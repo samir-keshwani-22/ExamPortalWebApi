@@ -5,7 +5,7 @@
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "/api"
+    "url" : "https://localhost:5001/api"
   } ],
   "tags" : [ {
     "description" : "Operations related to exams",
@@ -147,13 +147,6 @@
         },
         "responses" : {
           "201" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Exam"
-                }
-              }
-            },
             "description" : "Exam created"
           },
           "400" : {
@@ -304,13 +297,6 @@
         },
         "responses" : {
           "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Exam"
-                }
-              }
-            },
             "description" : "Exam updated"
           },
           "400" : {
@@ -424,13 +410,6 @@
         },
         "responses" : {
           "201" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Question"
-                }
-              }
-            },
             "description" : "Question created"
           },
           "400" : {
@@ -581,13 +560,6 @@
         },
         "responses" : {
           "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Question"
-                }
-              }
-            },
             "description" : "Question updated"
           },
           "400" : {
@@ -701,13 +673,6 @@
         },
         "responses" : {
           "201" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/QuestionOption"
-                }
-              }
-            },
             "description" : "Question option created"
           },
           "400" : {
@@ -858,13 +823,6 @@
         },
         "responses" : {
           "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/QuestionOption"
-                }
-              }
-            },
             "description" : "Question option updated"
           },
           "400" : {
@@ -978,14 +936,7 @@
         },
         "responses" : {
           "201" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Answer"
-                }
-              }
-            },
-            "description" : "Answer created"
+            "description" : "Answer created successfully"
           },
           "400" : {
             "content" : {
@@ -1135,14 +1086,7 @@
         },
         "responses" : {
           "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Answer"
-                }
-              }
-            },
-            "description" : "Answer updated"
+            "description" : "Answer updated successfully"
           },
           "400" : {
             "content" : {
@@ -1229,13 +1173,13 @@
           "endDate" : "2000-01-23T04:56:07.000+00:00",
           "description" : "description",
           "title" : "title",
-          "totalMarks" : 6,
-          "deletedBy" : 5,
-          "durationMinutes" : "durationMinutes",
+          "totalMarks" : 1,
+          "deletedBy" : 2,
+          "durationMinutes" : 6,
           "createdAt" : "2000-01-23T04:56:07.000+00:00",
           "deletedAt" : "2000-01-23T04:56:07.000+00:00",
           "isDeleted" : true,
-          "createdBy" : 1,
+          "createdBy" : 5,
           "id" : 0,
           "startDate" : "2000-01-23T04:56:07.000+00:00",
           "updatedAt" : "2000-01-23T04:56:07.000+00:00"
@@ -1254,7 +1198,7 @@
           },
           "durationMinutes" : {
             "format" : "duration",
-            "type" : "string"
+            "type" : "integer"
           },
           "totalMarks" : {
             "nullable" : true,
@@ -1304,12 +1248,12 @@
       },
       "ExamCreate" : {
         "example" : {
-          "durationMinutes" : "durationMinutes",
+          "durationMinutes" : 0,
           "endDate" : "2000-01-23T04:56:07.000+00:00",
-          "createdBy" : 6,
+          "createdBy" : 1,
           "description" : "description",
           "title" : "title",
-          "totalMarks" : 0,
+          "totalMarks" : 6,
           "startDate" : "2000-01-23T04:56:07.000+00:00"
         },
         "properties" : {
@@ -1322,7 +1266,7 @@
           },
           "durationMinutes" : {
             "format" : "duration",
-            "type" : "string"
+            "type" : "integer"
           },
           "totalMarks" : {
             "nullable" : true,
@@ -1346,13 +1290,13 @@
       },
       "ExamUpdate" : {
         "example" : {
-          "durationMinutes" : "durationMinutes",
-          "updatedBy" : 1,
+          "durationMinutes" : 6,
+          "updatedBy" : 5,
           "endDate" : "2000-01-23T04:56:07.000+00:00",
           "description" : "description",
           "id" : 0,
           "title" : "title",
-          "totalMarks" : 6,
+          "totalMarks" : 1,
           "startDate" : "2000-01-23T04:56:07.000+00:00"
         },
         "properties" : {
@@ -1368,7 +1312,7 @@
           },
           "durationMinutes" : {
             "format" : "duration",
-            "type" : "string"
+            "type" : "integer"
           },
           "totalMarks" : {
             "nullable" : true,
@@ -1724,13 +1668,13 @@
             "endDate" : "2000-01-23T04:56:07.000+00:00",
             "description" : "description",
             "title" : "title",
-            "totalMarks" : 6,
-            "deletedBy" : 5,
-            "durationMinutes" : "durationMinutes",
+            "totalMarks" : 1,
+            "deletedBy" : 2,
+            "durationMinutes" : 6,
             "createdAt" : "2000-01-23T04:56:07.000+00:00",
             "deletedAt" : "2000-01-23T04:56:07.000+00:00",
             "isDeleted" : true,
-            "createdBy" : 1,
+            "createdBy" : 5,
             "id" : 0,
             "startDate" : "2000-01-23T04:56:07.000+00:00",
             "updatedAt" : "2000-01-23T04:56:07.000+00:00"
@@ -1739,13 +1683,13 @@
             "endDate" : "2000-01-23T04:56:07.000+00:00",
             "description" : "description",
             "title" : "title",
-            "totalMarks" : 6,
-            "deletedBy" : 5,
-            "durationMinutes" : "durationMinutes",
+            "totalMarks" : 1,
+            "deletedBy" : 2,
+            "durationMinutes" : 6,
             "createdAt" : "2000-01-23T04:56:07.000+00:00",
             "deletedAt" : "2000-01-23T04:56:07.000+00:00",
             "isDeleted" : true,
-            "createdBy" : 1,
+            "createdBy" : 5,
             "id" : 0,
             "startDate" : "2000-01-23T04:56:07.000+00:00",
             "updatedAt" : "2000-01-23T04:56:07.000+00:00"

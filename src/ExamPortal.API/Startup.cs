@@ -26,6 +26,10 @@ using ExamPortal.API.OpenApi;
 using ExamPortal.API.Formatters;
 using ExamPortal.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
+using ExamPortal.Business.Interfaces;
+using ExamPortal.Business.Managers;
+using ExamPortal.DataAccess.Repositories;
+using AutoMapper;
 
 namespace ExamPortal.API
 {
@@ -54,11 +58,19 @@ namespace ExamPortal.API
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:5001").AllowAnyMethod().AllowAnyHeader();
+            }));
             services.AddDbContext<ExamPortalContext>(options =>
-           options.UseNpgsql(
-                "Name=ConnectionStrings:my_connection",
-                x => x.MigrationsAssembly("ExamPortal.Migrations")
-            ));
+          options.UseNpgsql(
+               "Name=ConnectionStrings:my_connection",
+               x => x.MigrationsAssembly("ExamPortal.Migrations")
+           ));
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<IExamRepository, ExamRepository>();
 
             // Add framework services.
             services
@@ -118,6 +130,11 @@ namespace ExamPortal.API
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(x => x
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed(origin => true) // allow any origin
+        .AllowAnyOrigin());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -139,10 +156,10 @@ namespace ExamPortal.API
                     // set route prefix to openapi, e.g. http://localhost:8080/openapi/index.html
                     c.RoutePrefix = "openapi";
                     //TODO: Either use the SwaggerGen generated OpenAPI contract (generated from C# classes)
-                    c.SwaggerEndpoint("/openapi/1.0.0/openapi.json", "Exam Portal API");
+                    //c.SwaggerEndpoint("/openapi/1.0.0/openapi.json", "Exam Portal API");
 
                     //TODO: Or alternatively use the original OpenAPI contract that's included in the static files
-                    // c.SwaggerEndpoint("/openapi-original.json", "Exam Portal API Original");
+                    c.SwaggerEndpoint("/openapi-original.json", "Exam Portal API Original");
                 });
             app.UseRouting();
             app.UseEndpoints(endpoints =>

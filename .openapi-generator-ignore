@@ -21,3 +21,16 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+
+
+**/Program.cs
+**/Startup.cs
+src/ExamPortal.API/Program.cs
+src/ExamPortal.API/Startup.cs
+src/ExamPortal.API/appsettings.json
+src/ExamPortal.API/ExamPortal.API.csproj
+src/ExamPortal.API.Models/ExamPortal.API.Models.csproj
+
+ExamPortal.API.sln
+ 
+ 

@@ -1,5 +1,3 @@
-.openapi-generator-ignore
-ExamPortal.API.sln
 README.md
 build.bat
 build.sh
@@ -11,7 +9,6 @@ src/ExamPortal.API.Models/Converters/CustomEnumConverter.cs
 src/ExamPortal.API.Models/Error.cs
 src/ExamPortal.API.Models/Exam.cs
 src/ExamPortal.API.Models/ExamCreate.cs
-src/ExamPortal.API.Models/ExamPortal.API.Models.csproj
 src/ExamPortal.API.Models/ExamUpdate.cs
 src/ExamPortal.API.Models/ListAnswers200Response.cs
 src/ExamPortal.API.Models/ListExams200Response.cs
@@ -32,16 +29,12 @@ src/ExamPortal.API/Controllers/ExamApi.cs
 src/ExamPortal.API/Controllers/QuestionApi.cs
 src/ExamPortal.API/Controllers/QuestionOptionApi.cs
 src/ExamPortal.API/Dockerfile
-src/ExamPortal.API/ExamPortal.API.csproj
 src/ExamPortal.API/Filters/BasePathFilter.cs
 src/ExamPortal.API/Filters/GeneratePathParamsValidationFilter.cs
 src/ExamPortal.API/Formatters/InputFormatterStream.cs
 src/ExamPortal.API/OpenApi/TypeExtensions.cs
-src/ExamPortal.API/Program.cs
 src/ExamPortal.API/Properties/launchSettings.json
-src/ExamPortal.API/Startup.cs
 src/ExamPortal.API/appsettings.Development.json
-src/ExamPortal.API/appsettings.json
 src/ExamPortal.API/wwwroot/README.md
 src/ExamPortal.API/wwwroot/index.html
 src/ExamPortal.API/wwwroot/openapi-original.json
