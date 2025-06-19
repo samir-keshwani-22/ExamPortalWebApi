@@ -27,30 +27,20 @@ namespace ExamPortal.API.Models
     public partial class QuestionOptionUpdate : IEquatable<QuestionOptionUpdate>
     {
         /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [Required]
-        [DataMember(Name="id", EmitDefaultValue=true)]
-        public int Id { get; set; }
-
-        /// <summary>
         /// Gets or Sets QuestionId
         /// </summary>
-        [Required]
         [DataMember(Name="questionId", EmitDefaultValue=true)]
         public int QuestionId { get; set; }
 
         /// <summary>
         /// Gets or Sets OptionText
         /// </summary>
-        [Required]
         [DataMember(Name="optionText", EmitDefaultValue=false)]
         public string OptionText { get; set; }
 
         /// <summary>
         /// Gets or Sets IsCorrect
         /// </summary>
-        [Required]
         [DataMember(Name="isCorrect", EmitDefaultValue=true)]
         public bool IsCorrect { get; set; }
 
@@ -68,7 +58,6 @@ namespace ExamPortal.API.Models
         {
             var sb = new StringBuilder();
             sb.Append("class QuestionOptionUpdate {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  QuestionId: ").Append(QuestionId).Append("\n");
             sb.Append("  OptionText: ").Append(OptionText).Append("\n");
             sb.Append("  IsCorrect: ").Append(IsCorrect).Append("\n");
@@ -110,11 +99,6 @@ namespace ExamPortal.API.Models
 
             return 
                 (
-                    Id == other.Id ||
-                    
-                    Id.Equals(other.Id)
-                ) && 
-                (
                     QuestionId == other.QuestionId ||
                     
                     QuestionId.Equals(other.QuestionId)
@@ -146,8 +130,6 @@ namespace ExamPortal.API.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    
-                    hashCode = hashCode * 59 + Id.GetHashCode();
                     
                     hashCode = hashCode * 59 + QuestionId.GetHashCode();
                     if (OptionText != null)

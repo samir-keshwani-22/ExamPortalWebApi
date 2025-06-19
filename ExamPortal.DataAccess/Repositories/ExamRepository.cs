@@ -16,31 +16,18 @@ public class ExamRepository : IExamRepository
 
     public async Task<bool> CreateAsync(Exam exam)
     {
-        try
-        {
-            await _context.Exams.AddAsync(exam);
-            return await _context.SaveChangesAsync() > 0;
-        }
-        catch
-        {
-            throw;
-        }
+
+        await _context.Exams.AddAsync(exam);
+        return await _context.SaveChangesAsync() > 0;
     }
 
     public async Task<bool> DeleteExamAsync(int id)
     {
-        try
-        {
-            var exam = await _context.Exams.FindAsync(id);
-            if (exam == null)
-                return false;
-            _context.Exams.Remove(exam);
-            return await _context.SaveChangesAsync() > 0;
-        }
-        catch
-        {
-            throw;
-        }
+        var exam = await _context.Exams.FindAsync(id);
+        if (exam == null)
+            return false;
+        _context.Exams.Remove(exam);
+        return await _context.SaveChangesAsync() > 0;
     }
 
     public async Task<Exam?> GetExamByIdAsync(int id)
@@ -48,4 +35,9 @@ public class ExamRepository : IExamRepository
         return await _context.Exams.FirstOrDefaultAsync(e => e.Id == id);
     }
 
+    public async Task<bool> UpdateExamAsync(Exam exam)
+    {
+        _context.Update(exam);
+        return await _context.SaveChangesAsync() > 0;
+    }
 }

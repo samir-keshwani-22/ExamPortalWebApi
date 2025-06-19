@@ -1290,20 +1290,17 @@
       },
       "ExamUpdate" : {
         "example" : {
-          "durationMinutes" : 6,
-          "updatedBy" : 5,
+          "durationMinutes" : 0,
+          "updatedBy" : 1,
           "endDate" : "2000-01-23T04:56:07.000+00:00",
           "description" : "description",
-          "id" : 0,
           "title" : "title",
-          "totalMarks" : 1,
+          "totalMarks" : 6,
           "startDate" : "2000-01-23T04:56:07.000+00:00"
         },
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "title" : {
+            "nullable" : true,
             "type" : "string"
           },
           "description" : {
@@ -1312,6 +1309,7 @@
           },
           "durationMinutes" : {
             "format" : "duration",
+            "nullable" : true,
             "type" : "integer"
           },
           "totalMarks" : {
@@ -1320,10 +1318,12 @@
           },
           "startDate" : {
             "format" : "date-time",
+            "nullable" : true,
             "type" : "string"
           },
           "endDate" : {
             "format" : "date-time",
+            "nullable" : true,
             "type" : "string"
           },
           "updatedBy" : {
@@ -1331,7 +1331,6 @@
             "type" : "integer"
           }
         },
-        "required" : [ "durationMinutes", "endDate", "id", "startDate", "title" ],
         "type" : "object"
       },
       "Question" : {
@@ -1440,19 +1439,15 @@
       },
       "QuestionUpdate" : {
         "example" : {
-          "updatedBy" : 5,
+          "updatedBy" : 1,
           "difficultyLevel" : "difficultyLevel",
-          "examId" : 6,
+          "examId" : 0,
           "topic" : "topic",
-          "id" : 0,
-          "marks" : 1,
+          "marks" : 6,
           "questionType" : "questionType",
           "questionText" : "questionText"
         },
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "examId" : {
             "type" : "integer"
           },
@@ -1478,7 +1473,6 @@
             "type" : "integer"
           }
         },
-        "required" : [ "examId", "id", "marks", "questionText", "questionType" ],
         "type" : "object"
       },
       "QuestionOption" : {
@@ -1559,16 +1553,12 @@
       },
       "QuestionOptionUpdate" : {
         "example" : {
-          "questionId" : 6,
-          "updatedBy" : 1,
-          "id" : 0,
+          "questionId" : 0,
+          "updatedBy" : 6,
           "optionText" : "optionText",
           "isCorrect" : true
         },
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "questionId" : {
             "type" : "integer"
           },
@@ -1583,7 +1573,6 @@
             "type" : "integer"
           }
         },
-        "required" : [ "id", "isCorrect", "optionText", "questionId" ],
         "type" : "object"
       },
       "Answer" : {
@@ -1626,14 +1615,10 @@
       },
       "AnswerUpdate" : {
         "example" : {
-          "questionId" : 6,
-          "id" : 0,
-          "selectedOptionId" : 1
+          "questionId" : 0,
+          "selectedOptionId" : 6
         },
         "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
           "questionId" : {
             "type" : "integer"
           },
@@ -1642,7 +1627,7 @@
             "type" : "integer"
           }
         },
-        "required" : [ "id", "questionId" ],
+        "required" : [ "questionId" ],
         "type" : "object"
       },
       "Error" : {

@@ -108,11 +108,6 @@
             
             </summary>
         </member>
-        <member name="P:ExamPortal.API.Models.AnswerUpdate.Id">
-            <summary>
-            Gets or Sets Id
-            </summary>
-        </member>
         <member name="P:ExamPortal.API.Models.AnswerUpdate.QuestionId">
             <summary>
             Gets or Sets QuestionId
@@ -384,11 +379,6 @@
         <member name="T:ExamPortal.API.Models.ExamUpdate">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:ExamPortal.API.Models.ExamUpdate.Id">
-            <summary>
-            Gets or Sets Id
             </summary>
         </member>
         <member name="P:ExamPortal.API.Models.ExamUpdate.Title">
@@ -1016,11 +1006,6 @@
             
             </summary>
         </member>
-        <member name="P:ExamPortal.API.Models.QuestionOptionUpdate.Id">
-            <summary>
-            Gets or Sets Id
-            </summary>
-        </member>
         <member name="P:ExamPortal.API.Models.QuestionOptionUpdate.QuestionId">
             <summary>
             Gets or Sets QuestionId
@@ -1076,11 +1061,6 @@
         <member name="T:ExamPortal.API.Models.QuestionUpdate">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:ExamPortal.API.Models.QuestionUpdate.Id">
-            <summary>
-            Gets or Sets Id
             </summary>
         </member>
         <member name="P:ExamPortal.API.Models.QuestionUpdate.ExamId">

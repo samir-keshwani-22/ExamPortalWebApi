@@ -18,7 +18,17 @@ public class ExamMappingProfile : Profile
            .ForMember(dest => dest.DurationMinutes,
            opt => opt.MapFrom(src => (int)src.DurationMinutes.TotalMinutes));
         CreateMap<ExamUpdate, API.Models.Entities.Exam>()
-            .ForMember(dest => dest.DurationMinutes, opt => opt.MapFrom(src => TimeSpan.FromMinutes(src.DurationMinutes)));
-
+      .ForMember(
+          dest => dest.DurationMinutes,
+          opt => opt.MapFrom(src => src.DurationMinutes.HasValue
+              ? TimeSpan.FromMinutes(src.DurationMinutes.Value)
+              : (TimeSpan?)null))
+      .ForMember(
+          dest => dest.StartDate,
+          opt => opt.Condition(src => src.StartDate != null))
+      .ForMember(
+          dest => dest.EndDate,
+          opt => opt.Condition(src => src.EndDate != null))
+      .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
     }
 }

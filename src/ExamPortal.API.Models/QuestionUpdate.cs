@@ -27,37 +27,26 @@ namespace ExamPortal.API.Models
     public partial class QuestionUpdate : IEquatable<QuestionUpdate>
     {
         /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [Required]
-        [DataMember(Name="id", EmitDefaultValue=true)]
-        public int Id { get; set; }
-
-        /// <summary>
         /// Gets or Sets ExamId
         /// </summary>
-        [Required]
         [DataMember(Name="examId", EmitDefaultValue=true)]
         public int ExamId { get; set; }
 
         /// <summary>
         /// Gets or Sets QuestionText
         /// </summary>
-        [Required]
         [DataMember(Name="questionText", EmitDefaultValue=false)]
         public string QuestionText { get; set; }
 
         /// <summary>
         /// Gets or Sets QuestionType
         /// </summary>
-        [Required]
         [DataMember(Name="questionType", EmitDefaultValue=false)]
         public string QuestionType { get; set; }
 
         /// <summary>
         /// Gets or Sets Marks
         /// </summary>
-        [Required]
         [DataMember(Name="marks", EmitDefaultValue=true)]
         public int Marks { get; set; }
 
@@ -87,7 +76,6 @@ namespace ExamPortal.API.Models
         {
             var sb = new StringBuilder();
             sb.Append("class QuestionUpdate {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  ExamId: ").Append(ExamId).Append("\n");
             sb.Append("  QuestionText: ").Append(QuestionText).Append("\n");
             sb.Append("  QuestionType: ").Append(QuestionType).Append("\n");
@@ -131,11 +119,6 @@ namespace ExamPortal.API.Models
             if (ReferenceEquals(this, other)) return true;
 
             return 
-                (
-                    Id == other.Id ||
-                    
-                    Id.Equals(other.Id)
-                ) && 
                 (
                     ExamId == other.ExamId ||
                     
@@ -183,8 +166,6 @@ namespace ExamPortal.API.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    
-                    hashCode = hashCode * 59 + Id.GetHashCode();
                     
                     hashCode = hashCode * 59 + ExamId.GetHashCode();
                     if (QuestionText != null)

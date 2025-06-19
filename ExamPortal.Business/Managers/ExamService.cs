@@ -36,6 +36,11 @@ public class ExamService : IExamService
 
     public async Task<bool> UpdateExamAsync(int id, ExamUpdate examUpdate)
     {
-        var existingExam = await _examRepository.GetExamByIdAsync(id); _
+        var existingExam = await _examRepository.GetExamByIdAsync(id);
+        if (existingExam == null)
+            return false;
+        // from , to 
+        _mapper.Map(examUpdate, existingExam);
+        return await _examRepository.UpdateExamAsync(existingExam);
     }
 }

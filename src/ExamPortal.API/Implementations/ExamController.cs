@@ -139,14 +139,20 @@ public class ExamController : ExamApiController
         }
         try
         {
-            // var reusl
+            var result = await _examService.UpdateExamAsync(id, examUpdate);
+            return result ? Ok() : NotFound(new Error
+            {
+                Code = "NotFound",
+                Message = "Exam not found or update failed"
+            });
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error creating exam");
             return StatusCode(500, new Error
             {
                 Code = "InternalServerError",
-                Message = ex.Message
+                Message = "Internal server error"
             });
         }
     }

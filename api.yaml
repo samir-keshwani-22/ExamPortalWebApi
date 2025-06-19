@@ -816,25 +816,28 @@ components:
 
     ExamUpdate:
       type: object
-      required: [title, durationMinutes, startDate, endDate]
       properties:
         title:
           type: string
+          nullable: true
         description:
           type: string
           nullable: true
         durationMinutes:
           type: integer
           format: duration
+          nullable: true
         totalMarks:
           type: integer
           nullable: true
         startDate:
           type: string
           format: date-time
+          nullable: true
         endDate:
           type: string
           format: date-time
+          nullable: true
         updatedBy:
           type: integer
           nullable: true
@@ -901,7 +904,6 @@ components:
 
     QuestionUpdate:
       type: object
-      required: [examId, questionText, questionType, marks]
       properties:
         examId:
           type: integer
@@ -967,7 +969,6 @@ components:
 
     QuestionOptionUpdate:
       type: object
-      required: [questionId, optionText, isCorrect]
       properties:
         questionId:
           type: integer

@@ -1757,11 +1757,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+      "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
       "projectName": "ExamPortal.Migrations",
-      "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+      "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
       "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-      "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\obj\\",
+      "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"

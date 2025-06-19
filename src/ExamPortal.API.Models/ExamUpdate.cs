@@ -27,17 +27,9 @@ namespace ExamPortal.API.Models
     public partial class ExamUpdate : IEquatable<ExamUpdate>
     {
         /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [Required]
-        [DataMember(Name="id", EmitDefaultValue=true)]
-        public int Id { get; set; }
-
-        /// <summary>
         /// Gets or Sets Title
         /// </summary>
-        [Required]
-        [DataMember(Name="title", EmitDefaultValue=false)]
+        [DataMember(Name="title", EmitDefaultValue=true)]
         public string Title { get; set; }
 
         /// <summary>
@@ -49,9 +41,8 @@ namespace ExamPortal.API.Models
         /// <summary>
         /// Gets or Sets DurationMinutes
         /// </summary>
-        [Required]
         [DataMember(Name="durationMinutes", EmitDefaultValue=true)]
-        public int DurationMinutes { get; set; }
+        public int? DurationMinutes { get; set; }
 
         /// <summary>
         /// Gets or Sets TotalMarks
@@ -62,16 +53,14 @@ namespace ExamPortal.API.Models
         /// <summary>
         /// Gets or Sets StartDate
         /// </summary>
-        [Required]
         [DataMember(Name="startDate", EmitDefaultValue=true)]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         /// <summary>
         /// Gets or Sets EndDate
         /// </summary>
-        [Required]
         [DataMember(Name="endDate", EmitDefaultValue=true)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Gets or Sets UpdatedBy
@@ -87,7 +76,6 @@ namespace ExamPortal.API.Models
         {
             var sb = new StringBuilder();
             sb.Append("class ExamUpdate {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  DurationMinutes: ").Append(DurationMinutes).Append("\n");
@@ -132,11 +120,6 @@ namespace ExamPortal.API.Models
 
             return 
                 (
-                    Id == other.Id ||
-                    
-                    Id.Equals(other.Id)
-                ) && 
-                (
                     Title == other.Title ||
                     Title != null &&
                     Title.Equals(other.Title)
@@ -148,7 +131,7 @@ namespace ExamPortal.API.Models
                 ) && 
                 (
                     DurationMinutes == other.DurationMinutes ||
-                    
+                    DurationMinutes != null &&
                     DurationMinutes.Equals(other.DurationMinutes)
                 ) && 
                 (
@@ -158,12 +141,12 @@ namespace ExamPortal.API.Models
                 ) && 
                 (
                     StartDate == other.StartDate ||
-                    
+                    StartDate != null &&
                     StartDate.Equals(other.StartDate)
                 ) && 
                 (
                     EndDate == other.EndDate ||
-                    
+                    EndDate != null &&
                     EndDate.Equals(other.EndDate)
                 ) && 
                 (
@@ -183,19 +166,17 @@ namespace ExamPortal.API.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    
-                    hashCode = hashCode * 59 + Id.GetHashCode();
                     if (Title != null)
                     hashCode = hashCode * 59 + Title.GetHashCode();
                     if (Description != null)
                     hashCode = hashCode * 59 + Description.GetHashCode();
-                    
+                    if (DurationMinutes != null)
                     hashCode = hashCode * 59 + DurationMinutes.GetHashCode();
                     if (TotalMarks != null)
                     hashCode = hashCode * 59 + TotalMarks.GetHashCode();
-                    
+                    if (StartDate != null)
                     hashCode = hashCode * 59 + StartDate.GetHashCode();
-                    
+                    if (EndDate != null)
                     hashCode = hashCode * 59 + EndDate.GetHashCode();
                     if (UpdatedBy != null)
                     hashCode = hashCode * 59 + UpdatedBy.GetHashCode();

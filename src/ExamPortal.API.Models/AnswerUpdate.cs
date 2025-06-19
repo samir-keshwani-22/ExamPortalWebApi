@@ -27,13 +27,6 @@ namespace ExamPortal.API.Models
     public partial class AnswerUpdate : IEquatable<AnswerUpdate>
     {
         /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [Required]
-        [DataMember(Name="id", EmitDefaultValue=true)]
-        public int Id { get; set; }
-
-        /// <summary>
         /// Gets or Sets QuestionId
         /// </summary>
         [Required]
@@ -54,7 +47,6 @@ namespace ExamPortal.API.Models
         {
             var sb = new StringBuilder();
             sb.Append("class AnswerUpdate {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  QuestionId: ").Append(QuestionId).Append("\n");
             sb.Append("  SelectedOptionId: ").Append(SelectedOptionId).Append("\n");
             sb.Append("}\n");
@@ -94,11 +86,6 @@ namespace ExamPortal.API.Models
 
             return 
                 (
-                    Id == other.Id ||
-                    
-                    Id.Equals(other.Id)
-                ) && 
-                (
                     QuestionId == other.QuestionId ||
                     
                     QuestionId.Equals(other.QuestionId)
@@ -120,8 +107,6 @@ namespace ExamPortal.API.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    
-                    hashCode = hashCode * 59 + Id.GetHashCode();
                     
                     hashCode = hashCode * 59 + QuestionId.GetHashCode();
                     if (SelectedOptionId != null)

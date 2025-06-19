@@ -4,14 +4,14 @@
     "D:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj": {}
   },
   "projects": {
-    "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+    "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "projectName": "ExamPortal.Business",
-        "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
+        "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
-                "projectPath": "D:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj"
+              "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
+                "projectPath": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj"
               }
             }
           }
@@ -89,8 +89,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
-                "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
+              "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+                "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
               }
             }
           }
@@ -146,14 +146,14 @@
         }
       }
     },
-    "D:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
+    "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
+        "projectUniqueName": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
         "projectName": "ExamPortal.API.Models",
-        "projectPath": "D:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
+        "projectPath": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
         "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "D:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\obj\\",
+        "outputPath": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
