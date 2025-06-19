@@ -291,7 +291,10 @@
           "Swashbuckle.AspNetCore.Newtonsoft": "6.4.0"
         },
         "runtime": {
-          "ExamPortal.API.Models.dll": {}
+          "ExamPortal.API.Models.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "ExamPortal.Business/1.0.0": {
@@ -300,7 +303,10 @@
           "ExamPortal.API.Models": "1.0.0"
         },
         "runtime": {
-          "ExamPortal.Business.dll": {}
+          "ExamPortal.Business.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "ExamPortal.DataAccess/1.0.0": {
@@ -310,7 +316,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.0"
         },
         "runtime": {
-          "ExamPortal.DataAccess.dll": {}
+          "ExamPortal.DataAccess.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

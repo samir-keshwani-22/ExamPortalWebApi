@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace ExamPortal.API.Implementations;
 
 /// <summary>
-/// Project API Im
+/// API Controller for Exam operations
 /// </summary>
 [ApiController]
 public class ExamController : ExamApiController
@@ -37,10 +37,8 @@ public class ExamController : ExamApiController
     /// <summary>
     /// Adds a new exam.
     /// </summary>
-    /// <param name="examCreate">The exam data to create.</param>
-    /// <returns>
-    /// 201 if the exam is created successfully, 400 if the request is invalid or creation fails, 500 for server errors.
-    /// </returns>
+    /// <param name="examCreate">Exam creation model</param>
+    /// <returns>HTTP 201 if created, 400 if bad request, 500 if server error</returns>
     public override async Task<IActionResult> AddExam([FromBody] ExamCreate examCreate)
     {
         if (!ModelState.IsValid)
@@ -71,6 +69,12 @@ public class ExamController : ExamApiController
 
     #region Delete Exam
 
+    /// <summary>
+    /// Deletes an exam by ID.
+    /// </summary>
+    /// <param name="id">Exam ID</param>
+    /// <returns>204 if deleted, 404 if not found</returns>
+
     public override async Task<IActionResult> DeleteExam([FromRoute(Name = "id"), Required] int id)
     {
         try
@@ -99,6 +103,14 @@ public class ExamController : ExamApiController
 
     #endregion
 
+    #region Get Exam By ID
+
+    /// <summary>
+    /// Retrieves an exam by ID.
+    /// </summary>
+    /// <param name="id">Exam ID</param>
+    /// <returns>200 with exam data or 404 if not found</returns>
+
     public override async Task<IActionResult> GetExamById([FromRoute(Name = "id"), Required] int id)
     {
 
@@ -125,12 +137,49 @@ public class ExamController : ExamApiController
         }
     }
 
+    #endregion
 
-    public override Task<IActionResult> ListExams([FromQuery(Name = "pageIndex")] long? pageIndex, [FromQuery(Name = "pageSize")] long? pageSize, [FromQuery(Name = "title")] string title, [FromQuery(Name = "startDateFrom")] DateOnly? startDateFrom, [FromQuery(Name = "startDateTo")] DateOnly? startDateTo, [FromQuery(Name = "endDateFrom")] DateOnly? endDateFrom, [FromQuery(Name = "endDateTo")] DateOnly? endDateTo, [FromQuery(Name = "createdBy")] long? createdBy)
+    #region List Exams
+    /// <summary>
+    /// Returns paginated and filtered list of exams.
+    /// </summary>
+    public override async Task<IActionResult> ListExams([FromQuery(Name = "pageIndex")] long? pageIndex, [FromQuery(Name = "pageSize")] long? pageSize, [FromQuery(Name = "title")] string title, [FromQuery(Name = "startDateFrom")] DateOnly? startDateFrom, [FromQuery(Name = "startDateTo")] DateOnly? startDateTo, [FromQuery(Name = "endDateFrom")] DateOnly? endDateFrom, [FromQuery(Name = "endDateTo")] DateOnly? endDateTo, [FromQuery(Name = "createdBy")] long? createdBy)
     {
-        throw new NotImplementedException();
-    }
+        try
+        {
+            var result = await _examService.ListExamsAsync(
+                pageIndex ?? 1,
+                pageSize ?? 10,
+                title,
+                startDateFrom,
+                startDateTo,
+                endDateFrom,
+                endDateTo,
+                createdBy);
 
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error listing exams");
+            return StatusCode(500, new Error
+            {
+                Code = "InternalServerError",
+                Message = "Internal server error"
+            });
+        }
+    }
+    #endregion
+
+
+    #region Update Exam
+
+    /// <summary>
+    /// Updates an existing exam.
+    /// </summary>
+    /// <param name="id">Exam ID</param>
+    /// <param name="examUpdate">Update model</param>
+    /// <returns>200 if updated, 404 if not found</returns>
     public override async Task<IActionResult> UpdateExam([FromRoute(Name = "id"), Required] int id, [FromBody] ExamUpdate examUpdate)
     {
         if (!ModelState.IsValid)
@@ -156,5 +205,7 @@ public class ExamController : ExamApiController
             });
         }
     }
+
+    #endregion
 
 }

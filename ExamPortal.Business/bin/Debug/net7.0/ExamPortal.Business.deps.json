@@ -194,7 +194,10 @@
           "Swashbuckle.AspNetCore.Newtonsoft": "6.4.0"
         },
         "runtime": {
-          "ExamPortal.API.Models.dll": {}
+          "ExamPortal.API.Models.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

@@ -18,3 +18,24 @@ d:\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\refint\ExamPortal.Dat
 d:\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.pdb
 d:\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.genruntimeconfig.cache
 d:\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ref\ExamPortal.DataAccess.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.DataAccess.deps.json
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.DataAccess.runtimeconfig.json
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.DataAccess.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.DataAccess.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.API.Models.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.Business.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.Business.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.API.Models.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\bin\Debug\net7.0\ExamPortal.API.Models.xml
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.csproj.AssemblyReference.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.AssemblyInfoInputs.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.AssemblyInfo.cs
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.csproj.CoreCompileInputs.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.sourcelink.json
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPort.82628D93.Up2Date
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\refint\ExamPortal.DataAccess.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ExamPortal.DataAccess.genruntimeconfig.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.DataAccess\obj\Debug\net7.0\ref\ExamPortal.DataAccess.dll

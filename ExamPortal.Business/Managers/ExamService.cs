@@ -1,8 +1,7 @@
 using AutoMapper;
 using ExamPortal.API.Models;
-using ExamPortal.API.Models.Entities;
+using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ExamPortal.Business.Managers;
 
@@ -32,6 +31,26 @@ public class ExamService : IExamService
     {
         var examModel = await _examRepository.GetExamByIdAsync(id);
         return examModel == null ? null : _mapper.Map<API.Models.Exam>(examModel);
+    }
+
+    public async Task<PagedResponse<API.Models.Exam>> ListExamsAsync(long pageIndex, long pageSize, string? title, DateOnly? startDateFrom, DateOnly? startDateTo, DateOnly? endDateFrom, DateOnly? endDateTo, long? createdBy)
+    {
+        var result = await _examRepository.GetPagedExamsAsync(
+          pageIndex, pageSize, title,
+          startDateFrom, startDateTo,
+          endDateFrom, endDateTo, createdBy);
+
+        return new PagedResponse<API.Models.Exam>
+        {
+            Paging = new API.Models.Common.Paging
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalRecords = result.TotalCount,
+                TotalPages = (int)Math.Ceiling((double)result.TotalCount / pageSize)
+            },
+            Items = _mapper.Map<List<API.Models.Exam>>(result.Items)
+        };
     }
 
     public async Task<bool> UpdateExamAsync(int id, ExamUpdate examUpdate)

@@ -14,3 +14,20 @@ d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.dll
 d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\refint\ExamPortal.Business.dll
 d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.pdb
 d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ref\ExamPortal.Business.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.deps.json
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.xml
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.AssemblyReference.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.GeneratedMSBuildEditorConfig.editorconfig
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.AssemblyInfoInputs.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.AssemblyInfo.cs
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.CoreCompileInputs.cache
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.sourcelink.json
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPort.B6B6C93B.Up2Date
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\refint\ExamPortal.Business.dll
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.pdb
+E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ref\ExamPortal.Business.dll

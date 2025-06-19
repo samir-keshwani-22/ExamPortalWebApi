@@ -150,6 +150,36 @@
             </summary>
             <returns>Hash code</returns>
         </member>
+        <member name="P:ExamPortal.API.Models.Common.PagedResponse`1.Paging">
+            <summary>
+            Paging information (pageIndex, pageSize, totalRecords, totalPages)
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.PagedResponse`1.Items">
+            <summary>
+            List of paged items (e.g., exams, questions)
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.Paging.PageIndex">
+            <summary>
+            Current page index (1-based)
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.Paging.PageSize">
+            <summary>
+            Number of items per page
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.Paging.TotalRecords">
+            <summary>
+            Total number of items across all pages
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.Paging.TotalPages">
+            <summary>
+            Total number of pages
+            </summary>
+        </member>
         <member name="T:ExamPortal.API.Models.Error">
             <summary>
             

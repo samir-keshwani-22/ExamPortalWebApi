@@ -1,3 +1,4 @@
+using ExamPortal.API.Models.Common;
 using ExamPortal.API.Models.Entities;
 using ExamPortal.Business.Interfaces;
 using ExamPortal.DataAccess.Contexts;
@@ -8,6 +9,7 @@ namespace ExamPortal.DataAccess.Repositories;
 public class ExamRepository : IExamRepository
 {
     private readonly ExamPortalContext _context;
+
 
     public ExamRepository(ExamPortalContext context)
     {
@@ -34,6 +36,43 @@ public class ExamRepository : IExamRepository
     {
         return await _context.Exams.FirstOrDefaultAsync(e => e.Id == id);
     }
+
+    public async Task<PagedResult<Exam>> GetPagedExamsAsync(long pageIndex, long pageSize, string? title, DateOnly? startDateFrom, DateOnly? startDateTo, DateOnly? endDateFrom, DateOnly? endDateTo, long? createdBy)
+    {
+        var query = _context.Exams.AsNoTracking();
+        if (!string.IsNullOrWhiteSpace(title))
+            query = query.Where(e => e.Title.Contains(title));
+
+        if (startDateFrom.HasValue)
+            query = query.Where(e => e.StartDate >= startDateFrom.Value.ToDateTime(TimeOnly.MinValue));
+
+        if (startDateTo.HasValue)
+            query = query.Where(e => e.StartDate <= startDateTo.Value.ToDateTime(TimeOnly.MaxValue));
+
+        if (endDateFrom.HasValue)
+            query = query.Where(e => e.EndDate >= endDateFrom.Value.ToDateTime(TimeOnly.MinValue));
+
+        if (endDateTo.HasValue)
+            query = query.Where(e => e.EndDate <= endDateTo.Value.ToDateTime(TimeOnly.MaxValue));
+
+        if (createdBy.HasValue)
+            query = query.Where(e => e.CreatedBy == createdBy);
+
+        var totalCount = await query.CountAsync();
+        var items = await query
+            .OrderByDescending(e => e.StartDate)
+            .Skip((int)((pageIndex - 1) * pageSize))
+            .Take((int)pageSize)
+            .ToListAsync();
+
+        return new PagedResult<Exam>
+        {
+            TotalCount = totalCount,
+            Items = items
+        };
+    }
+
+
 
     public async Task<bool> UpdateExamAsync(Exam exam)
     {

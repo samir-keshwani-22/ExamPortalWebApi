@@ -1,33 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {}
+    "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {}
   },
   "projects": {
-    "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+    "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectUniqueName": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "projectName": "ExamPortal.Business",
-        "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
-        "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
+        "projectPath": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "packagesPath": "C:\\Users\\sk531\\.nuget\\packages\\",
+        "outputPath": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sk531\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
-                "projectPath": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj"
+              "E:\\OpenApi Related\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
+                "projectPath": "E:\\OpenApi Related\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj"
               }
             }
           }
@@ -36,7 +42,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net7.0": {
@@ -63,26 +75,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
+    "E:\\OpenApi Related\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
+        "projectUniqueName": "E:\\OpenApi Related\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
         "projectName": "ExamPortal.API.Models",
-        "projectPath": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
-        "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "d:\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\obj\\",
+        "projectPath": "E:\\OpenApi Related\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\ExamPortal.API.Models.csproj",
+        "packagesPath": "C:\\Users\\sk531\\.nuget\\packages\\",
+        "outputPath": "E:\\OpenApi Related\\ExamPortalWebApi\\src\\ExamPortal.API.Models\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sk531\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -95,7 +113,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net7.0": {
@@ -138,7 +162,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
