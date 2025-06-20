@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace ExamPortal.API.Models.Common;
-
+/// <summary>
+///Paging class 
+/// </summary>
 public class Paging
 {
     /// <summary>

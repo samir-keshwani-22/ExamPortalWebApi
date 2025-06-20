@@ -1,19 +1,3 @@
-d:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.deps.json
-d:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.dll
-d:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.pdb
-d:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.dll
-d:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.pdb
-d:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.xml
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.AssemblyReference.cache
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.GeneratedMSBuildEditorConfig.editorconfig
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.AssemblyInfoInputs.cache
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.AssemblyInfo.cs
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.CoreCompileInputs.cache
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.CopyComplete
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.dll
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\refint\ExamPortal.Business.dll
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.pdb
-d:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ref\ExamPortal.Business.dll
 E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.deps.json
 E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.dll
 E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.pdb
@@ -31,3 +15,19 @@ E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPor
 E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\refint\ExamPortal.Business.dll
 E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.pdb
 E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ref\ExamPortal.Business.dll
+D:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.deps.json
+D:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.dll
+D:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.Business.pdb
+D:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.dll
+D:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.pdb
+D:\ExamPortalWebApi\ExamPortal.Business\bin\Debug\net7.0\ExamPortal.API.Models.xml
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.AssemblyReference.cache
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.GeneratedMSBuildEditorConfig.editorconfig
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.AssemblyInfoInputs.cache
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.AssemblyInfo.cs
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.CoreCompileInputs.cache
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.csproj.CopyComplete
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.dll
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\refint\ExamPortal.Business.dll
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ExamPortal.Business.pdb
+D:\ExamPortalWebApi\ExamPortal.Business\obj\Debug\net7.0\ref\ExamPortal.Business.dll

@@ -23,7 +23,11 @@ public class ExamController : ExamApiController
     #endregion
 
     #region Constructors 
-
+/// <summary>
+/// ExamController constructor
+/// </summary>
+/// <param name="examService"></param>
+/// <param name="logger"></param>
     public ExamController(IExamService examService, ILogger<ExamController> logger)
     {
         _examService = examService;

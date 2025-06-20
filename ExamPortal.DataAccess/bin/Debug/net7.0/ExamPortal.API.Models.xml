@@ -150,6 +150,12 @@
             </summary>
             <returns>Hash code</returns>
         </member>
+        <member name="T:ExamPortal.API.Models.Common.PagedResponse`1">
+            <summary>
+            Represents a paged response containing paging information and a list of items.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="P:ExamPortal.API.Models.Common.PagedResponse`1.Paging">
             <summary>
             Paging information (pageIndex, pageSize, totalRecords, totalPages)
@@ -159,6 +165,27 @@
             <summary>
             List of paged items (e.g., exams, questions)
             </summary>
+        </member>
+        <member name="T:ExamPortal.API.Models.Common.PagedResult`1">
+            <summary>
+            Represents a paged result with a list of items and the total count of available items.
+            </summary>
+            <typeparam name="T">The type of items in the result.</typeparam>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.PagedResult`1.TotalCount">
+            <summary>
+            Gets or sets the total number of items available.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Common.PagedResult`1.Items">
+            <summary>
+            Gets or sets the list of items for the current page.
+            </summary>
+        </member>
+        <member name="T:ExamPortal.API.Models.Common.Paging">
+             <summary>
+            Paging class 
+             </summary>
         </member>
         <member name="P:ExamPortal.API.Models.Common.Paging.PageIndex">
             <summary>
@@ -178,6 +205,251 @@
         <member name="P:ExamPortal.API.Models.Common.Paging.TotalPages">
             <summary>
             Total number of pages
+            </summary>
+        </member>
+        <member name="T:ExamPortal.API.Models.Entities.Answer">
+            <summary>
+            Represents an answer provided for a specific question in an exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Answer.Id">
+            <summary>
+            Gets or sets the unique identifier for the answer.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Answer.QuestionId">
+            <summary>
+            Gets or sets the identifier of the related question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Answer.Question">
+            <summary>
+            Gets or sets the related question entity.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Answer.SelectedOptionId">
+            <summary>
+            Gets or sets the identifier of the selected option (if any).
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Answer.SelectedOption">
+            <summary>
+            Gets or sets the selected option for the answer (if any).
+            </summary>
+        </member>
+        <member name="T:ExamPortal.API.Models.Entities.Exam">
+            <summary>
+            Represents an exam entity in the system.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.Id">
+            <summary>
+            Gets or sets the unique identifier for the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.Title">
+            <summary>
+            Gets or sets the title of the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.Description">
+            <summary>
+            Gets or sets the description of the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.DurationMinutes">
+            <summary>
+            Gets or sets the duration of the exam in minutes.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.TotalMarks">
+            <summary>
+            Gets or sets the total marks for the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.StartDate">
+            <summary>
+            Gets or sets the start date of the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.EndDate">
+            <summary>
+            Gets or sets the end date of the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.CreatedAt">
+            <summary>
+            Gets or sets the creation date of the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.UpdatedAt">
+            <summary>
+            Gets or sets the date when the exam was last updated.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.CreatedBy">
+            <summary>
+            Gets or sets the ID of the user who created the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.UpdatedBy">
+            <summary>
+            Gets or sets the ID of the user who last updated the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.DeletedBy">
+            <summary>
+            Gets or sets the ID of the user who deleted the exam.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.DeletedAt">
+            <summary>
+            Gets or sets the date when the exam was deleted.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.IsDeleted">
+            <summary>
+            Gets or sets a value indicating whether the exam is deleted.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Exam.Questions">
+            <summary>
+            Gets or sets the collection of questions associated with the exam.
+            </summary>
+        </member>
+        <member name="T:ExamPortal.API.Models.Entities.Question">
+            <summary>
+            Represents a question within an exam, including its text, type, marks, and related options and answers.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.Id">
+            <summary>
+            Gets or sets the unique identifier for the question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.ExamId">
+            <summary>
+            Gets or sets the exam identifier this question belongs to.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.Exam">
+            <summary>
+            Gets or sets the exam entity this question belongs to.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.QuestionText">
+            <summary>
+            Gets or sets the text of the question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.QuestionType">
+            <summary>
+            Gets or sets the question type (e.g., "MCQ", "Descriptive").
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.Marks">
+            <summary>
+            Gets or sets the marks assigned to this question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.CreatedAt">
+            <summary>
+            Gets or sets the creation date of the question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.UpdatedAt">
+            <summary>
+            Gets or sets the date when the question was last updated.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.CreatedBy">
+            <summary>
+            Gets or sets the ID of the user who created the question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.UpdatedBy">
+            <summary>
+            Gets or sets the ID of the user who last updated the question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.Topic">
+            <summary>
+            Gets or sets the topic of the question (optional).
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.DifficultyLevel">
+            <summary>
+            Gets or sets the difficulty level of the question (optional).
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.IsDeleted">
+            <summary>
+            Gets or sets a value indicating whether the question is deleted.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.Options">
+            <summary>
+            Gets or sets the collection of options for this question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.Question.Answers">
+            <summary>
+            Gets or sets the collection of answers for this question.
+            </summary>
+        </member>
+        <member name="T:ExamPortal.API.Models.Entities.QuestionOption">
+            <summary>
+            Represents an option for a specific exam question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.Id">
+            <summary>
+            Gets or sets the unique identifier for the option.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.QuestionId">
+            <summary>
+            Gets or sets the identifier of the related question.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.Question">
+            <summary>
+            Gets or sets the related question entity.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.OptionText">
+            <summary>
+            Gets or sets the text for this option.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.IsCorrect">
+            <summary>
+            Gets or sets a value indicating whether this option is the correct answer.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.IsDeleted">
+            <summary>
+            Gets or sets a value indicating whether the option is deleted.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.CreatedAt">
+            <summary>
+            Gets or sets the creation date of the option.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.UpdatedAt">
+            <summary>
+            Gets or sets the date when the option was last updated.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.CreatedBy">
+            <summary>
+            Gets or sets the ID of the user who created the option.
+            </summary>
+        </member>
+        <member name="P:ExamPortal.API.Models.Entities.QuestionOption.UpdatedBy">
+            <summary>
+            Gets or sets the ID of the user who last updated the option.
             </summary>
         </member>
         <member name="T:ExamPortal.API.Models.Error">
