@@ -1752,39 +1752,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sk531\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\pci137\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+      "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
       "projectName": "ExamPortal.Migrations",
-      "projectPath": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
-      "packagesPath": "C:\\Users\\sk531\\.nuget\\packages\\",
-      "outputPath": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.Migrations\\obj\\",
+      "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+      "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
+      "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\sk531\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj": {
-              "projectPath": "E:\\OpenApi Related\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj"
+            "D:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj": {
+              "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj"
             }
           }
         }
@@ -1793,13 +1786,7 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net7.0": {
@@ -1820,7 +1807,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
       }
     }
   }
