@@ -1452,12 +1452,15 @@
             "type" : "integer"
           },
           "questionText" : {
+            "nullable" : true,
             "type" : "string"
           },
           "questionType" : {
+            "nullable" : true,
             "type" : "string"
           },
           "marks" : {
+            "nullable" : true,
             "type" : "integer"
           },
           "topic" : {

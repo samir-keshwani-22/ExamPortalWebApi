@@ -35,20 +35,20 @@ namespace ExamPortal.API.Models
         /// <summary>
         /// Gets or Sets QuestionText
         /// </summary>
-        [DataMember(Name="questionText", EmitDefaultValue=false)]
+        [DataMember(Name="questionText", EmitDefaultValue=true)]
         public string QuestionText { get; set; }
 
         /// <summary>
         /// Gets or Sets QuestionType
         /// </summary>
-        [DataMember(Name="questionType", EmitDefaultValue=false)]
+        [DataMember(Name="questionType", EmitDefaultValue=true)]
         public string QuestionType { get; set; }
 
         /// <summary>
         /// Gets or Sets Marks
         /// </summary>
         [DataMember(Name="marks", EmitDefaultValue=true)]
-        public int Marks { get; set; }
+        public int? Marks { get; set; }
 
         /// <summary>
         /// Gets or Sets Topic
@@ -136,7 +136,7 @@ namespace ExamPortal.API.Models
                 ) && 
                 (
                     Marks == other.Marks ||
-                    
+                    Marks != null &&
                     Marks.Equals(other.Marks)
                 ) && 
                 (
@@ -172,7 +172,7 @@ namespace ExamPortal.API.Models
                     hashCode = hashCode * 59 + QuestionText.GetHashCode();
                     if (QuestionType != null)
                     hashCode = hashCode * 59 + QuestionType.GetHashCode();
-                    
+                    if (Marks != null)
                     hashCode = hashCode * 59 + Marks.GetHashCode();
                     if (Topic != null)
                     hashCode = hashCode * 59 + Topic.GetHashCode();

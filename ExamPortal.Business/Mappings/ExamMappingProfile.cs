@@ -17,18 +17,29 @@ public class ExamMappingProfile : Profile
         CreateMap<API.Models.Entities.Exam, Exam>()
            .ForMember(dest => dest.DurationMinutes,
            opt => opt.MapFrom(src => (int)src.DurationMinutes.TotalMinutes));
+
         CreateMap<ExamUpdate, API.Models.Entities.Exam>()
-      .ForMember(
-          dest => dest.DurationMinutes,
-          opt => opt.MapFrom(src => src.DurationMinutes.HasValue
-              ? TimeSpan.FromMinutes(src.DurationMinutes.Value)
-              : (TimeSpan?)null))
-      .ForMember(
-          dest => dest.StartDate,
-          opt => opt.Condition(src => src.StartDate != null))
-      .ForMember(
-          dest => dest.EndDate,
-          opt => opt.Condition(src => src.EndDate != null))
-      .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            .ForMember(
+                dest => dest.DurationMinutes,
+                opt => opt.MapFrom(src => src.DurationMinutes.HasValue
+                    ? TimeSpan.FromMinutes(src.DurationMinutes.Value)
+                    : (TimeSpan?)null))
+            .ForMember(
+                dest => dest.StartDate,
+                opt => opt.Condition(src => src.StartDate != null))
+            .ForMember(
+                dest => dest.EndDate,
+                opt => opt.Condition(src => src.EndDate != null))
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+        // for create 
+        CreateMap<QuestionCreate, API.Models.Entities.Question>()
+        .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+        CreateMap<API.Models.Entities.Question, Question>();
+        CreateMap<QuestionUpdate, API.Models.Entities.Question>()
+             .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
+           .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); ;
+
     }
 }

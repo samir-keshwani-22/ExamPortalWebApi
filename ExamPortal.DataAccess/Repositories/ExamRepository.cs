@@ -18,7 +18,6 @@ public class ExamRepository : IExamRepository
 
     public async Task<bool> CreateAsync(Exam exam)
     {
-
         await _context.Exams.AddAsync(exam);
         return await _context.SaveChangesAsync() > 0;
     }
@@ -76,7 +75,7 @@ public class ExamRepository : IExamRepository
 
     public async Task<bool> UpdateExamAsync(Exam exam)
     {
-        _context.Update(exam);
+        _context.Exams.Update(exam);
         return await _context.SaveChangesAsync() > 0;
     }
 }

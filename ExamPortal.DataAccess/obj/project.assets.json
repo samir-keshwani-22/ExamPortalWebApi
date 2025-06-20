@@ -1951,11 +1951,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj",
+      "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj",
       "projectName": "ExamPortal.DataAccess",
-      "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj",
+      "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.DataAccess\\ExamPortal.DataAccess.csproj",
       "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-      "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.DataAccess\\obj\\",
+      "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1970,8 +1970,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
-              "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
+            "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+              "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
             }
           }
         }

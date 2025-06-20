@@ -28,18 +28,18 @@ public class Question
     /// <summary>
     /// Gets or sets the text of the question.
     /// </summary>
-    public required string QuestionText { get; set; }
+    public string? QuestionText { get; set; }
 
     /// <summary>
     /// Gets or sets the question type (e.g., "MCQ", "Descriptive").
     /// </summary>
-    public required string QuestionType { get; set; }
+    public string? QuestionType { get; set; }
 
     /// <summary>
     /// Gets or sets the marks assigned to this question.
     /// </summary>
 
-    public int Marks { get; set; }
+    public int? Marks { get; set; }
 
     /// <summary>
     /// Gets or sets the creation date of the question.

@@ -22,12 +22,13 @@ public class ExamController : ExamApiController
 
     #endregion
 
-    #region Constructors 
-/// <summary>
-/// ExamController constructor
-/// </summary>
-/// <param name="examService"></param>
-/// <param name="logger"></param>
+    #region Constructor
+
+    /// <summary>
+    /// ExamController constructor
+    /// </summary>
+    /// <param name="examService"></param>
+    /// <param name="logger"></param>
     public ExamController(IExamService examService, ILogger<ExamController> logger)
     {
         _examService = examService;
@@ -35,6 +36,8 @@ public class ExamController : ExamApiController
     }
 
     #endregion
+
+    #region  Methods 
 
     #region  Add Exam 
 
@@ -159,8 +162,7 @@ public class ExamController : ExamApiController
                 startDateTo,
                 endDateFrom,
                 endDateTo,
-                createdBy);
-
+                createdBy); 
             return Ok(result);
         }
         catch (Exception ex)
@@ -212,4 +214,5 @@ public class ExamController : ExamApiController
 
     #endregion
 
+    #endregion
 }

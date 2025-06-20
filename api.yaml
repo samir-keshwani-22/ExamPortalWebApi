@@ -906,13 +906,16 @@ components:
       type: object
       properties:
         examId:
-          type: integer
+          type: integer 
         questionText:
           type: string
+          nullable: true
         questionType:
           type: string
+          nullable: true
         marks:
           type: integer
+          nullable: true
         topic:
           type: string
           nullable: true

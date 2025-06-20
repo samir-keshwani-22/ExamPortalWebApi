@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "u/pp2pWSMGsiXHmU/ZdhXt4Bb7544dP3M99598eBaAXOQeIpFResWqHSXfD3l3SxLhHl+UfQdDXYAy8/Q259Mw==",
+  "dgSpecHash": "TsfEucX6Fd+i3gjq+zYXQToB2ZXAg4bzuoyEv4//ZxmqbV0RL1Z365RTMxkL+Kbt5N//pqofSRR73VIGG6zDGQ==",
   "success": true,
-  "projectFilePath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+  "projectFilePath": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pci137\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\pci137\\.nuget\\packages\\jsonsubtypes\\1.8.0\\jsonsubtypes.1.8.0.nupkg.sha512",
