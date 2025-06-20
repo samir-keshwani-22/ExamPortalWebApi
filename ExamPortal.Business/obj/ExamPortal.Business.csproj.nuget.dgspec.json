@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {}
+    "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {}
   },
   "projects": {
-    "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+    "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "projectName": "ExamPortal.Business",
-        "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
+        "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"

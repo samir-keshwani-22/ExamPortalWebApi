@@ -41,5 +41,13 @@ public class ExamMappingProfile : Profile
              .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); ;
 
+        CreateMap<AnswerCreate, API.Models.Entities.Answer>()
+         .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<API.Models.Entities.Answer, Answer>();
+
+        CreateMap<AnswerUpdate, API.Models.Entities.Answer>()
+        .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+        
+
     }
 }

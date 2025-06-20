@@ -1970,8 +1970,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
-              "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
+            "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+              "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
             }
           }
         }

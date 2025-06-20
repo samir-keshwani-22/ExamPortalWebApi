@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj": {}
+    "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj": {}
   },
   "projects": {
-    "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+    "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "projectName": "ExamPortal.Business",
-        "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
+        "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj",
         "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
+        "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -89,8 +89,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
-                "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
+              "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj": {
+                "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Business\\ExamPortal.Business.csproj"
               }
             }
           }
@@ -146,14 +146,14 @@
         }
       }
     },
-    "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj": {
+    "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+        "projectUniqueName": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
         "projectName": "ExamPortal.Migrations",
-        "projectPath": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
+        "projectPath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\ExamPortal.Migrations.csproj",
         "packagesPath": "C:\\Users\\pci137\\.nuget\\packages\\",
-        "outputPath": "d:\\ExamPortalWebApi\\ExamPortal.Migrations\\obj\\",
+        "outputPath": "D:\\ExamPortalWebApi\\ExamPortal.Migrations\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pci137\\AppData\\Roaming\\NuGet\\NuGet.Config"
