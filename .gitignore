@@ -484,3 +484,10 @@ bin/
 
 **/bin/
 **/obj/
+
+ExamPortal.Business/bin/
+ExamPortal.Business/obj/
+ExamPortal.DataAccess/bin/
+ExamPortal.DataAccess/obj/
+ExamPortal.Migrations/bin/
+ExamPortal.Migrations/obj/
