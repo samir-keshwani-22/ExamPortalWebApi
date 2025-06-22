@@ -24,7 +24,7 @@ public class QuestionOptionRepository : IQuestionOptionRepository
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var questionOption = await _context.QuestionOptions.FindAsync(id);
+        QuestionOption? questionOption = await _context.QuestionOptions.FindAsync(id);
         if (questionOption == null)
             return false;
         _context.QuestionOptions.Remove(questionOption);
@@ -38,9 +38,9 @@ public class QuestionOptionRepository : IQuestionOptionRepository
 
     public async Task<PagedResult<QuestionOption>> GetPagedAsync(long pageIndex, long pageSize)
     {
-        var query = _context.QuestionOptions.AsNoTracking();
-        var totalCount = query.Count();
-        var items = await query.Skip((int)((pageIndex - 1) * pageSize))
+        IQueryable<QuestionOption> query = _context.QuestionOptions.AsNoTracking();
+        int totalCount = query.Count();
+        List<QuestionOption> items = await query.Skip((int)((pageIndex - 1) * pageSize))
           .Take((int)pageSize)
           .ToListAsync();
         return new PagedResult<QuestionOption>

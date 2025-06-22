@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ExamPortal.API.Controllers;
 using ExamPortal.API.Models;
+using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -49,7 +51,7 @@ public class QuestionOptionController : QuestionOptionApiController
             return BadRequest(ModelState);
         try
         {
-            var created = await _questionOptionService.CreateQuestionOptionAsync(questionOptionCreate);
+            bool created = await _questionOptionService.CreateQuestionOptionAsync(questionOptionCreate);
             return created ? StatusCode(201) : BadRequest(new Error
             {
                 Code = "BadRequest",
@@ -78,7 +80,7 @@ public class QuestionOptionController : QuestionOptionApiController
     {
         try
         {
-            var deleted = await _questionOptionService.DeleteQuestionOptionAsync(id);
+            bool deleted = await _questionOptionService.DeleteQuestionOptionAsync(id);
             return deleted ? NoContent() : NotFound(new Error
             {
                 Code = "NotFound",
@@ -108,7 +110,7 @@ public class QuestionOptionController : QuestionOptionApiController
     {
         try
         {
-            var option = await _questionOptionService.GetQuestionOptionByIdAsync(id);
+            QuestionOption? option = await _questionOptionService.GetQuestionOptionByIdAsync(id);
             return option != null ? Ok(option) : NotFound(new Error
             {
                 Code = "NotFound",
@@ -138,7 +140,7 @@ public class QuestionOptionController : QuestionOptionApiController
     {
         try
         {
-            var result = await _questionOptionService.ListQuestionOptionsAsync(pageIndex ?? 1, pageSize ?? 10);
+            PagedResponse<QuestionOption> result = await _questionOptionService.ListQuestionOptionsAsync(pageIndex ?? 1, pageSize ?? 10);
             return Ok(result);
         }
         catch (Exception ex)
@@ -171,7 +173,7 @@ public class QuestionOptionController : QuestionOptionApiController
 
         try
         {
-            var updated = await _questionOptionService.UpdateQuestionOptionAsync(id, questionOptionUpdate);
+            bool updated = await _questionOptionService.UpdateQuestionOptionAsync(id, questionOptionUpdate);
             return updated ? Ok() : NotFound(new Error
             {
                 Code = "NotFound",

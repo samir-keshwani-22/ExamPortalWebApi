@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ExamPortal.API.Controllers;
 using ExamPortal.API.Models;
+using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -54,7 +56,7 @@ public class ExamController : ExamApiController
         }
         try
         {
-            var result = await _examService.CreateExamAsync(examCreate);
+            bool result = await _examService.CreateExamAsync(examCreate);
             return result ? StatusCode(201) : BadRequest(new Error
             {
                 Code = "BadRequest",
@@ -86,7 +88,7 @@ public class ExamController : ExamApiController
     {
         try
         {
-            var result = await _examService.DeleteExamAsync(id);
+            bool result = await _examService.DeleteExamAsync(id);
             if (result)
                 return NoContent();
             else
@@ -123,7 +125,7 @@ public class ExamController : ExamApiController
 
         try
         {
-            var exam = await _examService.GetExamByIdAsync(id);
+            API.Models.Exam? exam = await _examService.GetExamByIdAsync(id);
             if (exam == null)
             {
                 return NotFound(new Error
@@ -154,7 +156,7 @@ public class ExamController : ExamApiController
     {
         try
         {
-            var result = await _examService.ListExamsAsync(
+            PagedResponse<API.Models.Exam> result = await _examService.ListExamsAsync(
                 pageIndex ?? 1,
                 pageSize ?? 10,
                 title,
@@ -162,7 +164,7 @@ public class ExamController : ExamApiController
                 startDateTo,
                 endDateFrom,
                 endDateTo,
-                createdBy); 
+                createdBy);
             return Ok(result);
         }
         catch (Exception ex)
@@ -194,7 +196,7 @@ public class ExamController : ExamApiController
         }
         try
         {
-            var result = await _examService.UpdateExamAsync(id, examUpdate);
+            bool result = await _examService.UpdateExamAsync(id, examUpdate);
             return result ? Ok() : NotFound(new Error
             {
                 Code = "NotFound",

@@ -18,7 +18,7 @@ public class QuestionOptionService : IQuestionOptionService
     }
     public async Task<bool> CreateQuestionOptionAsync(QuestionOptionCreate questionOptionCreate)
     {
-        var questionOption = _mapper.Map<API.Models.Entities.QuestionOption>(questionOptionCreate);
+        API.Models.Entities.QuestionOption questionOption = _mapper.Map<API.Models.Entities.QuestionOption>(questionOptionCreate);
         return await _questionOptionRepository.CreateAsync(questionOption);
     }
 
@@ -29,14 +29,13 @@ public class QuestionOptionService : IQuestionOptionService
 
     public async Task<QuestionOption?> GetQuestionOptionByIdAsync(int id)
     {
-        var questionOptionModel = await _questionOptionRepository.GetByIdAsync(id);
+        API.Models.Entities.QuestionOption? questionOptionModel = await _questionOptionRepository.GetByIdAsync(id);
         return questionOptionModel == null ? null : _mapper.Map<API.Models.QuestionOption>(questionOptionModel);
-
     }
 
     public async Task<PagedResponse<QuestionOption>> ListQuestionOptionsAsync(long pageIndex, long pageSize)
     {
-        var result = await _questionOptionRepository.GetPagedAsync(pageIndex, pageSize);
+        PagedResult<API.Models.Entities.QuestionOption> result = await _questionOptionRepository.GetPagedAsync(pageIndex, pageSize);
         return new PagedResponse<QuestionOption>
         {
             Paging = new API.Models.Common.Paging
@@ -52,7 +51,7 @@ public class QuestionOptionService : IQuestionOptionService
 
     public async Task<bool> UpdateQuestionOptionAsync(int id, QuestionOptionUpdate questionOptionUpdate)
     {
-        var existingQuestionOption = await _questionOptionRepository.GetByIdAsync(id);
+        API.Models.Entities.QuestionOption? existingQuestionOption = await _questionOptionRepository.GetByIdAsync(id);
         if (existingQuestionOption == null)
         {
             return false;

@@ -22,7 +22,7 @@ public class AnswerRepository : IAnswerRepository
 
     public async Task<bool> DeleteAnswerAsync(int id)
     {
-        var answer = await _context.Answers.FindAsync(id);
+        Answer? answer = await _context.Answers.FindAsync(id);
         if (answer == null)
             return false;
         _context.Answers.Remove(answer);
@@ -36,9 +36,9 @@ public class AnswerRepository : IAnswerRepository
 
     public async Task<PagedResult<Answer>> GetPagedAnswersAsync(long pageIndex, long pageSize)
     {
-        var query = _context.Answers.AsNoTracking();
-        var totalCount = query.Count();
-        var items = await query.Skip((int)((pageIndex - 1) * pageSize))
+        IQueryable<Answer> query = _context.Answers.AsNoTracking();
+        int totalCount = query.Count();
+        List<Answer> items = await query.Skip((int)((pageIndex - 1) * pageSize))
           .Take((int)pageSize)
           .ToListAsync();
         return new PagedResult<Answer>

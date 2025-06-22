@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ExamPortal.API.Controllers;
 using ExamPortal.API.Models;
+using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -53,7 +55,7 @@ public class QuestionController : QuestionApiController
         }
         try
         {
-            var result = await _questionService.CreateQuestionAsync(questionCreate);
+            bool result = await _questionService.CreateQuestionAsync(questionCreate);
             return result ? StatusCode(201) : BadRequest(
                 new Error
                 {
@@ -86,7 +88,7 @@ public class QuestionController : QuestionApiController
     {
         try
         {
-            var result = await _questionService.DeleteQuestionAsync(id);
+            bool result = await _questionService.DeleteQuestionAsync(id);
             if (result)
                 return NoContent();
             else
@@ -124,7 +126,7 @@ public class QuestionController : QuestionApiController
     {
         try
         {
-            var question = await _questionService.GetQuestionByIdAsync(id);
+            Question? question = await _questionService.GetQuestionByIdAsync(id);
             if (question == null)
             {
                 return NotFound(new Error
@@ -160,7 +162,7 @@ public class QuestionController : QuestionApiController
     {
         try
         {
-            var result = await _questionService.ListQuestionsAsync(
+            PagedResponse<Question> result = await _questionService.ListQuestionsAsync(
                 pageIndex ?? 1,
                 pageSize ?? 10);
             return Ok(result);
@@ -197,7 +199,7 @@ public class QuestionController : QuestionApiController
         }
         try
         {
-            var result = await _questionService.UpdateQuestionAsync(id, questionUpdate);
+            bool result = await _questionService.UpdateQuestionAsync(id, questionUpdate);
             return result ? Ok() : NotFound(new Error
             {
                 Code = "NotFound",

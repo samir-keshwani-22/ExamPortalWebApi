@@ -18,7 +18,7 @@ public class QuestionService : IQuestionService
 
     public async Task<bool> CreateQuestionAsync(QuestionCreate questionCreate)
     {
-        var question = _mapper.Map<API.Models.Entities.Question>(questionCreate);
+        API.Models.Entities.Question question = _mapper.Map<API.Models.Entities.Question>(questionCreate);
         return await _questionRepository.CreateAsync(question);
     }
 
@@ -29,13 +29,13 @@ public class QuestionService : IQuestionService
 
     public async Task<Question?> GetQuestionByIdAsync(int id)
     {
-        var questionModel = await _questionRepository.GetQuestionByIdAsync(id);
+        API.Models.Entities.Question? questionModel = await _questionRepository.GetQuestionByIdAsync(id);
         return questionModel == null ? null : _mapper.Map<API.Models.Question>(questionModel);
     }
 
     public async Task<PagedResponse<Question>> ListQuestionsAsync(long pageIndex, long pageSize)
     {
-        var result = await _questionRepository.GetPagedQuestionsAsync(pageIndex, pageSize);
+        PagedResult<API.Models.Entities.Question> result = await _questionRepository.GetPagedQuestionsAsync(pageIndex, pageSize);
         return new PagedResponse<Question>
         {
             Paging = new API.Models.Common.Paging
@@ -51,7 +51,7 @@ public class QuestionService : IQuestionService
 
     public async Task<bool> UpdateQuestionAsync(int id, QuestionUpdate questionUpdate)
     {
-        var existingQuestion = await _questionRepository.GetQuestionByIdAsync(id);
+        API.Models.Entities.Question? existingQuestion = await _questionRepository.GetQuestionByIdAsync(id);
         if (existingQuestion == null)
             return false;
         // from , to 

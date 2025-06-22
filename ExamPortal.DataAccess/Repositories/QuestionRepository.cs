@@ -22,7 +22,7 @@ public class QuestionRepository : IQuestionRepository
 
     public async Task<bool> DeleteQuestionAsync(int id)
     {
-        var question = await _context.Questions.FindAsync(id);
+        Question? question = await _context.Questions.FindAsync(id);
         if (question == null)
             return false;
         _context.Questions.Remove(question);
@@ -31,9 +31,9 @@ public class QuestionRepository : IQuestionRepository
 
     public async Task<PagedResult<Question>> GetPagedQuestionsAsync(long pageIndex, long pageSize)
     {
-        var query = _context.Questions.AsNoTracking();
-        var totalCount = query.Count();
-        var items = await query.Skip((int)((pageIndex - 1) * pageSize))
+        IQueryable<Question> query = _context.Questions.AsNoTracking();
+        int totalCount = query.Count();
+        List<Question> items = await query.Skip((int)((pageIndex - 1) * pageSize))
             .Take((int)pageSize)
             .ToListAsync();
         return new PagedResult<Question>

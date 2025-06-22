@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ExamPortal.API.Controllers;
 using ExamPortal.API.Models;
+using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -54,7 +56,7 @@ public class AnswerController : AnswerApiController
         }
         try
         {
-            var result = await _answerService.CreateAnswerAsync(answerCreate);
+            bool result = await _answerService.CreateAnswerAsync(answerCreate);
             return result ? StatusCode(201) : BadRequest(new Error
             {
                 Code = "BadRequest",
@@ -84,7 +86,7 @@ public class AnswerController : AnswerApiController
     {
         try
         {
-            var result = await _answerService.DeleteAnswerAsync(id);
+            bool result = await _answerService.DeleteAnswerAsync(id);
             if (result)
                 return NoContent();
             else
@@ -121,7 +123,7 @@ public class AnswerController : AnswerApiController
     {
         try
         {
-            var answer = await _answerService.GetAnswerByIdAsync(id);
+            Answer? answer = await _answerService.GetAnswerByIdAsync(id);
             if (answer == null)
             {
                 return NotFound(new Error
@@ -155,7 +157,7 @@ public class AnswerController : AnswerApiController
     {
         try
         {
-            var result = await _answerService.ListAnswersAsync(pageIndex ?? 1, pageSize ?? 10);
+            PagedResponse<Answer> result = await _answerService.ListAnswersAsync(pageIndex ?? 1, pageSize ?? 10);
             return Ok(result);
         }
         catch (Exception ex)
@@ -189,7 +191,7 @@ public class AnswerController : AnswerApiController
         }
         try
         {
-            var result = await _answerService.UpdateAnswerAsync(id, answerUpdate);
+            bool result = await _answerService.UpdateAnswerAsync(id, answerUpdate);
             return result ? Ok() : NotFound(new Error
             {
                 Code = "NotFound",
@@ -210,5 +212,4 @@ public class AnswerController : AnswerApiController
     #endregion
 
     #endregion
-
 }

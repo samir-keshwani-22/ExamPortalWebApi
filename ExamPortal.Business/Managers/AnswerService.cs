@@ -17,7 +17,7 @@ public class AnswerService : IAnswerService
     }
     public async Task<bool> CreateAnswerAsync(AnswerCreate answerCreate)
     {
-        var answer = _mapper.Map<API.Models.Entities.Answer>(answerCreate);
+        API.Models.Entities.Answer answer = _mapper.Map<API.Models.Entities.Answer>(answerCreate);
         return await _answerRepository.CreateAsync(answer);
     }
 
@@ -28,13 +28,13 @@ public class AnswerService : IAnswerService
 
     public async Task<Answer?> GetAnswerByIdAsync(int id)
     {
-        var answerModel = await _answerRepository.GetAnswerByIdAsnc(id);
+        API.Models.Entities.Answer? answerModel = await _answerRepository.GetAnswerByIdAsnc(id);
         return answerModel == null ? null : _mapper.Map<API.Models.Answer>(answerModel);
     }
 
     public async Task<PagedResponse<Answer>> ListAnswersAsync(long pageIndex, long pageSize)
     {
-        var result = await _answerRepository.GetPagedAnswersAsync(pageIndex, pageSize);
+        PagedResult<API.Models.Entities.Answer> result = await _answerRepository.GetPagedAnswersAsync(pageIndex, pageSize);
         return new PagedResponse<Answer>
         {
             Paging = new API.Models.Common.Paging
@@ -50,7 +50,7 @@ public class AnswerService : IAnswerService
 
     public async Task<bool> UpdateAnswerAsync(int id, AnswerUpdate answerUpdate)
     {
-        var existingAnswer = await _answerRepository.GetAnswerByIdAsnc(id);
+        API.Models.Entities.Answer? existingAnswer = await _answerRepository.GetAnswerByIdAsnc(id);
         if (existingAnswer == null)
         {
             return false;

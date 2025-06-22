@@ -6,7 +6,7 @@ namespace ExamPortal.Business.Mappings;
 public class ExamMappingProfile : Profile
 
 {
-    public ExamMappingProfile()
+       public ExamMappingProfile()
     {
         CreateMap<ExamCreate, API.Models.Entities.Exam>()
             .ForMember(dest => dest.Questions, opt => opt.Ignore())

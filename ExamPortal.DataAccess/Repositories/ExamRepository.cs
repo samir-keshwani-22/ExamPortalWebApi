@@ -9,8 +9,6 @@ namespace ExamPortal.DataAccess.Repositories;
 public class ExamRepository : IExamRepository
 {
     private readonly ExamPortalContext _context;
-
-
     public ExamRepository(ExamPortalContext context)
     {
         _context = context;
@@ -24,7 +22,7 @@ public class ExamRepository : IExamRepository
 
     public async Task<bool> DeleteExamAsync(int id)
     {
-        var exam = await _context.Exams.FindAsync(id);
+        Exam? exam = await _context.Exams.FindAsync(id);
         if (exam == null)
             return false;
         _context.Exams.Remove(exam);
@@ -38,7 +36,7 @@ public class ExamRepository : IExamRepository
 
     public async Task<PagedResult<Exam>> GetPagedExamsAsync(long pageIndex, long pageSize, string? title, DateOnly? startDateFrom, DateOnly? startDateTo, DateOnly? endDateFrom, DateOnly? endDateTo, long? createdBy)
     {
-        var query = _context.Exams.AsNoTracking();
+        IQueryable<Exam> query = _context.Exams.AsNoTracking();
         if (!string.IsNullOrWhiteSpace(title))
             query = query.Where(e => e.Title.Contains(title));
 
@@ -57,8 +55,8 @@ public class ExamRepository : IExamRepository
         if (createdBy.HasValue)
             query = query.Where(e => e.CreatedBy == createdBy);
 
-        var totalCount = await query.CountAsync();
-        var items = await query
+        int totalCount = await query.CountAsync();
+        List<Exam> items = await query
             .OrderByDescending(e => e.StartDate)
             .Skip((int)((pageIndex - 1) * pageSize))
             .Take((int)pageSize)
