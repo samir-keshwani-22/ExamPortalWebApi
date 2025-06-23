@@ -10,7 +10,7 @@ namespace ExamPortal.Tests.Services;
 
 public class ExamServiceTests
 {
-    private readonly Mock<IExamRepository> _mockRepo;
+    private readonly Mock<IExamRepository> _mockRepo ;
     private readonly Mock<IMapper> _mockMapper;
 
     private readonly ExamService _service;

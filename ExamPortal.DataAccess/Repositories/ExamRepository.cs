@@ -5,12 +5,11 @@ using ExamPortal.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamPortal.DataAccess.Repositories;
-
 public class ExamRepository : IExamRepository
 {
     private readonly ExamPortalContext _context;
     public ExamRepository(ExamPortalContext context)
-    { 
+    {
         _context = context;
     }
 
@@ -56,6 +55,8 @@ public class ExamRepository : IExamRepository
             query = query.Where(e => e.CreatedBy == createdBy);
 
         int totalCount = await query.CountAsync();
+        if (totalCount == 0)
+            return new PagedResult<Exam> { TotalCount = 0, Items = new List<Exam>() };
         List<Exam> items = await query
             .OrderByDescending(e => e.StartDate)
             .Skip((int)((pageIndex - 1) * pageSize))
@@ -68,8 +69,6 @@ public class ExamRepository : IExamRepository
             Items = items
         };
     }
-
-
 
     public async Task<bool> UpdateExamAsync(Exam exam)
     {

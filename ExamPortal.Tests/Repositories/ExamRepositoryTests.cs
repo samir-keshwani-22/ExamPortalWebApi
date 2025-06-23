@@ -35,9 +35,7 @@ public class ExamRepositoryTests
         var result = await repo.CreateAsync(exam);
         Assert.True(result);
         Assert.Single(ctx.Exams);
-    }
-
-    // when not added left 
+    } 
 
     [Fact]
     public async Task DeleteExamAsync_RemovesExam_ReturnsTrue()
@@ -132,7 +130,7 @@ public class ExamRepositoryTests
         var result = await repo.UpdateExamAsync(exam);
         Assert.True(result);
         Assert.Equal("New", context.Exams.First().Title);
-        
+
     }
 
 
