@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamPortal.DataAccess", "Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamPortal.Migrations", "ExamPortal.Migrations\ExamPortal.Migrations.csproj", "{894677F5-7BDD-49A0-B14A-2F4E38B53D91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamPortal.Tests", "ExamPortal.Tests\ExamPortal.Tests.csproj", "{4D673851-1DCF-4895-9ABF-16BAD24B2593}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{894677F5-7BDD-49A0-B14A-2F4E38B53D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{894677F5-7BDD-49A0-B14A-2F4E38B53D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{894677F5-7BDD-49A0-B14A-2F4E38B53D91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D673851-1DCF-4895-9ABF-16BAD24B2593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D673851-1DCF-4895-9ABF-16BAD24B2593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D673851-1DCF-4895-9ABF-16BAD24B2593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D673851-1DCF-4895-9ABF-16BAD24B2593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

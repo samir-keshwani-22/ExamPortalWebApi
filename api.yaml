@@ -68,10 +68,10 @@ paths:
             default: 10
         - name: title
           in: query
-          required: false
           schema:
             type: string
             default: ""
+            nullable: true
         - name: startDateFrom
           in: query
           schema:
@@ -750,6 +750,7 @@ components:
           readOnly: true
         title:
           type: string
+          nullable: true
         description:
           type: string
           nullable: true
@@ -796,6 +797,7 @@ components:
       properties:
         title:
           type: string
+
         description:
           type: string
           nullable: true

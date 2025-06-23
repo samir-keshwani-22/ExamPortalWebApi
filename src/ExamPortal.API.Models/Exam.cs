@@ -35,7 +35,7 @@ namespace ExamPortal.API.Models
         /// <summary>
         /// Gets or Sets Title
         /// </summary>
-        [DataMember(Name="title", EmitDefaultValue=false)]
+        [DataMember(Name="title", EmitDefaultValue=true)]
         public string Title { get; set; }
 
         /// <summary>

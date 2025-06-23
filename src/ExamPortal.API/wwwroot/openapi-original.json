@@ -53,6 +53,7 @@
           "required" : false,
           "schema" : {
             "default" : "",
+            "nullable" : true,
             "type" : "string"
           },
           "style" : "form"
@@ -1190,6 +1191,7 @@
             "type" : "integer"
           },
           "title" : {
+            "nullable" : true,
             "type" : "string"
           },
           "description" : {
