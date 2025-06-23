@@ -10,7 +10,7 @@ public class ExamRepository : IExamRepository
 {
     private readonly ExamPortalContext _context;
     public ExamRepository(ExamPortalContext context)
-    {
+    { 
         _context = context;
     }
 
