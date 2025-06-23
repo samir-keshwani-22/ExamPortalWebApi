@@ -187,6 +187,63 @@ public class AnswerControllerTests
         var result = await _controller.ListAnswers(1, 10);
 
         var objectResult = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(500, objectResult.StatusCode);
+        var error = Assert.IsType<Error>(objectResult.Value);
+        Assert.Equal("InternalServerError", error.Code);
+        Assert.Equal("Internal server error", error.Message);
 
     }
+
+    [Fact]
+    public async Task UpdateAnswer_ReturnsOk_OnSuccess()
+    {
+        var update = new AnswerUpdate { QuestionId = 2 };
+        _mockService.Setup(s => s.UpdateAnswerAsync(1, update)).ReturnsAsync(true);
+
+        var result = await _controller.UpdateAnswer(1, update);
+
+        Assert.IsType<OkResult>(result);
+    }
+
+    [Fact]
+    public async Task UpdateAnswer_ReturnsNotFound_OnServiceFailure()
+    {
+        var update = new AnswerUpdate { QuestionId = 2 };
+        _mockService.Setup(s => s.UpdateAnswerAsync(1, update)).ReturnsAsync(false);
+
+        var result = await _controller.UpdateAnswer(1, update);
+
+        var notFound = Assert.IsType<NotFoundObjectResult>(result);
+        var error = Assert.IsType<Error>(notFound.Value);
+        Assert.Equal("NotFound", error.Code);
+    }
+
+    [Fact]
+    public async Task UpdateAnswer_ReturnsBadRequest_WhenQuestionIdMissing()
+    {
+        var update = new AnswerUpdate { QuestionId = 0 };
+
+        var result = await _controller.UpdateAnswer(1, update);
+
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+        var serializableError = Assert.IsType<SerializableError>(badRequest.Value);
+        Assert.True(serializableError.ContainsKey("QuestionId"));
+    }
+
+    [Fact]
+    public async Task UpdateAnswer_Returns500_OnException()
+    {
+        var update = new AnswerUpdate { QuestionId = 2 };
+        _mockService.Setup(s => s.UpdateAnswerAsync(1, update)).ThrowsAsync(new Exception("fail"));
+
+        var result = await _controller.UpdateAnswer(1, update);
+
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(500, objectResult.StatusCode);
+        var error = Assert.IsType<Error>(objectResult.Value);
+        Assert.Equal("InternalServerError", error.Code);
+        Assert.Equal("Internal server error", error.Message);
+    }
+
+    
 }
