@@ -68,6 +68,7 @@ paths:
             default: 10
         - name: title
           in: query
+          required: false
           schema:
             type: string
             default: ""
@@ -906,7 +907,7 @@ components:
       type: object
       properties:
         examId:
-          type: integer 
+          type: integer
         questionText:
           type: string
           nullable: true

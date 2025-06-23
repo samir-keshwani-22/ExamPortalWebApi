@@ -152,7 +152,7 @@ public class ExamController : ExamApiController
     /// <summary>
     /// Returns paginated and filtered list of exams.
     /// </summary>
-    public override async Task<IActionResult> ListExams([FromQuery(Name = "pageIndex")] long? pageIndex, [FromQuery(Name = "pageSize")] long? pageSize, [FromQuery(Name = "title")] string title, [FromQuery(Name = "startDateFrom")] DateOnly? startDateFrom, [FromQuery(Name = "startDateTo")] DateOnly? startDateTo, [FromQuery(Name = "endDateFrom")] DateOnly? endDateFrom, [FromQuery(Name = "endDateTo")] DateOnly? endDateTo, [FromQuery(Name = "createdBy")] long? createdBy)
+    public override async Task<IActionResult> ListExams([FromQuery(Name = "pageIndex")] long? pageIndex, [FromQuery(Name = "pageSize")] long? pageSize, [FromQuery(Name = "title")] string? title, [FromQuery(Name = "startDateFrom")] DateOnly? startDateFrom, [FromQuery(Name = "startDateTo")] DateOnly? startDateTo, [FromQuery(Name = "endDateFrom")] DateOnly? endDateFrom, [FromQuery(Name = "endDateTo")] DateOnly? endDateTo, [FromQuery(Name = "createdBy")] long? createdBy)
     {
         try
         {
