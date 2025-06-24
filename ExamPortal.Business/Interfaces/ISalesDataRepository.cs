@@ -4,7 +4,10 @@ namespace ExamPortal.Business.Interfaces;
 
 public interface ISalesDataRepository
 {
-    Task <int>AddSalesDataBulkAsync(List<SalesData> data);
-    Task<HashSet<long>> GetExistingOrderIdsAsync(IEnumerable<long> orderIds);
+    Task<int> AddSalesDataBulkAsync(List<SalesData> data);
+    // Task<HashSet<long>> GetExistingOrderIdsAsync(IEnumerable<long> orderIds);
+
+    Task<HashSet<string>> GetExistingRowHashesAsync(IEnumerable<string> hashes);
+
 
 }

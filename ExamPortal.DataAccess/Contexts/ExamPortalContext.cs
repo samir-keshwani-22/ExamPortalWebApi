@@ -54,7 +54,7 @@ public partial class ExamPortalContext : DbContext
             entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
         });
 
-        modelBuilder.Entity<SalesData>().HasIndex(s => s.OrderId).IsUnique( );
+        modelBuilder.Entity<SalesData>().HasIndex(s => s.RowHash).IsUnique();
 
         modelBuilder.Entity<Answer>()
            .HasOne(a => a.SelectedOption)
@@ -67,6 +67,8 @@ public partial class ExamPortalContext : DbContext
             .HasOne(qo => qo.Question)
             .WithMany(q => q.Options)
             .HasForeignKey(qo => qo.QuestionId);
+
+
         OnModelCreatingPartial(modelBuilder);
     }
 

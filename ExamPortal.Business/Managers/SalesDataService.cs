@@ -18,21 +18,21 @@ public class SalesDataService : ISalesDataService
     }
     public async Task<(int successCount, int errorCount)> ProcessCsvUploadAsync(IFormFile file)
     {
-        int success = 0;
-        int error = 0;
+        int success = 0, error = 0;
+
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HeaderValidated = null,
             MissingFieldFound = null,
         };
-        
-        using var stream = new BufferedStream(file.OpenReadStream(), bufferSize: 8192); 
+
+        using var stream = new BufferedStream(file.OpenReadStream(), bufferSize: 8192);
         using var reader = new StreamReader(stream);
         using var csv = new CsvReader(reader, config);
 
         csv.Context.RegisterClassMap<SalesDataMap>();
 
-        var fileOrderIdSet = new HashSet<long>();
+        var seenHashes = new HashSet<string>();
         var buffer = new List<SalesData>();
         int batchSize = 5000;
 
@@ -40,20 +40,24 @@ public class SalesDataService : ISalesDataService
         {
             try
             {
-                if (fileOrderIdSet.Contains(record.OrderId))
+                var rowHash = ComputeRowHash(record);
+
+                if (seenHashes.Contains(rowHash))
                 {
                     error++;
                     continue;
                 }
-                fileOrderIdSet.Add(record.OrderId);
+
+                record.RowHash = rowHash;
+                seenHashes.Add(rowHash);
                 record.CreatedDate = DateTime.UtcNow;
                 buffer.Add(record);
 
                 if (buffer.Count >= batchSize)
                 {
-                    var batchSuccess = await InsertNonDuplicateBatch(buffer);
-                    success += batchSuccess;
-                    error += buffer.Count - batchSuccess;
+                    var inserted = await InsertUniqueHashBatch(buffer);
+                    success += inserted;
+                    error += buffer.Count - inserted;
                     buffer.Clear();
                 }
             }
@@ -63,13 +67,13 @@ public class SalesDataService : ISalesDataService
             }
         }
 
-        if (buffer.Count > 0)
+        if (buffer.Any())
         {
             try
             {
-                var batchSuccess = await InsertNonDuplicateBatch(buffer);
-                success += batchSuccess;
-                error += buffer.Count - batchSuccess;
+                var inserted = await InsertUniqueHashBatch(buffer);
+                success += inserted;
+                error += buffer.Count - inserted;
             }
             catch
             {
@@ -80,19 +84,30 @@ public class SalesDataService : ISalesDataService
         return (success, error);
     }
 
-    private async Task<int> InsertNonDuplicateBatch(List<SalesData> batch)
+    private async Task<int> InsertUniqueHashBatch(List<SalesData> batch)
     {
-        var orderIds = batch.Select(x => x.OrderId).Distinct();
-        var existingOrderIds = await _salesDataRepository.GetExistingOrderIdsAsync(orderIds);
+        var hashes = batch.Select(x => x.RowHash).Distinct();
+        var existingHashes = await _salesDataRepository.GetExistingRowHashesAsync(hashes);
 
         var uniqueRecords = batch
-            .Where(x => !existingOrderIds.Contains(x.OrderId))
+            .Where(x => !existingHashes.Contains(x.RowHash))
             .ToList();
 
         if (!uniqueRecords.Any())
             return 0;
 
         return await _salesDataRepository.AddSalesDataBulkAsync(uniqueRecords);
+    }
+
+    private string ComputeRowHash(SalesData s)
+    {
+        var rowString = $"{s.Region}|{s.Country}|{s.ItemType}|{s.SalesChannel}|{s.OrderPriority}|" +
+                        $"{s.OrderDate:O}|{s.ShipDate:O}|{s.UnitsSold}|{s.UnitPrice}|{s.UnitCost}|" +
+                        $"{s.TotalRevenue}|{s.TotalCost}|{s.TotalProfit}";
+
+        using var sha256 = System.Security.Cryptography.SHA256.Create();
+        var hashBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(rowString));
+        return Convert.ToBase64String(hashBytes);
     }
 
 }
