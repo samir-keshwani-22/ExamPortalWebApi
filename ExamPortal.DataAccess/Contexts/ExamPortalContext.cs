@@ -13,6 +13,9 @@ public partial class ExamPortalContext : DbContext
     {
     }
     public DbSet<Exam> Exams { get; set; }
+
+    public DbSet<SalesData> SalesData { get; set; }
+
     public DbSet<Question> Questions { get; set; }
     public DbSet<QuestionOption> QuestionOptions { get; set; }
     public DbSet<Answer> Answers { get; set; }
@@ -50,6 +53,8 @@ public partial class ExamPortalContext : DbContext
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
         });
+
+        modelBuilder.Entity<SalesData>().HasIndex(s => s.OrderId).IsUnique( );
 
         modelBuilder.Entity<Answer>()
            .HasOne(a => a.SelectedOption)

@@ -5,6 +5,7 @@ src/ExamPortal.API.Models/.gitignore
 src/ExamPortal.API.Models/Answer.cs
 src/ExamPortal.API.Models/AnswerCreate.cs
 src/ExamPortal.API.Models/AnswerUpdate.cs
+src/ExamPortal.API.Models/BatchUpload200Response.cs
 src/ExamPortal.API.Models/Converters/CustomEnumConverter.cs
 src/ExamPortal.API.Models/Error.cs
 src/ExamPortal.API.Models/Exam.cs

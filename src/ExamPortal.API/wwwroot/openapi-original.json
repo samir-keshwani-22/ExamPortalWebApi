@@ -1133,6 +1133,66 @@
         "summary" : "Update an existing answer",
         "tags" : [ "Answer" ]
       }
+    },
+    "/batch-upload" : {
+      "post" : {
+        "operationId" : "batchUpload",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/batchUpload_request"
+              }
+            }
+          },
+          "description" : "Upload a CSV file containing exam/question data (supports large files)",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/batchUpload_200_response"
+                }
+              }
+            },
+            "description" : "File processed successfully"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid input or file format"
+          },
+          "413" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "File too large"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Batch upload data by CSV file",
+        "tags" : [ "Exam" ]
+      }
     }
   },
   "components" : {
@@ -1823,6 +1883,34 @@
               "$ref" : "#/components/schemas/Answer"
             },
             "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "batchUpload_request" : {
+        "properties" : {
+          "file" : {
+            "description" : "CSV file with up to 10Lakh  records",
+            "format" : "binary",
+            "type" : "string"
+          }
+        },
+        "required" : [ "file" ],
+        "type" : "object"
+      },
+      "batchUpload_200_response" : {
+        "example" : {
+          "successCount" : 98000,
+          "errorCount" : 12
+        },
+        "properties" : {
+          "successCount" : {
+            "example" : 98000,
+            "type" : "integer"
+          },
+          "errorCount" : {
+            "example" : 12,
+            "type" : "integer"
           }
         },
         "type" : "object"

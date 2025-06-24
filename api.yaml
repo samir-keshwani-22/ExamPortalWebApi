@@ -720,6 +720,59 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /batch-upload:
+    post:
+      tags: [Exam]
+      summary: Batch upload data by CSV file
+      operationId: batchUpload
+      requestBody:
+        description: Upload a CSV file containing exam/question data 
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: CSV file with up to 10Lakh  records
+              required:
+                - file
+        required: true
+      responses:
+        "200":
+          description: File processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  successCount:
+                    type: integer
+                    example: 98000
+                  errorCount:
+                    type: integer
+                    example: 12
+
+        "400":
+          description: Invalid input or file format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "413":
+          description: File too large
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     paging:

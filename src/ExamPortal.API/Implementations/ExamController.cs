@@ -6,6 +6,7 @@ using ExamPortal.API.Controllers;
 using ExamPortal.API.Models;
 using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +22,7 @@ public class ExamController : ExamApiController
 
     private readonly IExamService _examService;
     private readonly ILogger<ExamController> _logger;
+    private readonly ISalesDataService _salesDataService;
 
     #endregion
 
@@ -31,8 +33,9 @@ public class ExamController : ExamApiController
     /// </summary>
     /// <param name="examService"></param>
     /// <param name="logger"></param>
-    public ExamController(IExamService examService, ILogger<ExamController> logger)
+    public ExamController(IExamService examService, ILogger<ExamController> logger, ISalesDataService salesDataService)
     {
+        _salesDataService = salesDataService;
         _examService = examService;
         _logger = logger;
     }
@@ -74,7 +77,8 @@ public class ExamController : ExamApiController
         }
     }
 
-    
+
+
 
     #endregion
 
@@ -216,6 +220,38 @@ public class ExamController : ExamApiController
         }
     }
 
+    #endregion
+
+    #region Batch Upload 
+
+    [RequestSizeLimit(524288000)]
+    [HttpPost]
+    [Route("/api/batch-upload")]
+    [Consumes("multipart/form-data")]
+    public override async Task<IActionResult> BatchUpload([Required] IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest(new Error { Code = "InvalidFile", Message = "File is empty or missing" });
+        try
+        {
+            var (successCount, errorCount) = await _salesDataService.ProcessCsvUploadAsync(file);
+
+            return Ok(new
+            {
+                successCount,
+                errorCount
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error processing batch upload");
+            return StatusCode(500, new Error
+            {
+                Code = "InternalServerError",
+                Message = "Error processing CSV upload"
+            });
+        }
+    }
     #endregion
 
     #endregion

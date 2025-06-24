@@ -1,0 +1,10 @@
+using ExamPortal.API.Models.Entities;
+
+namespace ExamPortal.Business.Interfaces;
+
+public interface ISalesDataRepository
+{
+    Task <int>AddSalesDataBulkAsync(List<SalesData> data);
+    Task<HashSet<long>> GetExistingOrderIdsAsync(IEnumerable<long> orderIds);
+
+}

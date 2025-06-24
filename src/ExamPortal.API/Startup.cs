@@ -71,6 +71,7 @@ namespace ExamPortal.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<ISalesDataService, SalesDataService>();
             services.AddScoped<IQuestionOptionService, QuestionOptionService>();
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IAnswerService, AnswerService>();
@@ -78,6 +79,7 @@ namespace ExamPortal.API
             services.AddScoped<IQuestionOptionRepository, QuestionOptionRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<ISalesDataRepository, SalesDataRepository>();
 
             // Add framework services.
             services

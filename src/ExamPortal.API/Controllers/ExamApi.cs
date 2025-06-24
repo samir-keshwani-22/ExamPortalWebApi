@@ -49,6 +49,25 @@ namespace ExamPortal.API.Controllers
         public abstract Task<IActionResult> AddExam([FromBody]ExamCreate examCreate);
 
         /// <summary>
+        /// Batch upload data by CSV file
+        /// </summary>
+        /// <param name="file">CSV file with up to 10Lakh  records</param>
+        /// <response code="200">File processed successfully</response>
+        /// <response code="400">Invalid input or file format</response>
+        /// <response code="413">File too large</response>
+        /// <response code="0">Unexpected error</response>
+        [HttpPost]
+        [Route("/api/batch-upload")]
+        [Consumes("multipart/form-data")]
+        [ValidateModelState]
+        [SwaggerOperation("BatchUpload")]
+        [SwaggerResponse(statusCode: 200, type: typeof(BatchUpload200Response), description: "File processed successfully")]
+        [SwaggerResponse(statusCode: 400, type: typeof(Error), description: "Invalid input or file format")]
+        [SwaggerResponse(statusCode: 413, type: typeof(Error), description: "File too large")]
+        [SwaggerResponse(statusCode: 0, type: typeof(Error), description: "Unexpected error")]
+        public abstract Task<IActionResult> BatchUpload([Required()]IFormFile file);
+
+        /// <summary>
         /// Delete an exam
         /// </summary>
         /// <param name="id"></param>
