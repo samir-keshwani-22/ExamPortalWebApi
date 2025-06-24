@@ -24,14 +24,17 @@ public class SalesDataService : ISalesDataService
         {
             HeaderValidated = null,
             MissingFieldFound = null,
-        }; 
-        using var stream = file.OpenReadStream();
+        };
+        
+        using var stream = new BufferedStream(file.OpenReadStream(), bufferSize: 8192); 
         using var reader = new StreamReader(stream);
         using var csv = new CsvReader(reader, config);
-        var fileOrderIdSet = new HashSet<long>();
+
         csv.Context.RegisterClassMap<SalesDataMap>();
+
+        var fileOrderIdSet = new HashSet<long>();
         var buffer = new List<SalesData>();
-        int batchSize = 20000;
+        int batchSize = 5000;
 
         await foreach (var record in csv.GetRecordsAsync<SalesData>())
         {
@@ -76,7 +79,7 @@ public class SalesDataService : ISalesDataService
 
         return (success, error);
     }
- 
+
     private async Task<int> InsertNonDuplicateBatch(List<SalesData> batch)
     {
         var orderIds = batch.Select(x => x.OrderId).Distinct();
