@@ -243,7 +243,5 @@ public class AnswerControllerTests
         var error = Assert.IsType<Error>(objectResult.Value);
         Assert.Equal("InternalServerError", error.Code);
         Assert.Equal("Internal server error", error.Message);
-    }
-
-    
+    } 
 }
