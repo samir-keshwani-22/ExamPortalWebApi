@@ -20,7 +20,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using ExamPortal.API.Authentication;
 using ExamPortal.API.Filters;
 using ExamPortal.API.OpenApi;
 using ExamPortal.API.Formatters;
@@ -29,7 +28,6 @@ using Microsoft.EntityFrameworkCore;
 using ExamPortal.Business.Interfaces;
 using ExamPortal.Business.Managers;
 using ExamPortal.DataAccess.Repositories;
-using AutoMapper;
 
 namespace ExamPortal.API
 {
