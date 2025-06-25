@@ -33,6 +33,7 @@ public class ExamController : ExamApiController
     /// </summary>
     /// <param name="examService"></param>
     /// <param name="logger"></param>
+    /// <param name="salesDataService"></param>
     public ExamController(IExamService examService, ILogger<ExamController> logger, ISalesDataService salesDataService)
     {
         _salesDataService = salesDataService;
@@ -222,24 +223,38 @@ public class ExamController : ExamApiController
 
     #endregion
 
-    #region Batch Upload 
+    #region Batch Upload
 
+    /// <summary>
+    /// Batch upload feature 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
     [RequestSizeLimit(524288000)]
     [HttpPost]
     [Route("/api/batch-upload")]
     [Consumes("multipart/form-data")]
     public override async Task<IActionResult> BatchUpload([Required] IFormFile file)
     {
+        var cancellationToken = HttpContext.RequestAborted;
+
         if (file == null || file.Length == 0)
             return BadRequest(new Error { Code = "InvalidFile", Message = "File is empty or missing" });
         try
         {
-            var (successCount, errorCount) = await _salesDataService.ProcessCsvUploadAsync(file);
-
+            var (successCount, errorCount) = await _salesDataService.ProcessCsvUploadAsync(file, cancellationToken);
             return Ok(new
             {
                 successCount,
                 errorCount
+            });
+        }
+        catch (OperationCanceledException)
+        {
+            return StatusCode(499, new Error
+            {
+                Code = "ClientClosedRequest",
+                Message = "The request was canceled by the client."
             });
         }
         catch (Exception ex)

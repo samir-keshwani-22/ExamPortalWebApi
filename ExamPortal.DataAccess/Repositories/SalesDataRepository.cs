@@ -14,7 +14,7 @@ public class SalesDataRepository : ISalesDataRepository
         _context = context;
     }
 
-    public async Task<int> AddSalesDataBulkAsync(List<SalesData> data)
+    public async Task<int> AddSalesDataBulkAsync(List<SalesData> data, CancellationToken cancellationToken)
     {
         _context.ChangeTracker.AutoDetectChangesEnabled = false;
         int insertedCount = 0;
@@ -35,13 +35,12 @@ public class SalesDataRepository : ISalesDataRepository
         return insertedCount;
     }
 
-    public async Task<HashSet<string>> GetExistingRowHashesAsync(IEnumerable<string> hashes)
+    public async Task<HashSet<string>> GetExistingRowHashesAsync(IEnumerable<string> hashes, CancellationToken cancellationToken)
     {
         var list = await _context.SalesData
         .Where(sd => hashes.Contains(sd.RowHash))
         .Select(sd => sd.RowHash)
-        .ToListAsync();
-
+        .ToListAsync(cancellationToken);
         return list.ToHashSet();
     }
 
