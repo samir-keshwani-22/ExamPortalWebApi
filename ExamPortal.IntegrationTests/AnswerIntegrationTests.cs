@@ -41,7 +41,9 @@ namespace ExamPortal.IntegrationTests
         //         SelectedOptionId = 2
         //     };
         //     var response = await _client.PostAsJsonAsync("/api/answers", answerCreate);
-        //     response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+     
+
+        //     response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         // }
 
         [Fact]
