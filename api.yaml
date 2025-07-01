@@ -215,6 +215,44 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /exams/rule-check:
+    post:
+      tags:
+        - Exam
+      summary: Checking for the  validation of json
+      operationId: checkRule
+      requestBody:
+        description: Enter the data to check
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RuleEvaluatorRequest"
+      responses:
+        "200":
+          description: "Rule evaluation result"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        "400":
+          description: "Invalid input try above the threshold for the queries entries"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /questions:
     post:
       tags: [Question]
@@ -726,7 +764,7 @@ paths:
       summary: Batch upload data by CSV file
       operationId: batchUpload
       requestBody:
-        description: Upload a CSV file containing exam/question data 
+        description: Upload a CSV file containing exam/question data
         content:
           multipart/form-data:
             schema:
@@ -1081,3 +1119,33 @@ components:
           type: string
         message:
           type: string
+    RuleEvaluatorRequest:
+      type: object
+      required:
+        - triggers
+        - queries
+        - result
+      properties:
+        triggers:
+          type: string
+          example: "#{amount} >= {5000}"
+        queries:
+          type: array
+          minItems: 2
+          items:
+            $ref: "#/components/schemas/Query"
+        result:
+          type: string
+          example: "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150"
+    Query:
+      type: object
+      required:
+        - variable_name
+        - pseudo_query
+      properties:
+        variable_name:
+          type: string
+          example: "Q1_count, Q1_sum"
+        pseudo_query:
+          type: string
+          example: "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 30 day FROM 7 day before transaction date\nWHERE #{amount} >= {5000}"

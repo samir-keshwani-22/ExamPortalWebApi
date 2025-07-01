@@ -6,6 +6,7 @@ src/ExamPortal.API.Models/Answer.cs
 src/ExamPortal.API.Models/AnswerCreate.cs
 src/ExamPortal.API.Models/AnswerUpdate.cs
 src/ExamPortal.API.Models/BatchUpload200Response.cs
+src/ExamPortal.API.Models/CheckRule200Response.cs
 src/ExamPortal.API.Models/Converters/CustomEnumConverter.cs
 src/ExamPortal.API.Models/Error.cs
 src/ExamPortal.API.Models/Exam.cs
@@ -16,12 +17,14 @@ src/ExamPortal.API.Models/ListExams200Response.cs
 src/ExamPortal.API.Models/ListQuestionOptions200Response.cs
 src/ExamPortal.API.Models/ListQuestions200Response.cs
 src/ExamPortal.API.Models/Paging.cs
+src/ExamPortal.API.Models/Query.cs
 src/ExamPortal.API.Models/Question.cs
 src/ExamPortal.API.Models/QuestionCreate.cs
 src/ExamPortal.API.Models/QuestionOption.cs
 src/ExamPortal.API.Models/QuestionOptionCreate.cs
 src/ExamPortal.API.Models/QuestionOptionUpdate.cs
 src/ExamPortal.API.Models/QuestionUpdate.cs
+src/ExamPortal.API.Models/RuleEvaluatorRequest.cs
 src/ExamPortal.API/.gitignore
 src/ExamPortal.API/Attributes/ValidateModelStateAttribute.cs
 src/ExamPortal.API/Authentication/ApiAuthentication.cs

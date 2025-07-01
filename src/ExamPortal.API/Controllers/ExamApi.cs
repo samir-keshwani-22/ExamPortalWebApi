@@ -68,6 +68,23 @@ namespace ExamPortal.API.Controllers
         public abstract Task<IActionResult> BatchUpload([Required()]IFormFile file);
 
         /// <summary>
+        /// Checking for the  validation of json
+        /// </summary>
+        /// <param name="ruleEvaluatorRequest">Enter the data to check</param>
+        /// <response code="200">Rule evaluation result</response>
+        /// <response code="400">Invalid input try above the threshold for the queries entries</response>
+        /// <response code="0">Unexpected error</response>
+        [HttpPost]
+        [Route("/api/exams/rule-check")]
+        [Consumes("application/json")]
+        [ValidateModelState]
+        [SwaggerOperation("CheckRule")]
+        [SwaggerResponse(statusCode: 200, type: typeof(CheckRule200Response), description: "Rule evaluation result")]
+        [SwaggerResponse(statusCode: 400, type: typeof(Error), description: "Invalid input try above the threshold for the queries entries")]
+        [SwaggerResponse(statusCode: 0, type: typeof(Error), description: "Unexpected error")]
+        public abstract Task<IActionResult> CheckRule([FromBody]RuleEvaluatorRequest ruleEvaluatorRequest);
+
+        /// <summary>
         /// Delete an exam
         /// </summary>
         /// <param name="id"></param>

@@ -14,15 +14,15 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         {
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<ExamPortalContext>));
-            // if (descriptor != null)
-            // {
-            //     services.Remove(descriptor);
-            // }
+            if (descriptor != null)
+            {
+                services.Remove(descriptor);
+            }
 
-            // services.AddDbContext<ExamPortalContext>(options =>
-            // {
-            //     options.UseInMemoryDatabase("InMemoryTestDb");
-            // });
+            services.AddDbContext<ExamPortalContext>(options =>
+            {
+                options.UseInMemoryDatabase("InMemoryTestDb");
+            });
 
             var sp = services.BuildServiceProvider();
 

@@ -14,12 +14,14 @@ public class ExamControllerTests
     private readonly Mock<IExamService> _mockService;
     private readonly Mock<ILogger<ExamController>> _mockLogger;
     private readonly ExamController _controller;
+    private readonly Mock<ISalesDataService> _mockSalesService;
 
     public ExamControllerTests()
     {
         _mockService = new Mock<IExamService>();
         _mockLogger = new Mock<ILogger<ExamController>>();
-        _controller = new ExamController(_mockService.Object, _mockLogger.Object);
+        _mockSalesService = new Mock<ISalesDataService>();
+        _controller = new ExamController(_mockService.Object, _mockLogger.Object, _mockSalesService.Object);
         _controller.ControllerContext = new ControllerContext();
     }
 

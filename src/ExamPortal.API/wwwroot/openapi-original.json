@@ -345,6 +345,56 @@
         "tags" : [ "Exam" ]
       }
     },
+    "/exams/rule-check" : {
+      "post" : {
+        "operationId" : "checkRule",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RuleEvaluatorRequest"
+              }
+            }
+          },
+          "description" : "Enter the data to check",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/checkRule_200_response"
+                }
+              }
+            },
+            "description" : "Rule evaluation result"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid input try above the threshold for the queries entries"
+          },
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Unexpected error"
+          }
+        },
+        "summary" : "Checking for the  validation of json",
+        "tags" : [ "Exam" ]
+      }
+    },
     "/questions" : {
       "get" : {
         "operationId" : "listQuestions",
@@ -1145,7 +1195,7 @@
               }
             }
           },
-          "description" : "Upload a CSV file containing exam/question data (supports large files)",
+          "description" : "Upload a CSV file containing exam/question data",
           "required" : true
         },
         "responses" : {
@@ -1711,6 +1761,56 @@
         "required" : [ "code", "message" ],
         "type" : "object"
       },
+      "RuleEvaluatorRequest" : {
+        "example" : {
+          "result" : "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+          "triggers" : "#{amount} >= {5000}",
+          "queries" : [ {
+            "variable_name" : "Q1_count, Q1_sum",
+            "pseudo_query" : "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 30 day FROM 7 day before transaction date\nWHERE #{amount} >= {5000}"
+          }, {
+            "variable_name" : "Q1_count, Q1_sum",
+            "pseudo_query" : "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 30 day FROM 7 day before transaction date\nWHERE #{amount} >= {5000}"
+          } ]
+        },
+        "properties" : {
+          "triggers" : {
+            "example" : "#{amount} >= {5000}",
+            "type" : "string"
+          },
+          "queries" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Query"
+            },
+            "minItems" : 2,
+            "type" : "array"
+          },
+          "result" : {
+            "example" : "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            "type" : "string"
+          }
+        },
+        "required" : [ "queries", "result", "triggers" ],
+        "type" : "object"
+      },
+      "Query" : {
+        "example" : {
+          "variable_name" : "Q1_count, Q1_sum",
+          "pseudo_query" : "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 30 day FROM 7 day before transaction date\nWHERE #{amount} >= {5000}"
+        },
+        "properties" : {
+          "variable_name" : {
+            "example" : "Q1_count, Q1_sum",
+            "type" : "string"
+          },
+          "pseudo_query" : {
+            "example" : "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 30 day FROM 7 day before transaction date\nWHERE #{amount} >= {5000}",
+            "type" : "string"
+          }
+        },
+        "required" : [ "pseudo_query", "variable_name" ],
+        "type" : "object"
+      },
       "listExams_200_response" : {
         "example" : {
           "exams" : [ {
@@ -1760,6 +1860,21 @@
               "$ref" : "#/components/schemas/Exam"
             },
             "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "checkRule_200_response" : {
+        "example" : {
+          "success" : true,
+          "message" : "message"
+        },
+        "properties" : {
+          "success" : {
+            "type" : "boolean"
+          },
+          "message" : {
+            "type" : "string"
           }
         },
         "type" : "object"

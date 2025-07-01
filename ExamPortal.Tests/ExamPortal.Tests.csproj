@@ -26,6 +26,5 @@
     <ProjectReference Include="..\src\ExamPortal.API\ExamPortal.API.csproj" />
     <ProjectReference Include="..\src\ExamPortal.API.Models\ExamPortal.API.Models.csproj" />
     <ProjectReference Include="..\ExamPortal.Business\ExamPortal.Business.csproj" />
-    <ProjectReference Include="..\ExamPortal.DataAccess\ExamPortal.DataAccess.csproj" />
   </ItemGroup>
 </Project>

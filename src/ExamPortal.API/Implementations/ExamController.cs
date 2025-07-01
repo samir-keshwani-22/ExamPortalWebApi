@@ -269,5 +269,32 @@ public class ExamController : ExamApiController
     }
     #endregion
 
+
+    /// <summary>
+    /// Check for a threshold value 
+    /// </summary>
+    /// <param name="ruleEvaluatorRequest">Rule Checker</param> 
+    [HttpPost]
+    [Route("/api/exams/rule-check")]
+    [Consumes("application/json")]
+    public override async Task<IActionResult> CheckRule([FromBody] RuleEvaluatorRequest ruleEvaluatorRequest)
+    {
+            var is = 
+            var is = 
+        if (ruleEvaluatorRequest.Queries.Count > 2)
+        {
+            return BadRequest(new Error
+            {
+                Code = "InvalidInput",
+                Message = "The queries array must have less than  2 items."
+            });
+        }
+        return Ok(new
+        {
+            success = true,
+            message = "Valid input ",
+        });
+    }
+
     #endregion
 }
