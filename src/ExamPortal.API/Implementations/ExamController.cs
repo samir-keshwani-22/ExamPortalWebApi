@@ -6,6 +6,7 @@ using ExamPortal.API.Controllers;
 using ExamPortal.API.Models;
 using ExamPortal.API.Models.Common;
 using ExamPortal.Business.Interfaces;
+using ExamPortal.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,8 @@ public class ExamController : ExamApiController
     private readonly ILogger<ExamController> _logger;
     private readonly ISalesDataService _salesDataService;
 
+    private readonly IRuleValidationService _ruleValidationService;
+
     #endregion
 
     #region Constructor
@@ -34,11 +37,13 @@ public class ExamController : ExamApiController
     /// <param name="examService"></param>
     /// <param name="logger"></param>
     /// <param name="salesDataService"></param>
-    public ExamController(IExamService examService, ILogger<ExamController> logger, ISalesDataService salesDataService)
+    /// <param name="ruleValidationService"></param>
+    public ExamController(IExamService examService, ILogger<ExamController> logger, ISalesDataService salesDataService, IRuleValidationService ruleValidationService)
     {
         _salesDataService = salesDataService;
         _examService = examService;
         _logger = logger;
+        _ruleValidationService = ruleValidationService;
     }
 
     #endregion
@@ -279,21 +284,16 @@ public class ExamController : ExamApiController
     [Consumes("application/json")]
     public override async Task<IActionResult> CheckRule([FromBody] RuleEvaluatorRequest ruleEvaluatorRequest)
     {
-            var is = 
-            var is = 
-        if (ruleEvaluatorRequest.Queries.Count > 2)
+        try
         {
-            return BadRequest(new Error
-            {
-                Code = "InvalidInput",
-                Message = "The queries array must have less than  2 items."
-            });
+            _ruleValidationService.CheckThreshold(ruleEvaluatorRequest);
+            _ruleValidationService.ValidateRules(ruleEvaluatorRequest); 
+            return Ok(new { success = true, message = "Valid input" });
         }
-        return Ok(new
+        catch (RuleValidationException ex)
         {
-            success = true,
-            message = "Valid input ",
-        });
+            return BadRequest(new Error { Code = "InvalidInput", Message = ex.Message });
+        }
     }
 
     #endregion

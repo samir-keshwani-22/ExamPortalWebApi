@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\ExamPortal.API.Models\ExamPortal.API.Models.csproj" />
+    <ProjectReference Include="..\ExamPortal.Common\ExamPortal.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="K4os.Hash.xxHash" Version="1.0.8" />

@@ -69,6 +69,7 @@ namespace ExamPortal.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<IRuleValidationService, RuleValidationService>();
             services.AddScoped<ISalesDataService, SalesDataService>();
             services.AddScoped<IQuestionOptionService, QuestionOptionService>();
             services.AddScoped<IQuestionService, QuestionService>();

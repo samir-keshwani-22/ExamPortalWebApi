@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamPortal.Tests", "ExamPor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamPortal.IntegrationTests", "ExamPortal.IntegrationTests\ExamPortal.IntegrationTests.csproj", "{A87D2E41-F6E4-46EE-BEDC-61A3026774A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamPortal.Common", "ExamPortal.Common\ExamPortal.Common.csproj", "{199498A6-8A25-4154-BB67-5CCEB5EDB537}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A87D2E41-F6E4-46EE-BEDC-61A3026774A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A87D2E41-F6E4-46EE-BEDC-61A3026774A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A87D2E41-F6E4-46EE-BEDC-61A3026774A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199498A6-8A25-4154-BB67-5CCEB5EDB537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199498A6-8A25-4154-BB67-5CCEB5EDB537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199498A6-8A25-4154-BB67-5CCEB5EDB537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199498A6-8A25-4154-BB67-5CCEB5EDB537}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
