@@ -15,13 +15,15 @@ public class ExamControllerTests
     private readonly Mock<ILogger<ExamController>> _mockLogger;
     private readonly ExamController _controller;
     private readonly Mock<ISalesDataService> _mockSalesService;
+    private readonly Mock<IRuleValidationService> _mockRuleValidationService;
 
     public ExamControllerTests()
     {
         _mockService = new Mock<IExamService>();
         _mockLogger = new Mock<ILogger<ExamController>>();
         _mockSalesService = new Mock<ISalesDataService>();
-        _controller = new ExamController(_mockService.Object, _mockLogger.Object, _mockSalesService.Object);
+        _mockRuleValidationService = new Mock<IRuleValidationService>();
+        _controller = new ExamController(_mockService.Object, _mockLogger.Object, _mockSalesService.Object, _mockRuleValidationService.Object);
         _controller.ControllerContext = new ControllerContext();
     }
 

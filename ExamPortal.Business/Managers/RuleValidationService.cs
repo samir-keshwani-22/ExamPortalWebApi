@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Antlr4.Runtime;
 using ExamPortal.API.Models;
 using ExamPortal.Business.AntlrGrammar.Helpers;
@@ -18,20 +19,35 @@ public class RuleValidationService : IRuleValidationService
 
     public void ValidateRules(RuleEvaluatorRequest request)
     {
-        if (!string.IsNullOrWhiteSpace(request.Triggers))
+        bool hasQueries = request.Queries != null && request.Queries.Any();
+        bool hasTriggers = !string.IsNullOrWhiteSpace(request.Triggers);
+
+        if (!hasQueries && !hasTriggers)
         {
-            ValidateWithQueryGrammar(request.Triggers, "triggers");
-        }
-        foreach (var q in request.Queries)
-        {
-            ValidateWithQueryGrammar(q.PseudoQuery, $"queries.pseudo_query ({q.VariableName})");
+            throw new RuleValidationException($"At least one of queries or trigger needs to be present");
         }
 
+        if (hasTriggers)
+        {
+            // for validation of trigger 
+            ValidateWithQueryGrammar(request.Triggers, "triggers");
+        }
+        if (hasQueries)
+        {
+            foreach (var q in request.Queries!)
+            {
+                // for validation of pseudo_query validation 
+                ValidateWithQueryGrammar(q.PseudoQuery, $"queries.pseudo_query ({q.VariableName})");
+            }
+        }
+        // for validation of the result 
         ValidateWithResultGrammar(request.Result, "result");
+        // for checking the unused variable 
+        CheckVariablesInResultAreDeclared(request);
 
     }
 
-    private void ValidateWithQueryGrammar(string input, string field)
+    private static void ValidateWithQueryGrammar(string input, string field)
     {
         var errorListener = new ErrorListener();
         var inputStream = new AntlrInputStream(input);
@@ -49,7 +65,7 @@ public class RuleValidationService : IRuleValidationService
             throw new RuleValidationException($"Invalid grammar in {field}: {errorListener.ErrorMessage}");
         }
     }
-    private void ValidateWithResultGrammar(string input, string field)
+    private static void ValidateWithResultGrammar(string input, string field)
     {
         var errorListener = new ErrorListener();
         var inputStream = new AntlrInputStream(input);
@@ -68,5 +84,31 @@ public class RuleValidationService : IRuleValidationService
         }
     }
 
+    private static void CheckVariablesInResultAreDeclared(RuleEvaluatorRequest request)
+    {
+        var declaredVariables = request.Queries
+          .SelectMany(q => q.VariableName.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+          .Select(x => x.Trim())
+          .ToHashSet(StringComparer.OrdinalIgnoreCase);
+ 
+        var usedVariables = GetIdentifierFromResult(request.Result);
+
+        var undeclared = usedVariables
+            .Where(v => !declaredVariables.Contains(v))
+            .ToList();
+
+        if (undeclared.Any())
+        {
+            throw new RuleValidationException(
+                $"Variables used in result but not declared in queries: {string.Join(", ", undeclared)}"
+            );
+        }
+    }
+
+    private static IEnumerable<string> GetIdentifierFromResult(string expr)
+    {
+        var matches = Regex.Matches(expr, @"Q\d+_(count|sum)");
+        return matches.Select(m => m.Value).Distinct();
+    }
 
 }

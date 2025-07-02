@@ -275,8 +275,9 @@ public class ExamController : ExamApiController
     #endregion
 
 
+#pragma warning disable CS1998
     /// <summary>
-    /// Check for a threshold value 
+    /// Check for a rules value 
     /// </summary>
     /// <param name="ruleEvaluatorRequest">Rule Checker</param> 
     [HttpPost]
@@ -287,7 +288,7 @@ public class ExamController : ExamApiController
         try
         {
             _ruleValidationService.CheckThreshold(ruleEvaluatorRequest);
-            _ruleValidationService.ValidateRules(ruleEvaluatorRequest); 
+            _ruleValidationService.ValidateRules(ruleEvaluatorRequest);
             return Ok(new { success = true, message = "Valid input" });
         }
         catch (RuleValidationException ex)
@@ -295,6 +296,7 @@ public class ExamController : ExamApiController
             return BadRequest(new Error { Code = "InvalidInput", Message = ex.Message });
         }
     }
+#pragma warning restore CS1998
 
     #endregion
 }

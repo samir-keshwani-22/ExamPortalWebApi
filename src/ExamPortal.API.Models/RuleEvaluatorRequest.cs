@@ -30,7 +30,6 @@ namespace ExamPortal.API.Models
         /// Gets or Sets Triggers
         /// </summary>
         /* <example>#{amount} &gt;&#x3D; {5000}</example> */
-        [Required]
         [DataMember(Name="triggers", EmitDefaultValue=false)]
         public string Triggers { get; set; }
 
@@ -44,7 +43,7 @@ namespace ExamPortal.API.Models
         /// <summary>
         /// Gets or Sets Result
         /// </summary>
-        /* <example>Q2_count &gt; 0 AND Q1_count &gt;&#x3D; 3 AND (Q1_count/Q2_count)*100 &gt;&#x3D; 150 AND (Q1_sum/Q2_sum)*100 &gt;&#x3D; 150</example> */
+        /* <example>Q1_count &gt; 0 AND Q1_sum &gt;&#x3D; 3 AND (Q1_sum/Q1_count)*100 &gt;&#x3D; 150 AND (Q1_count/Q1_sum)*100 &gt;&#x3D; 150</example> */
         [Required]
         [DataMember(Name="result", EmitDefaultValue=false)]
         public string Result { get; set; }

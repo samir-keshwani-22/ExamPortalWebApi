@@ -1122,7 +1122,6 @@ components:
     RuleEvaluatorRequest:
       type: object
       required:
-        - triggers
         - queries
         - result
       properties:
@@ -1136,7 +1135,7 @@ components:
             $ref: "#/components/schemas/Query"
         result:
           type: string
-          example: "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150"
+          example: "Q1_count > 0 AND Q1_sum >= 3 AND (Q1_sum/Q1_count)*100 >= 150 AND (Q1_count/Q1_sum)*100 >= 150"
     Query:
       type: object
       required:

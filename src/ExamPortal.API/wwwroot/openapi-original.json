@@ -1763,7 +1763,7 @@
       },
       "RuleEvaluatorRequest" : {
         "example" : {
-          "result" : "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+          "result" : "Q1_count > 0 AND Q1_sum >= 3 AND (Q1_sum/Q1_count)*100 >= 150 AND (Q1_count/Q1_sum)*100 >= 150",
           "triggers" : "#{amount} >= {5000}",
           "queries" : [ {
             "variable_name" : "Q1_count, Q1_sum",
@@ -1786,11 +1786,11 @@
             "type" : "array"
           },
           "result" : {
-            "example" : "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            "example" : "Q1_count > 0 AND Q1_sum >= 3 AND (Q1_sum/Q1_count)*100 >= 150 AND (Q1_count/Q1_sum)*100 >= 150",
             "type" : "string"
           }
         },
-        "required" : [ "queries", "result", "triggers" ],
+        "required" : [ "queries", "result" ],
         "type" : "object"
       },
       "Query" : {
