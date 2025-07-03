@@ -92,7 +92,6 @@ STAR: '*';
 
 TIMEUNIT: 'day' | 'minute' | 'hour' | 'month' | 'year';
 
- 
 DATE:
 	'{' DIGIT DIGIT DIGIT DIGIT '-' DIGIT DIGIT '-' DIGIT DIGIT '}';
 
@@ -113,3 +112,5 @@ fragment IDENTIFIER_CHAR: [a-zA-Z_] [a-zA-Z0-9_,.]*;
 fragment VALUE_CHAR: ~[{}];
 
 WS: [ \t\r\n]+ -> skip;
+
+INVALID: .;

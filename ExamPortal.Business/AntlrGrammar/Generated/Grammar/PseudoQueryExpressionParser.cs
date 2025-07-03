@@ -40,7 +40,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		COUNT=10, SUM=11, IN=12, NOT_IN=13, TRANSACTION_DATE=14, SOURCE_TOKEN=15, 
 		DEST_TOKEN=16, EQ=17, NE=18, GT=19, LT=20, GE=21, LE=22, LPAREN=23, RPAREN=24, 
 		COMMA=25, STAR=26, TIMEUNIT=27, DATE=28, IDENTIFIER=29, VALUEIDENTIFIER=30, 
-		EMPTY=31, INT=32, WS=33;
+		EMPTY=31, INT=32, WS=33, INVALID=34;
 	public const int
 		RULE_start = 0, RULE_query = 1, RULE_aggregateQuery = 2, RULE_aggregateList = 3, 
 		RULE_aggregate = 4, RULE_aggregateFunction = 5, RULE_timeFilter = 6, RULE_timeReference = 7, 
@@ -63,7 +63,8 @@ public partial class PseudoQueryExpressionParser : Parser {
 		null, "QUERY", "FROM", "DATA", "WHERE", "AND", "OR", "IS", "PAST", "BEFORE", 
 		"COUNT", "SUM", "IN", "NOT_IN", "TRANSACTION_DATE", "SOURCE_TOKEN", "DEST_TOKEN", 
 		"EQ", "NE", "GT", "LT", "GE", "LE", "LPAREN", "RPAREN", "COMMA", "STAR", 
-		"TIMEUNIT", "DATE", "IDENTIFIER", "VALUEIDENTIFIER", "EMPTY", "INT", "WS"
+		"TIMEUNIT", "DATE", "IDENTIFIER", "VALUEIDENTIFIER", "EMPTY", "INT", "WS", 
+		"INVALID"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -1199,7 +1200,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,33,123,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,34,123,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,3,1,43,8,1,1,2,1,2,
 		1,2,1,2,1,2,3,2,50,8,2,1,2,3,2,53,8,2,1,3,1,3,1,3,5,3,58,8,3,10,3,12,3,

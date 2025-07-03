@@ -20,7 +20,7 @@ public class PseudoQueryExpressionParser extends Parser {
 		COUNT=10, SUM=11, IN=12, NOT_IN=13, TRANSACTION_DATE=14, SOURCE_TOKEN=15, 
 		DEST_TOKEN=16, EQ=17, NE=18, GT=19, LT=20, GE=21, LE=22, LPAREN=23, RPAREN=24, 
 		COMMA=25, STAR=26, TIMEUNIT=27, DATE=28, IDENTIFIER=29, VALUEIDENTIFIER=30, 
-		EMPTY=31, INT=32, WS=33;
+		EMPTY=31, INT=32, WS=33, INVALID=34;
 	public static final int
 		RULE_start = 0, RULE_query = 1, RULE_aggregateQuery = 2, RULE_aggregateList = 3, 
 		RULE_aggregate = 4, RULE_aggregateFunction = 5, RULE_timeFilter = 6, RULE_timeReference = 7, 
@@ -51,7 +51,7 @@ public class PseudoQueryExpressionParser extends Parser {
 			"COUNT", "SUM", "IN", "NOT_IN", "TRANSACTION_DATE", "SOURCE_TOKEN", "DEST_TOKEN", 
 			"EQ", "NE", "GT", "LT", "GE", "LE", "LPAREN", "RPAREN", "COMMA", "STAR", 
 			"TIMEUNIT", "DATE", "IDENTIFIER", "VALUEIDENTIFIER", "EMPTY", "INT", 
-			"WS"
+			"WS", "INVALID"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -924,15 +924,15 @@ public class PseudoQueryExpressionParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001!{\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002\u0002"+
-		"\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002\u0005"+
-		"\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002\b\u0007"+
-		"\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002\f\u0007"+
-		"\f\u0002\r\u0007\r\u0002\u000e\u0007\u000e\u0002\u000f\u0007\u000f\u0002"+
-		"\u0010\u0007\u0010\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001+\b\u0001\u0001"+
-		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0003\u00022\b"+
-		"\u0002\u0001\u0002\u0003\u00025\b\u0002\u0001\u0003\u0001\u0003\u0001"+
+		"\u0004\u0001\"{\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
+		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
+		"\f\u0007\f\u0002\r\u0007\r\u0002\u000e\u0007\u000e\u0002\u000f\u0007\u000f"+
+		"\u0002\u0010\u0007\u0010\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001+\b\u0001"+
+		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0003\u0002"+
+		"2\b\u0002\u0001\u0002\u0003\u00025\b\u0002\u0001\u0003\u0001\u0003\u0001"+
 		"\u0003\u0005\u0003:\b\u0003\n\u0003\f\u0003=\t\u0003\u0001\u0004\u0001"+
 		"\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001"+
 		"\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001"+
