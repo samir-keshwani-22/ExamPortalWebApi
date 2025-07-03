@@ -89,9 +89,9 @@ public class RuleValidationService : IRuleValidationService
         var declaredVariables = request.Queries
           .SelectMany(q => q.VariableName.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
           .Select(x => x.Trim())
-          .ToHashSet(StringComparer.OrdinalIgnoreCase);
- 
-        var usedVariables = GetIdentifierFromResult(request.Result);
+          .ToHashSet();
+
+        var usedVariables = GetIdentifiersFromResult(request.Result);
 
         var undeclared = usedVariables
             .Where(v => !declaredVariables.Contains(v))
@@ -105,10 +105,19 @@ public class RuleValidationService : IRuleValidationService
         }
     }
 
-    private static IEnumerable<string> GetIdentifierFromResult(string expr)
+    private static IEnumerable<string> GetIdentifiersFromResult(string expr)
     {
-        var matches = Regex.Matches(expr, @"Q\d+_(count|sum)");
-        return matches.Select(m => m.Value).Distinct();
+        var inputStream = new AntlrInputStream(expr);
+        var lexer = new PseudoResultExpressionLexer(inputStream);
+        var tokenStream = new CommonTokenStream(lexer);
+        var parser = new PseudoResultExpressionParser(tokenStream);
+
+        var tree = parser.start();
+
+        var visitor = new ResultIdentifierCollectorVisitor();
+        visitor.Visit(tree);
+
+        return visitor.Identifiers;
     }
 
 }
