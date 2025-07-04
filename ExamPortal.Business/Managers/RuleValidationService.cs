@@ -30,7 +30,7 @@ public class RuleValidationService : IRuleValidationService
         if (hasTriggers)
         {
             // for validation of trigger 
-            ValidateWithQueryGrammar(request.Triggers, "triggers");
+            ValidateWithTriggerGrammar(request.Triggers, "triggers");
         }
         if (hasQueries)
         {
@@ -54,6 +54,24 @@ public class RuleValidationService : IRuleValidationService
         var lexer = new PseudoQueryExpressionLexer(inputStream);
         var tokenStream = new CommonTokenStream(lexer);
         var parser = new PseudoQueryExpressionParser(tokenStream);
+
+        parser.RemoveErrorListeners();
+        parser.AddErrorListener(errorListener);
+
+        parser.start();
+
+        if (errorListener.HasErrors)
+        {
+            throw new RuleValidationException($"Invalid grammar in {field}: {errorListener.ErrorMessage}");
+        }
+    }
+    private static void ValidateWithTriggerGrammar(string input, string field)
+    {
+        var errorListener = new ErrorListener();
+        var inputStream = new AntlrInputStream(input);
+        var lexer = new TriggersLexer(inputStream);
+        var tokenStream = new CommonTokenStream(lexer);
+        var parser = new TriggersParser(tokenStream);
 
         parser.RemoveErrorListeners();
         parser.AddErrorListener(errorListener);

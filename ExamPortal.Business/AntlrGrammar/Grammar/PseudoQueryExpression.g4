@@ -2,7 +2,7 @@ grammar PseudoQueryExpression;
 
 start: query EOF;
 
-query: expression | preExpression expression | aggregateQuery;
+query: aggregateQuery;
 
 aggregateQuery:
 	QUERY aggregateList FROM DATA timeFilter? whereClause?;

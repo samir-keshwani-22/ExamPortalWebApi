@@ -1,0 +1,13 @@
+Q_PREFIX=1
+INT=2
+UNDERSCORE=3
+COUNT=4
+SUM=5
+COMMA=6
+WS=7
+INVALID=8
+'Q'=1
+'_'=3
+'count'=4
+'sum'=5
+','=6

@@ -151,12 +151,6 @@ public partial class PseudoQueryExpressionParser : Parser {
 	}
 
 	public partial class QueryContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public PreExpressionContext preExpression() {
-			return GetRuleContext<PreExpressionContext>(0);
-		}
 		[System.Diagnostics.DebuggerNonUserCode] public AggregateQueryContext aggregateQuery() {
 			return GetRuleContext<AggregateQueryContext>(0);
 		}
@@ -188,32 +182,10 @@ public partial class PseudoQueryExpressionParser : Parser {
 		QueryContext _localctx = new QueryContext(Context, State);
 		EnterRule(_localctx, 2, RULE_query);
 		try {
-			State = 42;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,0,Context) ) {
-			case 1:
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 37;
-				expression();
-				}
-				break;
-			case 2:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 38;
-				preExpression();
-				State = 39;
-				expression();
-				}
-				break;
-			case 3:
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 41;
-				aggregateQuery();
-				}
-				break;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 37;
+			aggregateQuery();
 			}
 		}
 		catch (RecognitionException re) {
@@ -271,30 +243,30 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 44;
+			State = 39;
 			Match(QUERY);
-			State = 45;
+			State = 40;
 			aggregateList();
-			State = 46;
+			State = 41;
 			Match(FROM);
-			State = 47;
+			State = 42;
 			Match(DATA);
-			State = 49;
+			State = 44;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==PAST) {
 				{
-				State = 48;
+				State = 43;
 				timeFilter();
 				}
 			}
 
-			State = 52;
+			State = 47;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==WHERE) {
 				{
-				State = 51;
+				State = 46;
 				whereClause();
 				}
 			}
@@ -354,21 +326,21 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 54;
+			State = 49;
 			aggregate();
-			State = 59;
+			State = 54;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 55;
+				State = 50;
 				Match(COMMA);
-				State = 56;
+				State = 51;
 				aggregate();
 				}
 				}
-				State = 61;
+				State = 56;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -424,11 +396,11 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 62;
+			State = 57;
 			aggregateFunction();
-			State = 63;
+			State = 58;
 			Match(LPAREN);
-			State = 64;
+			State = 59;
 			_la = TokenStream.LA(1);
 			if ( !(_la==STAR || _la==VALUEIDENTIFIER) ) {
 			ErrorHandler.RecoverInline(this);
@@ -437,7 +409,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
-			State = 65;
+			State = 60;
 			Match(RPAREN);
 			}
 		}
@@ -486,7 +458,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 67;
+			State = 62;
 			_la = TokenStream.LA(1);
 			if ( !(_la==COUNT || _la==SUM) ) {
 			ErrorHandler.RecoverInline(this);
@@ -546,15 +518,15 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 69;
+			State = 64;
 			Match(PAST);
-			State = 70;
+			State = 65;
 			Match(INT);
-			State = 71;
+			State = 66;
 			Match(TIMEUNIT);
-			State = 72;
+			State = 67;
 			Match(FROM);
-			State = 73;
+			State = 68;
 			timeReference();
 			}
 		}
@@ -602,26 +574,26 @@ public partial class PseudoQueryExpressionParser : Parser {
 		TimeReferenceContext _localctx = new TimeReferenceContext(Context, State);
 		EnterRule(_localctx, 14, RULE_timeReference);
 		try {
-			State = 80;
+			State = 75;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case TRANSACTION_DATE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 75;
+				State = 70;
 				Match(TRANSACTION_DATE);
 				}
 				break;
 			case INT:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 76;
+				State = 71;
 				Match(INT);
-				State = 77;
+				State = 72;
 				Match(TIMEUNIT);
-				State = 78;
+				State = 73;
 				Match(BEFORE);
-				State = 79;
+				State = 74;
 				Match(TRANSACTION_DATE);
 				}
 				break;
@@ -678,19 +650,19 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 82;
+			State = 77;
 			Match(WHERE);
-			State = 84;
+			State = 79;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,4,Context) ) {
 			case 1:
 				{
-				State = 83;
+				State = 78;
 				preExpression();
 				}
 				break;
 			}
-			State = 86;
+			State = 81;
 			expression();
 			}
 		}
@@ -742,13 +714,13 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 88;
+			State = 83;
 			Match(IDENTIFIER);
-			State = 89;
+			State = 84;
 			Match(IS);
-			State = 90;
+			State = 85;
 			sourceDestSpecifier();
-			State = 91;
+			State = 86;
 			Match(AND);
 			}
 		}
@@ -797,7 +769,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 93;
+			State = 88;
 			_la = TokenStream.LA(1);
 			if ( !(_la==SOURCE_TOKEN || _la==DEST_TOKEN) ) {
 			ErrorHandler.RecoverInline(this);
@@ -863,21 +835,21 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 95;
+			State = 90;
 			term();
-			State = 101;
+			State = 96;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==AND || _la==OR) {
 				{
 				{
-				State = 96;
+				State = 91;
 				logicalOperator();
-				State = 97;
+				State = 92;
 				term();
 				}
 				}
-				State = 103;
+				State = 98;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -937,28 +909,28 @@ public partial class PseudoQueryExpressionParser : Parser {
 		TermContext _localctx = new TermContext(Context, State);
 		EnterRule(_localctx, 24, RULE_term);
 		try {
-			State = 112;
+			State = 107;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LPAREN:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 104;
+				State = 99;
 				Match(LPAREN);
-				State = 105;
+				State = 100;
 				expression();
-				State = 106;
+				State = 101;
 				Match(RPAREN);
 				}
 				break;
 			case IDENTIFIER:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 108;
+				State = 103;
 				field();
-				State = 109;
+				State = 104;
 				@operator();
-				State = 110;
+				State = 105;
 				value();
 				}
 				break;
@@ -1009,7 +981,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 114;
+			State = 109;
 			Match(IDENTIFIER);
 			}
 		}
@@ -1064,7 +1036,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 116;
+			State = 111;
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 8269824L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -1121,7 +1093,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 118;
+			State = 113;
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3489660928L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -1177,7 +1149,7 @@ public partial class PseudoQueryExpressionParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 120;
+			State = 115;
 			_la = TokenStream.LA(1);
 			if ( !(_la==AND || _la==OR) ) {
 			ErrorHandler.RecoverInline(this);
@@ -1200,41 +1172,39 @@ public partial class PseudoQueryExpressionParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,34,123,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,34,118,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
-		2,15,7,15,2,16,7,16,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,3,1,43,8,1,1,2,1,2,
-		1,2,1,2,1,2,3,2,50,8,2,1,2,3,2,53,8,2,1,3,1,3,1,3,5,3,58,8,3,10,3,12,3,
-		61,9,3,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,
-		1,7,1,7,3,7,81,8,7,1,8,1,8,3,8,85,8,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,10,
-		1,10,1,11,1,11,1,11,1,11,5,11,100,8,11,10,11,12,11,103,9,11,1,12,1,12,
-		1,12,1,12,1,12,1,12,1,12,1,12,3,12,113,8,12,1,13,1,13,1,14,1,14,1,15,1,
-		15,1,16,1,16,1,16,0,0,17,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,
-		0,6,2,0,26,26,30,30,1,0,10,11,1,0,15,16,2,0,12,13,17,22,2,0,28,28,30,31,
-		1,0,5,6,114,0,34,1,0,0,0,2,42,1,0,0,0,4,44,1,0,0,0,6,54,1,0,0,0,8,62,1,
-		0,0,0,10,67,1,0,0,0,12,69,1,0,0,0,14,80,1,0,0,0,16,82,1,0,0,0,18,88,1,
-		0,0,0,20,93,1,0,0,0,22,95,1,0,0,0,24,112,1,0,0,0,26,114,1,0,0,0,28,116,
-		1,0,0,0,30,118,1,0,0,0,32,120,1,0,0,0,34,35,3,2,1,0,35,36,5,0,0,1,36,1,
-		1,0,0,0,37,43,3,22,11,0,38,39,3,18,9,0,39,40,3,22,11,0,40,43,1,0,0,0,41,
-		43,3,4,2,0,42,37,1,0,0,0,42,38,1,0,0,0,42,41,1,0,0,0,43,3,1,0,0,0,44,45,
-		5,1,0,0,45,46,3,6,3,0,46,47,5,2,0,0,47,49,5,3,0,0,48,50,3,12,6,0,49,48,
-		1,0,0,0,49,50,1,0,0,0,50,52,1,0,0,0,51,53,3,16,8,0,52,51,1,0,0,0,52,53,
-		1,0,0,0,53,5,1,0,0,0,54,59,3,8,4,0,55,56,5,25,0,0,56,58,3,8,4,0,57,55,
-		1,0,0,0,58,61,1,0,0,0,59,57,1,0,0,0,59,60,1,0,0,0,60,7,1,0,0,0,61,59,1,
-		0,0,0,62,63,3,10,5,0,63,64,5,23,0,0,64,65,7,0,0,0,65,66,5,24,0,0,66,9,
-		1,0,0,0,67,68,7,1,0,0,68,11,1,0,0,0,69,70,5,8,0,0,70,71,5,32,0,0,71,72,
-		5,27,0,0,72,73,5,2,0,0,73,74,3,14,7,0,74,13,1,0,0,0,75,81,5,14,0,0,76,
-		77,5,32,0,0,77,78,5,27,0,0,78,79,5,9,0,0,79,81,5,14,0,0,80,75,1,0,0,0,
-		80,76,1,0,0,0,81,15,1,0,0,0,82,84,5,4,0,0,83,85,3,18,9,0,84,83,1,0,0,0,
-		84,85,1,0,0,0,85,86,1,0,0,0,86,87,3,22,11,0,87,17,1,0,0,0,88,89,5,29,0,
-		0,89,90,5,7,0,0,90,91,3,20,10,0,91,92,5,5,0,0,92,19,1,0,0,0,93,94,7,2,
-		0,0,94,21,1,0,0,0,95,101,3,24,12,0,96,97,3,32,16,0,97,98,3,24,12,0,98,
-		100,1,0,0,0,99,96,1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,101,102,1,0,0,
-		0,102,23,1,0,0,0,103,101,1,0,0,0,104,105,5,23,0,0,105,106,3,22,11,0,106,
-		107,5,24,0,0,107,113,1,0,0,0,108,109,3,26,13,0,109,110,3,28,14,0,110,111,
-		3,30,15,0,111,113,1,0,0,0,112,104,1,0,0,0,112,108,1,0,0,0,113,25,1,0,0,
-		0,114,115,5,29,0,0,115,27,1,0,0,0,116,117,7,3,0,0,117,29,1,0,0,0,118,119,
-		7,4,0,0,119,31,1,0,0,0,120,121,7,5,0,0,121,33,1,0,0,0,8,42,49,52,59,80,
-		84,101,112
+		2,15,7,15,2,16,7,16,1,0,1,0,1,0,1,1,1,1,1,2,1,2,1,2,1,2,1,2,3,2,45,8,2,
+		1,2,3,2,48,8,2,1,3,1,3,1,3,5,3,53,8,3,10,3,12,3,56,9,3,1,4,1,4,1,4,1,4,
+		1,4,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,3,7,76,8,7,1,8,
+		1,8,3,8,80,8,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,10,1,10,1,11,1,11,1,11,1,
+		11,5,11,95,8,11,10,11,12,11,98,9,11,1,12,1,12,1,12,1,12,1,12,1,12,1,12,
+		1,12,3,12,108,8,12,1,13,1,13,1,14,1,14,1,15,1,15,1,16,1,16,1,16,0,0,17,
+		0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,0,6,2,0,26,26,30,30,1,0,
+		10,11,1,0,15,16,2,0,12,13,17,22,2,0,28,28,30,31,1,0,5,6,107,0,34,1,0,0,
+		0,2,37,1,0,0,0,4,39,1,0,0,0,6,49,1,0,0,0,8,57,1,0,0,0,10,62,1,0,0,0,12,
+		64,1,0,0,0,14,75,1,0,0,0,16,77,1,0,0,0,18,83,1,0,0,0,20,88,1,0,0,0,22,
+		90,1,0,0,0,24,107,1,0,0,0,26,109,1,0,0,0,28,111,1,0,0,0,30,113,1,0,0,0,
+		32,115,1,0,0,0,34,35,3,2,1,0,35,36,5,0,0,1,36,1,1,0,0,0,37,38,3,4,2,0,
+		38,3,1,0,0,0,39,40,5,1,0,0,40,41,3,6,3,0,41,42,5,2,0,0,42,44,5,3,0,0,43,
+		45,3,12,6,0,44,43,1,0,0,0,44,45,1,0,0,0,45,47,1,0,0,0,46,48,3,16,8,0,47,
+		46,1,0,0,0,47,48,1,0,0,0,48,5,1,0,0,0,49,54,3,8,4,0,50,51,5,25,0,0,51,
+		53,3,8,4,0,52,50,1,0,0,0,53,56,1,0,0,0,54,52,1,0,0,0,54,55,1,0,0,0,55,
+		7,1,0,0,0,56,54,1,0,0,0,57,58,3,10,5,0,58,59,5,23,0,0,59,60,7,0,0,0,60,
+		61,5,24,0,0,61,9,1,0,0,0,62,63,7,1,0,0,63,11,1,0,0,0,64,65,5,8,0,0,65,
+		66,5,32,0,0,66,67,5,27,0,0,67,68,5,2,0,0,68,69,3,14,7,0,69,13,1,0,0,0,
+		70,76,5,14,0,0,71,72,5,32,0,0,72,73,5,27,0,0,73,74,5,9,0,0,74,76,5,14,
+		0,0,75,70,1,0,0,0,75,71,1,0,0,0,76,15,1,0,0,0,77,79,5,4,0,0,78,80,3,18,
+		9,0,79,78,1,0,0,0,79,80,1,0,0,0,80,81,1,0,0,0,81,82,3,22,11,0,82,17,1,
+		0,0,0,83,84,5,29,0,0,84,85,5,7,0,0,85,86,3,20,10,0,86,87,5,5,0,0,87,19,
+		1,0,0,0,88,89,7,2,0,0,89,21,1,0,0,0,90,96,3,24,12,0,91,92,3,32,16,0,92,
+		93,3,24,12,0,93,95,1,0,0,0,94,91,1,0,0,0,95,98,1,0,0,0,96,94,1,0,0,0,96,
+		97,1,0,0,0,97,23,1,0,0,0,98,96,1,0,0,0,99,100,5,23,0,0,100,101,3,22,11,
+		0,101,102,5,24,0,0,102,108,1,0,0,0,103,104,3,26,13,0,104,105,3,28,14,0,
+		105,106,3,30,15,0,106,108,1,0,0,0,107,99,1,0,0,0,107,103,1,0,0,0,108,25,
+		1,0,0,0,109,110,5,29,0,0,110,27,1,0,0,0,111,112,7,3,0,0,112,29,1,0,0,0,
+		113,114,7,4,0,0,114,31,1,0,0,0,115,116,7,5,0,0,116,33,1,0,0,0,7,44,47,
+		54,75,79,96,107
 	};
 
 	public static readonly ATN _ATN =
