@@ -1121,9 +1121,8 @@ components:
           type: string
     RuleEvaluatorRequest:
       type: object
-      required:
-        - queries
-        - result
+      required: 
+        - triggers
       properties:
         triggers:
           type: string

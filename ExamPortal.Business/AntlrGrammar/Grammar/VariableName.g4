@@ -18,4 +18,4 @@ COMMA: ',';
 fragment DIGIT: [0-9];
 
 WS: [ \t\r\n]+ -> skip;
-INVALID: .;
+ 

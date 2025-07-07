@@ -8,32 +8,26 @@ namespace ExamPortal.Business.AntlrGrammar.Helpers
     {
         public static void ValidateVariableSemantics(List<VariableInfo> variables, string fieldName)
         {
-
-        }
-
-        public static List<VariableInfo> ExtractAndValidateVariables(string input, string fieldName)
-        {
-            var errorListener = new ErrorListener();
-            var inputStream = new AntlrInputStream(input);
-            var lexer = new VariableNameLexer(inputStream);
-            var tokenStream = new CommonTokenStream(lexer);
-            var parser = new VariableNameParser(tokenStream);
-
-            parser.RemoveErrorListeners();
-            parser.AddErrorListener(errorListener);
-
-            var tree = parser.start();
-
-            if (errorListener.HasErrors)
+            if (variables == null || variables.Count == 0)
             {
-                throw new RuleValidationException($"Invalid variable name syntax in {fieldName}: {errorListener.ErrorMessage}");
+                throw new RuleValidationException($"No variables found in {fieldName}");
             }
+            if (variables.Count == 1) return;
 
-            var visitor = new VariableNameCollectorVisitor();
-            visitor.Visit(tree);
+            if (variables.Count == 2)
+            {
+                var var1 = variables[0];
+                var var2 = variables[1];
+                if (var1.Number != var2.Number)
+                    throw new RuleValidationException($"Invalid variable combination in {fieldName}: Different N values - {var1.FullName} and {var2.FullName}. ");
 
-            ValidateVariableSemantics(visitor.Variables, fieldName);
-            return visitor.Variables;
-        }
+                if (var1.AggregateType.Equals(var2.AggregateType))
+                {
+                    throw new RuleValidationException($"Invalid variable combination in {fieldName}: Same aggregate type - {var1.FullName} and {var2.FullName}. ");
+                }
+                return;
+            }
+            throw new RuleValidationException($"Invalid number of variables in {fieldName}: {variables.Count}");
+        } 
     }
 }
