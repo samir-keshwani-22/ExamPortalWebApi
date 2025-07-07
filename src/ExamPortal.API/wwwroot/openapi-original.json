@@ -1790,7 +1790,6 @@
             "type" : "string"
           }
         },
-        "required" : [ "triggers" ],
         "type" : "object"
       },
       "Query" : {

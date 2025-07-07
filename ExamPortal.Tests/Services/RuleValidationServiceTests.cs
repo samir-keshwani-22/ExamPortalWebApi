@@ -60,34 +60,95 @@ public class RuleValidationServiceTests
     {
         var request = new RuleEvaluatorRequest()
         {
-            Result = "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            Result = "Q1_sum > 0 AND Q1_count >= 3 AND (Q1_count/Q1_sum)*100 >= 150 AND (Q1_count/Q1_sum)*100 >= 150",
             Queries = new List<Query>
             {
-                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q2_count,Q1_sum,Q2_sum" }
+                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q1_sum" }
             },
             Triggers = "invalid grammar"
         };
 
         var exception = Assert.Throws<RuleValidationException>(() => _service.ValidateRules(request));
         Assert.Contains("Invalid grammar in", exception.Message);
-
     }
+
+    [Fact]
+    public void ValidateRules_Throw_WhenTriggesMustStartWithQueryButDoesNot()
+    {
+        var request = new RuleEvaluatorRequest()
+        {
+            Triggers = "#{amount} >= {5000}"
+        };
+
+        var exception = Assert.Throws<RuleValidationException>(() => _service.ValidateRules(request));
+        Assert.Equal("When 'queries' is not present, 'triggers' must start with 'QUERY'.", exception.Message);
+    }
+
+
+    [Fact]
+    public void ValidateRules_Throws_WhenTriggersMustNotStartWithQueryButDoes()
+    {
+        var request = new RuleEvaluatorRequest()
+        {
+            Triggers = "QUERY COUNT({amount}) FROM DATA WHERE #{amount} >= {5000}",
+            Queries = new List<Query>
+            {
+                new() {PseudoQuery = "QUERY COUNT({amount}) FROM DATA WHERE #{amount} >= {5000}", VariableName = "Q1_count" }
+            },
+            Result = "Q1_count > 0"
+        };
+
+        var exception = Assert.Throws<RuleValidationException>(() => _service.ValidateRules(request));
+        Assert.Equal("When 'queries' is present, 'triggers' must not start with 'QUERY'.", exception.Message);
+    }
+
+    [Fact]
+    public void ValidateRules_DoesNotThrow_WhenTriggersStartWithQueryAndNoQueries()
+    {
+        var request = new RuleEvaluatorRequest()
+        {
+            Triggers = "QUERY COUNT(*) FROM DATA WHERE #{account} is {dest} AND #{amount} >= {5000}"
+
+        };
+
+        var exception = Record.Exception(() => _service.ValidateRules(request));
+        Assert.Null(exception);
+    }
+
+
+    [Fact]
+    public void ValidateRules_DoesNotThrow_WhenTriggersNotStartWithQueryAndQueriesPresent()
+    {
+        var request = new RuleEvaluatorRequest()
+        {
+            Triggers = "#{amount} >= {5000}",
+            Queries = new List<Query>
+        {
+            new() {PseudoQuery = "QUERY COUNT({amount}) FROM DATA WHERE #{amount} >= {5000}", VariableName = "Q1_count" }
+        },
+            Result = "Q1_count > 0"
+        };
+
+        var exception = Record.Exception(() => _service.ValidateRules(request));
+        Assert.Null(exception);
+    }
+
 
     [Fact]
     public void ValidateRules_Throws_WhenQueriesHaveInvalidGrammar()
     {
         var request = new RuleEvaluatorRequest()
         {
-            Result = "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            Result = "Q1_count > 0 AND Q1_count >= 3 AND (Q1_count/Q1_sum)*100 >= 150 AND (Q1_sum/Q1_count)*100 >= 150",
             Queries = new List<Query>
             {
-                new() {PseudoQuery = "QUERYbogus COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q2_count,Q1_sum,Q2_sum" }
+                new() {PseudoQuery = "QUERYbogus COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count ,Q1_sum" }
             },
             Triggers = "#{amount} >= {5000}"
         };
 
         var exception = Assert.Throws<RuleValidationException>(() => _service.ValidateRules(request));
-        Assert.Contains("Invalid grammar in queries.pseudo_query (Q1_count,Q2_count,Q1_sum,Q2_sum)", exception.Message);
+        Assert.Contains("Invalid grammar in queries.pseudo_query (Q1_count ,Q1_sum)", exception.Message);
     }
 
     [Fact]
@@ -95,10 +156,10 @@ public class RuleValidationServiceTests
     {
         var request = new RuleEvaluatorRequest()
         {
-            Result = "Q2_countbogus > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            Result = "bogusQ2_count> 0 AND Q1_sum >= 3 AND (Q1_count/Q1_sum)*100 >= 150 AND (Q1_count/Q1_sum)*100 >= 150",
             Queries = new List<Query>
             {
-                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q2_count,Q1_sum,Q2_sum" }
+                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count, Q1_sum" }
             },
             Triggers = "#{amount} >= {5000}"
         };
@@ -113,10 +174,10 @@ public class RuleValidationServiceTests
     {
         var request = new RuleEvaluatorRequest()
         {
-            Result = "Q5_count > 0 AND Q6_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            Result = "Q5_count > 0 AND Q6_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q1_sum)*100 >= 150",
             Queries = new List<Query>
             {
-                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q2_count,Q1_sum,Q2_sum" }
+                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q1_sum" }
             },
             Triggers = "#{amount} >= {5000}"
         };
@@ -130,10 +191,10 @@ public class RuleValidationServiceTests
     {
         var request = new RuleEvaluatorRequest()
         {
-            Result = "Q2_count > 0 AND Q1_count >= 3 AND (Q1_count/Q2_count)*100 >= 150 AND (Q1_sum/Q2_sum)*100 >= 150",
+            Result = "Q1_sum > 0 AND Q1_count >= 3 AND (Q1_count/Q1_sum)*100 >= 150 AND (Q1_count/Q1_sum)*100 >= 150",
             Queries = new List<Query>
             {
-                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q2_count,Q1_sum,Q2_sum" }
+                new() {PseudoQuery = "QUERY COUNT({amount}), SUM({amount})\nFROM DATA\nPAST 7 day FROM transaction date\nWHERE #{amount} >= {5000}", VariableName = "Q1_count,Q1_sum" }
             },
             Triggers = "#{amount} >= {5000}"
         };
@@ -141,5 +202,5 @@ public class RuleValidationServiceTests
         var exception = Record.Exception(() => _service.ValidateRules(request));
         Assert.Null(exception);
     }
- 
+
 }

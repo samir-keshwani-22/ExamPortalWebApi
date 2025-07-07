@@ -30,7 +30,6 @@ namespace ExamPortal.API.Models
         /// Gets or Sets Triggers
         /// </summary>
         /* <example>#{amount} &gt;&#x3D; {5000}</example> */
-        [Required]
         [DataMember(Name="triggers", EmitDefaultValue=false)]
         public string Triggers { get; set; }
 

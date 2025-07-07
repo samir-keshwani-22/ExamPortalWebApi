@@ -14,4 +14,4 @@ npx @openapitools/openapi-generator-cli generate -g aspnetcore \
 
 
 
- 
+ read -p "Press [Enter] key to close the terminal..."
