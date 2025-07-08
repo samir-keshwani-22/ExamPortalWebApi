@@ -22,7 +22,7 @@ public class RuleValidationService : IRuleValidationService
     /// <exception cref="RuleValidationException"></exception>
     public void CheckThreshold(RuleEvaluatorRequest request)
     {
-        if (request.Queries != null && request.Queries.Count >2)
+        if (request.Queries != null && request.Queries.Count > 2)
         {
             throw new RuleValidationException("The queries array must have less than or equal to 2 items.");
         }
@@ -84,6 +84,16 @@ public class RuleValidationService : IRuleValidationService
             // for checking the unused variable 
             CheckVariablesInResultAreDeclared(request);
         }
+
+
+
+        var processor = new RuleProcessor();
+        var sql = processor.GenerateSqlQueries(request);
+        foreach (var asql in sql)
+        {
+            Console.WriteLine(asql);
+        }
+
     }
 
     #endregion
@@ -254,7 +264,7 @@ public class RuleValidationService : IRuleValidationService
 
         return visitor.Identifiers;
     }
-   
+
     /// <summary>
     /// Retrieves declared variables from the grammar using the variable name.
     /// </summary>
