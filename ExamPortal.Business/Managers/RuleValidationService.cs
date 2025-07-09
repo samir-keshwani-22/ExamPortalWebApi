@@ -97,7 +97,27 @@ public class RuleValidationService : IRuleValidationService
         var results = PseudoSqlTestService.RunAllTests(@"E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\AntlrGrammar\all_pseudo_queries.txt",
     @"E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\AntlrGrammar\all_sqls.txt");
 
+        var failed = results.Where(r => !r.Passed).ToList();
+
+        foreach (var fail in failed)
+        {
+            Console.WriteLine($"Test {fail.Index} FAILED");
+            Console.WriteLine("Pseudo Query:");
+            Console.WriteLine(fail.PseudoQuery);
+            Console.WriteLine("Expected SQL:");
+            Console.WriteLine(fail.ExpectedSql);
+            Console.WriteLine("Generated SQL:");
+            Console.WriteLine(fail.GeneratedSql);
+            Console.WriteLine("--------------------------------------------------");
+        }
+
     }
+
+    // input = input
+    // .Replace("in {monitored_keywords_high}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'monitored_keywords')")
+    // .Replace("in {monitored_keywords_prohibited}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'monitored_keywords')")
+    // .Replace("in {country_risk_high}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'country_risk')")
+    // .Replace("in {country_risk_prohibited}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'country_risk')");
 
     #endregion
 
