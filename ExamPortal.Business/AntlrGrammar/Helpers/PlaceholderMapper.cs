@@ -1,4 +1,3 @@
-// Updated PlaceholderMapper.cs with dynamic alias support
 using System.Text.RegularExpressions;
 
 namespace ExamPortal.Business.AntlrGrammar.Helpers;
@@ -15,28 +14,14 @@ public static class PlaceholderMapper
         input = Regex.Replace(input,
             @"#\{account\}\s*is\s*\{(source|dest)\}",
             match => {
-                var accountType = match.Groups[1].Value;
-                var tableAlias = accountType == "source" ? "s" : "d";
+                var accountType = match.Groups[1].Value.ToLower();
                 var accountTypeValue = accountType == "source" ? "Source" : "Destination";
-                return $"{tableAlias}.trans_acct_type = '{accountTypeValue}'";
+                return $"{primaryAlias}.trans_acct_type = '{accountTypeValue}'";
             }, RegexOptions.IgnoreCase);
 
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*\>=\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value)} >= '{m.Groups[2].Value}'");
+        input = Regex.Replace(input, @"AND\s*$", "", RegexOptions.IgnoreCase).Trim();
 
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*\<=\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value)} <= '{m.Groups[2].Value}'");
-
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*>\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value)} > '{m.Groups[2].Value}'");
-
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*<\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value)} < '{m.Groups[2].Value}'");
-
+        // '=' with list must come before '>=' etc.
         input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*=\s*\{([^}]+)\}",
             m => {
@@ -46,24 +31,40 @@ public static class PlaceholderMapper
                 if (values.Contains(','))
                 {
                     var valueList = values.Split(',').Select(v => $"'{v.Trim()}'");
-                    var fieldMapping = GetFieldMapping(field);
+                    var fieldMapping = GetFieldMapping(field, primaryAlias);
                     return $"{fieldMapping} in ({string.Join(", ", valueList)})";
                 }
                 else
                 {
-                    var fieldMapping = GetFieldMapping(field);
+                    var fieldMapping = GetFieldMapping(field, primaryAlias);
                     return $"{fieldMapping} = '{values.Trim()}'";
                 }
             });
 
         input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*>\=\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} >= '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*<=\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} <= '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*>\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} > '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*<\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} < '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*!=\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value)} != '{m.Groups[2].Value}'");
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} != '{m.Groups[2].Value}'");
 
         input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*in\s*\{([^}]+)\}",
             m => {
-                var field = GetFieldMapping(m.Groups[1].Value);
+                var field = GetFieldMapping(m.Groups[1].Value, primaryAlias);
                 var values = m.Groups[2].Value.Split(',').Select(v => $"'{v.Trim()}'");
                 return $"{field} in ({string.Join(", ", values)})";
             });
@@ -114,11 +115,11 @@ public static class PlaceholderMapper
             .Replace("in {country_risk_prohibited}", "in (SELECT value FROM ref_list_items WHERE risk_level = 'Prohibited')");
     }
 
-    private static string GetFieldMapping(string field)
+    private static string GetFieldMapping(string field, string primaryAlias = "a")
     {
         var fieldMappings = new Dictionary<string, string>
         {
-            ["account"] = "a.acct_id",
+            ["account"] = $"{primaryAlias}.acct_id",
             ["trans_type"] = "t.trans_type",
             ["trans_method"] = "t.trans_method",
             ["s.entity_type"] = "s.entity_type",
@@ -133,7 +134,7 @@ public static class PlaceholderMapper
             ["description"] = "t.description",
             ["purpose"] = "t.purpose",
             ["location"] = "t.location",
-            ["addr_country"] = "a.addr_country",
+            ["addr_country"] = $"{primaryAlias}.addr_country",
             ["d.related_parties"] = "d.related_parties",
             ["s.related_parties"] = "s.related_parties",
             ["asset_type"] = "t.asset_type",
