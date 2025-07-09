@@ -6,7 +6,9 @@ namespace ExamPortal.Business.AntlrGrammar.Visitors;
 public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
 {
     private bool _hasPreExpression = false;
-    private string _preExpressionType = "";
+    private string _preExpressionRole = "";
+
+    private bool RequiresDualJoin => _preExpressionRole == "{dest}" || _preExpressionRole == "{source}";
 
     public override string VisitAggregateQuery([NotNull] PseudoQueryExpressionParser.AggregateQueryContext context)
     {
@@ -15,35 +17,32 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
         if (context.whereClause()?.preExpression() != null)
         {
             _hasPreExpression = true;
-            _preExpressionType = context.whereClause().preExpression().sourceDestSpecifier().GetText();
+            _preExpressionRole = context.whereClause().preExpression().sourceDestSpecifier().GetText();
         }
+
         var whereClause = context.whereClause() != null ? VisitWhereClause(context.whereClause()) : "";
         var timeClause = context.timeFilter() != null ? VisitTimeFilter(context.timeFilter()) : "";
 
         string sql;
 
-        if (_hasPreExpression && _preExpressionType == "{dest}")
+        if (RequiresDualJoin)
         {
-
             sql = $@"SELECT {aggregates} 
         FROM cust_trans_info d
-            JOIN transactions t
-            ON d.trans_id = t.id
-            AND d.trans_acct_type = 'Destination'
-            JOIN cust_trans_info s
-            ON s.trans_id = t.id
-            AND s.trans_acct_type = 'Source'
+            JOIN transactions t ON d.trans_id = t.id AND d.trans_acct_type = 'Destination'
+            JOIN cust_trans_info s ON s.trans_id = t.id AND s.trans_acct_type = 'Source'
         WHERE 
-        COALESCE(t.env, 0) = %(env_var)d AND
-        t.tenant_id = %(tenant_id)s AND (
-        d.tenant_id = %(tenant_id)s AND d.acct_id = %(acct_id)s AND COALESCE(d.env, 0) = %(env_var)d AND COALESCE(s.env, 0) = %(env_var)d{whereClause}{timeClause}
+            COALESCE(t.env, 0) = %(env_var)d AND
+            t.tenant_id = %(tenant_id)s AND (
+                {GetPrimaryAlias()}.tenant_id = %(tenant_id)s AND {GetPrimaryAlias()}.acct_id = %(acct_id)s AND
+                COALESCE({GetPrimaryAlias()}.env, 0) = %(env_var)d AND COALESCE({GetSecondaryAlias()}.env, 0) = %(env_var)d
+                {whereClause}{timeClause}
         );";
         }
         else
         {
             sql = $@"SELECT {aggregates} 
-        FROM 
-            cust_trans_info a
+        FROM cust_trans_info a
             JOIN transactions t ON a.trans_id = t.id 
         WHERE 
             (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND
@@ -54,17 +53,16 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
         }
 
         return sql;
-
     }
 
     public override string VisitAggregateList([NotNull] PseudoQueryExpressionParser.AggregateListContext context)
     {
         return string.Join(", ", context.aggregate().Select(agg =>
-          {
-              var func = agg.aggregateFunction().GetText();
-              var alias = func.ToUpper() == "COUNT" ? "Count" : "Sum";
-              return $"{Visit(agg)} AS {alias}";
-          }));
+        {
+            var func = agg.aggregateFunction().GetText();
+            var alias = func.ToUpper() == "COUNT" ? "Count" : "Sum";
+            return $"{Visit(agg)} as {alias}";
+        }));
     }
 
     public override string VisitAggregate([NotNull] PseudoQueryExpressionParser.AggregateContext context)
@@ -79,66 +77,63 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
         var num = context.INT().GetText();
         var unit = context.TIMEUNIT().GetText();
         var before = context.timeReference().GetText().Contains("before");
-        if (before)
+        var offset = before ? context.timeReference().INT().GetText() : null;
+
+        string prefix = RequiresDualJoin ? "d, s, t" : "a, t";
+        var targets = prefix.Split(", ");
+
+        string clause = string.Join(" AND\n        ", targets.Select(alias =>
         {
-            var offset = context.timeReference().INT().GetText();
-            if (_hasPreExpression && _preExpressionType == "{dest}")
+            if (before)
             {
-                return $@" AND
-    d.trans_date >= date_sub({unit}, {num}, date_sub({unit}, {offset}, toDateTime(%(trans_date)s))) AND
-        d.trans_date <= date_sub({unit}, {offset}, toDateTime(%(trans_date)s)) AND 
-        s.trans_date >= date_sub({unit}, {num}, date_sub({unit}, {offset}, toDateTime(%(trans_date)s))) AND 
-        s.trans_date <= date_sub({unit}, {offset}, toDateTime(%(trans_date)s)) AND
-        t.trans_date >= date_sub({unit}, {num}, date_sub({unit}, {offset}, toDateTime(%(trans_date)s))) AND 
-        t.trans_date <= date_sub({unit}, {offset}, toDateTime(%(trans_date)s))";
+                return $"{alias}.trans_date >= date_sub({unit}, {num}, date_sub({unit}, {offset}, toDateTime(%(trans_date)s))) AND\n        {alias}.trans_date <= date_sub({unit}, {offset}, toDateTime(%(trans_date)s))";
             }
             else
             {
-                return $@" AND
-    a.trans_date >= date_sub({unit}, {num}, date_sub({unit}, {offset}, toDateTime(%(trans_date)s))) AND
-            a.trans_date <= date_sub({unit}, {offset}, toDateTime(%(trans_date)s)) AND 
-            t.trans_date >= date_sub({unit}, {num}, date_sub({unit}, {offset}, toDateTime(%(trans_date)s))) AND 
-            t.trans_date <= date_sub({unit}, {offset}, toDateTime(%(trans_date)s))";
+                return $"{alias}.trans_date >= date_sub({unit}, {num}, toDateTime(%(trans_date)s)) AND\n        {alias}.trans_date <= toDateTime(%(trans_date)s)";
             }
-        }
-        else
-        {
-            if (_hasPreExpression && _preExpressionType == "{dest}")
-            {
-                return $@" AND
-    d.trans_date >= date_sub({unit}, {num}, toDateTime(%(trans_date)s)) AND
-        d.trans_date <= toDateTime(%(trans_date)s) AND 
-        s.trans_date >= date_sub({unit}, {num}, toDateTime(%(trans_date)s)) AND 
-        s.trans_date <= toDateTime(%(trans_date)s) AND
-        t.trans_date >= date_sub({unit}, {num}, toDateTime(%(trans_date)s)) AND 
-        t.trans_date <= toDateTime(%(trans_date)s)";
-            }
-            else
-            {
-                return $@" AND
-    a.trans_date >= date_sub({unit}, {num}, toDateTime(%(trans_date)s)) AND
-            a.trans_date <= toDateTime(%(trans_date)s) AND 
-            t.trans_date >= date_sub({unit}, {num}, toDateTime(%(trans_date)s)) AND 
-            t.trans_date <= toDateTime(%(trans_date)s)";
-            }
-        }
+        }));
+
+        return $" AND\n        {clause}";
     }
 
     public override string VisitWhereClause(PseudoQueryExpressionParser.WhereClauseContext context)
     {
+        string preExpressionSql = "";
+        if (context.preExpression() != null)
+        {
+            var preExpressionText = context.preExpression().GetText().TrimEnd();
+
+            if (preExpressionText.Contains("#{account} is {source}") || preExpressionText.Contains("#{account} is {dest}"))
+            { 
+                preExpressionText = preExpressionText.Replace("#{account} is {source}", "");
+                preExpressionText = preExpressionText.Replace("#{account} is {dest}", "");
+            }
+
+            preExpressionSql = PlaceholderMapper.ReplacePlaceholders(preExpressionText, GetPrimaryAlias());
+        }
+
+
         var expressionText = context.expression()?.GetText() ?? "";
-        if (string.IsNullOrWhiteSpace(expressionText)) return "";
+        var mainExpressionSql = string.IsNullOrWhiteSpace(expressionText) ? "" : PlaceholderMapper.ReplacePlaceholders(expressionText, GetPrimaryAlias());
 
-        string parsedCondition = PlaceholderMapper.ReplacePlaceholders(expressionText);
+        var conditions = new[] { preExpressionSql, mainExpressionSql }.Where(c => !string.IsNullOrWhiteSpace(c));
+        if (!conditions.Any()) return "";
 
-        // Don't add extra parentheses if there's a pre-expression
-        if (_hasPreExpression)
-        {
-            return $" AND {parsedCondition}";
-        }
-        else
-        {
-            return $" AND (\n    {parsedCondition}";
-        }
+        var combined = string.Join(" AND ", conditions);
+        return RequiresDualJoin ? $" AND {combined}" : $" AND (\n    {combined}\n)";
     }
+
+    private string GetPrimaryAlias()
+    {
+        return _preExpressionRole == "{source}" ? "s" :
+               _preExpressionRole == "{dest}" ? "d" : "a";
+    }
+
+    private string GetSecondaryAlias()
+    {
+        return _preExpressionRole == "{source}" ? "d" :
+               _preExpressionRole == "{dest}" ? "s" : "a";
+    }
+
 }
