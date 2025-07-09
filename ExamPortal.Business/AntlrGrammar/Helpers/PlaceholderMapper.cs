@@ -21,7 +21,22 @@ public static class PlaceholderMapper
 
         input = Regex.Replace(input, @"AND\s*$", "", RegexOptions.IgnoreCase).Trim();
 
-        // '=' with list must come before '>=' etc.
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*>=\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} >= '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*<=\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} <= '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*>\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} > '{m.Groups[2].Value}'");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*<\s*\{([^}]+)\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} < '{m.Groups[2].Value}'");
+
         input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*=\s*\{([^}]+)\}",
             m => {
@@ -40,22 +55,6 @@ public static class PlaceholderMapper
                     return $"{fieldMapping} = '{values.Trim()}'";
                 }
             });
-
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*>\=\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} >= '{m.Groups[2].Value}'");
-
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*<=\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} <= '{m.Groups[2].Value}'");
-
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*>\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} > '{m.Groups[2].Value}'");
-
-        input = Regex.Replace(input,
-            @"#\{([^}]+)\}\s*<\s*\{([^}]+)\}",
-            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} < '{m.Groups[2].Value}'");
 
         input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*!=\s*\{([^}]+)\}",
