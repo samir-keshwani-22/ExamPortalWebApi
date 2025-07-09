@@ -94,6 +94,9 @@ public class RuleValidationService : IRuleValidationService
             Console.WriteLine(asql);
         }
 
+        var results = PseudoSqlTestService.RunAllTests(@"E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\AntlrGrammar\all_pseudo_queries.txt",
+    @"E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\AntlrGrammar\all_sqls.txt");
+
     }
 
     #endregion

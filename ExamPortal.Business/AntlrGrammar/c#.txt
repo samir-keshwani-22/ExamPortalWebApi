@@ -1,0 +1,68 @@
+using System;
+using System.IO;
+using System.Linq;
+using Antlr4.Runtime;
+using ExamPortal.Business.AntlrGrammar.Visitors;
+
+class Program
+{
+    static void Main()
+    {
+        var pseudoQueries = File.ReadAllText("all_pseudo_queries.txt")
+            .Split(new[] { "---" }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(q => q.Trim())
+            .ToList();
+
+        var sqlQueries = File.ReadAllText("all_sqls.txt")
+            .Split(new[] { "---" }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(q => q.Trim())
+            .ToList();
+
+        if (pseudoQueries.Count != sqlQueries.Count)
+        {
+            Console.WriteLine($"Count mismatch: {pseudoQueries.Count} pseudo queries, {sqlQueries.Count} SQL queries.");
+            return;
+        }
+
+        int pass = 0, fail = 0;
+        for (int i = 0; i < pseudoQueries.Count; i++)
+        {
+            var input = pseudoQueries[i];
+            var expectedSql = sqlQueries[i];
+
+            var inputStream = new AntlrInputStream(input);
+            var lexer = new PseudoQueryExpressionLexer(inputStream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new PseudoQueryExpressionParser(tokens);
+
+            var tree = parser.query();
+            var visitor = new PseudoQueryToSqlVisitor();
+            var generatedSql = visitor.Visit(tree);
+
+            if (NormalizeSql(generatedSql) == NormalizeSql(expectedSql))
+            {
+                Console.WriteLine($"Test {i + 1}: PASS");
+                pass++;
+            }
+            else
+            {
+                Console.WriteLine($"Test {i + 1}: FAIL");
+                Console.WriteLine("Pseudo Query:");
+                Console.WriteLine(input);
+                Console.WriteLine("Expected SQL:");
+                Console.WriteLine(expectedSql);
+                Console.WriteLine("Generated SQL:");
+                Console.WriteLine(generatedSql);
+                Console.WriteLine();
+                fail++;
+            }
+        }
+
+        Console.WriteLine($"Total: {pass + fail}, Passed: {pass}, Failed: {fail}");
+    }
+
+    static string NormalizeSql(string sql)
+    {
+        return string.Concat(sql.Where(c => !char.IsWhiteSpace(c))).ToLowerInvariant();
+    }
+}

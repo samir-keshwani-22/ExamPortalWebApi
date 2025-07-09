@@ -1,0 +1,164 @@
+SELECT COUNT(*) 
+FROM cust_trans_info a
+    JOIN transactions t 
+    ON t.id = a.trans_id 
+WHERE (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND t.id = %(trans_id)s AND
+a.tenant_id = %(tenant_id)s AND
+t.tenant_id = %(tenant_id)s AND
+a.acct_id = %(acct_id)s AND
+a.trans_date = %(trans_date)s AND (
+    t.amount >= '10000'
+);
+---
+SELECT COUNT(t.amount) as Count, SUM(t.amount) as Sum 
+FROM 
+    cust_trans_info a
+    JOIN transactions t ON a.trans_id = t.id 
+WHERE 
+    (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND
+    a.tenant_id = %(tenant_id)s AND
+    t.tenant_id = %(tenant_id)s AND
+    a.acct_id = %(acct_id)s AND (
+    t.amount >= '5000' AND
+    a.trans_date >= date_sub(day, 7, toDateTime(%(trans_date)s)) AND
+            a.trans_date <= toDateTime(%(trans_date)s) AND 
+            t.trans_date >= date_sub(day, 7, toDateTime(%(trans_date)s)) AND 
+            t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT COUNT(t.amount) as Count, SUM(t.amount) as Sum 
+FROM 
+    cust_trans_info a
+    JOIN transactions t ON a.trans_id = t.id 
+WHERE 
+    (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND
+    a.tenant_id = %(tenant_id)s AND
+    t.tenant_id = %(tenant_id)s AND
+    a.acct_id = %(acct_id)s AND (
+    t.amount >= '5000' AND
+    a.trans_date >= date_sub(day, 30, date_sub(day ,7 ,toDateTime(%(trans_date)s))) AND
+            a.trans_date <= date_sub(day, 7, toDateTime(%(trans_date)s)) AND
+            t.trans_date >= date_sub(day, 30, date_sub(day ,7 ,toDateTime(%(trans_date)s))) AND
+            t.trans_date <= date_sub(day, 7, toDateTime(%(trans_date)s))
+);
+---
+SELECT COUNT(t.amount) as Count, SUM(t.amount) as Sum 
+    FROM cust_trans_info d
+        JOIN transactions t
+        ON d.trans_id = t.id
+        AND d.trans_acct_type = 'Destination'
+        JOIN cust_trans_info s
+        ON s.trans_id = t.id
+        AND s.trans_acct_type = 'Source'
+    WHERE 
+    COALESCE(t.env, 0) = %(env_var)d AND
+    t.tenant_id = %(tenant_id)s AND (
+    d.tenant_id = %(tenant_id)s AND d.acct_id = %(acct_id)s AND COALESCE(d.env, 0) = %(env_var)d AND COALESCE(s.env, 0) = %(env_var)d AND NOT has(d.related_parties, s.acct_id) AND t.trans_type = 'Transfer' AND
+    d.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND
+        d.trans_date <= toDateTime(%(trans_date)s) AND 
+        s.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+        s.trans_date <= toDateTime(%(trans_date)s) AND
+        t.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+        t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT COUNT(t.amount) as Count, SUM(t.amount) as Sum 
+FROM 
+    cust_trans_info a
+    JOIN transactions t ON a.trans_id = t.id 
+WHERE 
+    (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND
+    a.tenant_id = %(tenant_id)s AND
+    t.tenant_id = %(tenant_id)s AND
+    a.acct_id = %(acct_id)s AND (
+    a.trans_acct_type = 'Destination' AND t.trans_type in ('ATMDeposit', 'Payment', 'Deposit', 'Transfer', 'AssetSale') AND
+    a.trans_date >= date_sub(day, 7, toDateTime(%(trans_date)s)) AND
+            a.trans_date <= toDateTime(%(trans_date)s) AND 
+            t.trans_date >= date_sub(day, 7, toDateTime(%(trans_date)s)) AND 
+            t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT COUNT(t.amount) as Count, SUM(t.amount) as Sum 
+FROM 
+    cust_trans_info a
+    JOIN transactions t ON a.trans_id = t.id 
+WHERE 
+    (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND
+    a.tenant_id = %(tenant_id)s AND
+    t.tenant_id = %(tenant_id)s AND
+    a.acct_id = %(acct_id)s AND (
+    a.trans_acct_type = 'Destination' AND t.trans_type in ('ATMDeposit', 'Payment', 'Deposit', 'Transfer', 'AssetSale') AND
+    a.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND
+            a.trans_date <= toDateTime(%(trans_date)s) AND 
+            t.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+            t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT SUM(t.amount) as Sum 
+FROM 
+    cust_trans_info a
+    JOIN transactions t ON a.trans_id = t.id 
+WHERE 
+    (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND
+    a.tenant_id = %(tenant_id)s AND
+    t.tenant_id = %(tenant_id)s AND
+    a.acct_id = %(acct_id)s AND (
+    a.trans_acct_type = 'Source' AND t.trans_type = 'Transfer' AND
+    a.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND
+            a.trans_date <= toDateTime(%(trans_date)s) AND 
+            t.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+            t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT COUNT(t.amount) as Count 
+    FROM cust_trans_info d
+        JOIN transactions t
+        ON d.trans_id = t.id
+        AND d.trans_acct_type = 'Destination'
+        JOIN cust_trans_info s
+        ON s.trans_id = t.id
+        AND s.trans_acct_type = 'Source'
+    WHERE 
+    COALESCE(t.env, 0) = %(env_var)d AND
+    t.tenant_id = %(tenant_id)s AND (
+    d.tenant_id = %(tenant_id)s AND d.acct_id = %(acct_id)s AND COALESCE(d.env, 0) = %(env_var)d AND COALESCE(s.env, 0) = %(env_var)d AND NOT has(d.related_parties, s.acct_id) AND t.trans_type = 'Transfer' AND t.amount >= '5000' AND
+    d.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND
+        d.trans_date <= toDateTime(%(trans_date)s) AND 
+        s.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+        s.trans_date <= toDateTime(%(trans_date)s) AND
+        t.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+        t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT COUNT(t.amount) as Count 
+    FROM cust_trans_info d
+        JOIN transactions t
+        ON d.trans_id = t.id
+        AND d.trans_acct_type = 'Destination'
+        JOIN cust_trans_info s
+        ON s.trans_id = t.id
+        AND s.trans_acct_type = 'Source'
+    WHERE 
+    COALESCE(t.env, 0) = %(env_var)d AND
+    t.tenant_id = %(tenant_id)s AND (
+    s.tenant_id = %(tenant_id)s AND s.acct_id = %(acct_id)s AND COALESCE(s.env, 0) = %(env_var)d AND COALESCE(d.env, 0) = %(env_var)d AND NOT has(s.related_parties, d.acct_id) AND t.trans_type = 'Transfer' AND t.amount >= '5000' AND
+    d.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND
+        d.trans_date <= toDateTime(%(trans_date)s) AND 
+        s.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+        s.trans_date <= toDateTime(%(trans_date)s) AND
+        t.trans_date >= date_sub(day, 30, toDateTime(%(trans_date)s)) AND 
+        t.trans_date <= toDateTime(%(trans_date)s)
+);
+---
+SELECT COUNT(*) 
+FROM cust_trans_info a
+    JOIN transactions t 
+    ON t.id = a.trans_id 
+WHERE (COALESCE(t.env, 0) = %(env_var)d AND COALESCE(a.env, 0) = %(env_var)d) AND t.id = %(trans_id)s AND
+a.tenant_id = %(tenant_id)s AND
+t.tenant_id = %(tenant_id)s AND
+a.acct_id = %(acct_id)s AND
+a.trans_date = %(trans_date)s AND (
+    ( t.description  in  (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'monitored_keywords') OR t.description  in  (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'monitored_keywords') OR t.purpose  in  (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'monitored_keywords') OR t.purpose  in  (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'monitored_keywords') )
+);
+--- 

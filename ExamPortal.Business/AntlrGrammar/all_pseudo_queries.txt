@@ -1,0 +1,278 @@
+QUERY COUNT(*)
+FROM DATA
+WHERE #{amount} >= {10000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{amount} >= {5000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM 7 day before transaction date
+WHERE #{amount} >= {5000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{s.acct_id} not in {d.related_parties} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {ATMDeposit, Payment, Deposit, Transfer, AssetSale}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {ATMDeposit, Payment, Deposit, Transfer, AssetSale}
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{s.acct_id} not in {d.related_parties} AND #{trans_type} = {Transfer} AND #{amount} >= {5000}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{d.acct_id} not in {s.related_parties} AND #{trans_type} = {Transfer} AND #{amount} >= {5000}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE (#{description} in {monitored_keywords_high} OR #{description} in {monitored_keywords_prohibited} OR #{purpose} in {monitored_keywords_high} OR #{purpose} in {monitored_keywords_prohibited})
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Deposit} AND #{trans_method} = {Cheque} AND #{s.entity_type} = {Business} AND #{s.risk_level} = {High}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Transfer} AND #{s.entity_type} = {Business} AND #{s.risk_level} = {High}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Deposit} AND #{trans_method} = {Cheque} AND #{s.acct_id} not in {d.related_parties}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {source} AND #{s.addr_country} != {location}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{s.acct_id} not in {d.related_parties} AND #{trans_type} = {ATMDeposit, Payment, Deposit, Transfer, AssetSale} AND #{amount} >= {10000}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{d.acct_id} not in {s.related_parties} AND #{trans_type} = {Payment, LoanRepayment} AND #{amount} >= {5000}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{s.risk_level} = {High} AND #{amount} >= {10000}
+---
+QUERY COUNT({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{d.risk_level} = {High} AND #{amount} >= {10000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM 30 day before transaction date
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{account} is {dest} AND #{trans_type} = {Transfer} AND ( #{s.addr_country} in {country_risk_high} OR #{s.addr_country} in {country_risk_prohibited}) AND #{amount} >= {10000}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{account} is {source} AND #{trans_type} = {Transfer} AND  ( #{d.addr_country} in {country_risk_high} OR #{d.addr_country} in {country_risk_prohibited}) AND #{amount} >= {10000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {AssetPurchase} AND #{asset_type} = {PreciousMetal, Artwork, Jewelry, PreciousStones}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 90 day FROM 30 day before transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 90 day FROM 30 day before transaction date
+WHERE #{account} is {source} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{account} is {dest} AND #{s.entity_type} = {Business} AND #{s.acct_id} not in {d.related_parties} AND #{amount} >= {10000}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{account} is {source} AND #{d.entity_type} = {Business} AND #{d.acct_id} not in {s.related_parties} AND #{amount} >= {10000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{d.business_type} = {AuctionHighRisk, AuctionLuxury, AuctionGeneral, AuctionMetal} AND #{trans_type} = {Transfer, Payment, AssetPurchase}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{trans_ip} in {ip_blacklist}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{trans_ip} != { } AND #{acct_open_ip} != { } AND #{trans_ip} != {acct_open_ip}
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 1 day FROM transaction date
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 30 day FROM 1 day before transaction date
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{empl_status} = {Unemployed, SelfEmployed} AND #{trans_type} = {AssetPurchase} AND #{asset_type} = {PreciousMetal , Artwork, Jewelry, PreciousStones}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 1 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {ATMDeposit, Payment, Deposit, Transfer, AssetSale}
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {Withdrawal, Payment, AssetPurchase, Transfer, ATMWithdrawal, LoanRepayment, Bet}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{trans_type} = {Deposit} AND #{trans_method} = {Cash}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{trans_type} = {Withdrawal} AND #{trans_method} = {Cash}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Deposit} AND #{trans_method} = {Cash}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {Transfer}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {ATMWithdrawal}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {ATMWithdrawal} AND #{addr_country} != {location}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{trans_type} = {Deposit} AND #{trans_method} = {Cash}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 60 day FROM 30 day before transaction date
+WHERE #{trans_type} = {Deposit} AND #{trans_method} = {Cash}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 10 minute FROM transaction date
+WHERE #{industry} = {Crypto}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 1 day FROM transaction date
+WHERE #{account} is {dest} AND #{trans_type} = {ATMDeposit, Payment, Deposit, Transfer, AssetSale} AND #{industry} = {Crypto}
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 1 day FROM transaction date
+WHERE #{account} is {source} AND #{trans_type} = {Withdrawal, Payment, AssetPurchase, Transfer, ATMWithdrawal, LoanRepayment, Bet} AND #{industry} = {Crypto}
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{trans_type} = {CryptoSale} AND #{trans_method} = {CryptoCurrency}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM 7 day before transaction date
+WHERE #{trans_type} = {CryptoSale} AND #{trans_method} = {CryptoCurrency}
+---
+QUERY SUM({amount})
+FROM DATA
+PAST 7 day FROM transaction date
+WHERE #{trans_type} = {CryptoPurchase} AND #{trans_method} = {Cash , CreditCard}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM 7 day before transaction date
+WHERE #{trans_type} = {CryptoPurchase} AND #{trans_method} = {Cash , CreditCard}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{account} is {source} AND #{d.acct_type} = {WalletAddr} AND (#{d.acct_id} in {wallet_address_blacklist})
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{account} is {dest} AND #{s.acct_type} = {WalletAddr} AND (#{s.acct_id} in {wallet_address_blacklist})
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{industry} = {Crypto} AND #{trans_type} = {ATMDeposit, ATMWithdrawal} AND ( #{location} in {country_risk_high} OR #{location} in {country_risk_prohibited} )
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {dest} AND #{d.acct_type} = {LoanAcct} AND #{s.reference} != {d.reference} AND #{amount} >= {50000}
+---
+QUERY COUNT({amount}), SUM({amount})
+FROM DATA
+PAST 30 day FROM transaction date
+WHERE #{account} is {source} AND #{d.business_type} = {AuctionHighRisk, AuctionLuxury, AuctionGeneral, AuctionMetal} AND #{trans_type} = {Transfer, Payment, AssetPurchase}
+---
+QUERY COUNT(*)
+FROM DATA
+WHERE #{trans_type} = {InsuranceSurrender} AND #{amount} >= {10000} AND #{s.reference} != {d.reference} 

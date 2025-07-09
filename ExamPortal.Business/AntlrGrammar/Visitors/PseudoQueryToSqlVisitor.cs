@@ -1,4 +1,3 @@
-// Updated PseudoQueryToSqlVisitor.cs with smarter dual join logic
 using Antlr4.Runtime.Misc;
 using ExamPortal.Business.AntlrGrammar.Helpers;
 
@@ -15,33 +14,37 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
     {
         var aggregates = VisitAggregateList(context.aggregateList());
 
-        if (context.whereClause()?.preExpression() != null)
-        {
-            var preText = context.whereClause().preExpression().GetText();
+        // Gather all text from whereClause for dual join detection
+        var whereClauseText = context.whereClause()?.GetText() ?? string.Empty;
+        var preText = context.whereClause()?.preExpression()?.GetText() ?? string.Empty;
+        var exprText = context.whereClause()?.expression()?.GetText() ?? string.Empty;
 
-            // Only trigger dual-join if truly needed
-            if (
-                (preText.Contains("#{s.acct_id}") && preText.Contains("{d.related_parties}")) ||
-                (preText.Contains("#{d.acct_id}") && preText.Contains("{s.related_parties}"))
-            )
-            {
-                _hasPreExpression = true;
-                _preExpressionRole = "{dest}";
-            }
-            else if (preText.Contains("#{account} is {source}"))
-            {
-                _preExpressionRole = "{source}";
-            }
-            else if (preText.Contains("#{account} is {dest}"))
-            {
-                _preExpressionRole = "{dest}";
-            }
+        // Enhanced dual-join detection: check for both s. and d. references
+        bool hasS = whereClauseText.Contains("#{s.") || whereClauseText.Contains("s.");
+        bool hasD = whereClauseText.Contains("#{d.") || whereClauseText.Contains("d.");
+        bool hasSRelated = whereClauseText.Contains("#{s.related_parties}") || whereClauseText.Contains("s.related_parties");
+        bool hasDRelated = whereClauseText.Contains("#{d.related_parties}") || whereClauseText.Contains("d.related_parties");
+
+        if ((hasS && hasD) || (hasSRelated && hasD) || (hasDRelated && hasS))
+        {
+            _preExpressionRole = preText.Contains("{source}") ? "{source}" : preText.Contains("{dest}") ? "{dest}" : "{dest}";
+        }
+        else if (preText.Contains("#{account} is {source}"))
+        {
+            _preExpressionRole = "{source}";
+        }
+        else if (preText.Contains("#{account} is {dest}"))
+        {
+            _preExpressionRole = "{dest}";
+        }
+        else
+        {
+            _preExpressionRole = string.Empty;
         }
 
         var whereClause = VisitWhereClause(context.whereClause(), context.timeFilter());
 
         string sql;
-
         if (RequiresDualJoin)
         {
             sql = $@"SELECT {aggregates} 
@@ -68,7 +71,6 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
             a.acct_id = %(acct_id)s{whereClause}
         );";
         }
-
         return sql;
     }
 
@@ -134,6 +136,21 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
 
         var expressionText = context?.expression()?.GetText() ?? "";
         var mainExpressionSql = string.IsNullOrWhiteSpace(expressionText) ? "" : PlaceholderMapper.ReplacePlaceholders(expressionText, GetPrimaryAlias());
+
+        // Remove redundant acct_type conditions in dual join
+        if (RequiresDualJoin)
+        {
+            preExpressionSql = preExpressionSql
+                .Replace("d.trans_acct_type = 'Destination' AND", "")
+                .Replace("d.trans_acct_type = 'Destination'", "")
+                .Replace("s.trans_acct_type = 'Source' AND", "")
+                .Replace("s.trans_acct_type = 'Source'", "");
+            mainExpressionSql = mainExpressionSql
+                .Replace("d.trans_acct_type = 'Destination' AND", "")
+                .Replace("d.trans_acct_type = 'Destination'", "")
+                .Replace("s.trans_acct_type = 'Source' AND", "")
+                .Replace("s.trans_acct_type = 'Source'", "");
+        }
 
         var timeClause = timeContext != null ? VisitTimeFilter(timeContext) : "";
 

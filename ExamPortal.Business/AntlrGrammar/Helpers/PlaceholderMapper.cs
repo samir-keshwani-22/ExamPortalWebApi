@@ -13,7 +13,8 @@ public static class PlaceholderMapper
 
         input = Regex.Replace(input,
             @"#\{account\}\s*is\s*\{(source|dest)\}",
-            match => {
+            match =>
+            {
                 var accountType = match.Groups[1].Value.ToLower();
                 var accountTypeValue = accountType == "source" ? "Source" : "Destination";
                 return $"{primaryAlias}.trans_acct_type = '{accountTypeValue}'";
@@ -39,7 +40,8 @@ public static class PlaceholderMapper
 
         input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*=\s*\{([^}]+)\}",
-            m => {
+            m =>
+            {
                 var field = m.Groups[1].Value.Trim();
                 var values = m.Groups[2].Value;
 
@@ -62,12 +64,22 @@ public static class PlaceholderMapper
 
         input = Regex.Replace(input,
             @"#\{([^}]+)\}\s*in\s*\{([^}]+)\}",
-            m => {
+            m =>
+            {
                 var field = GetFieldMapping(m.Groups[1].Value, primaryAlias);
                 var values = m.Groups[2].Value.Split(',').Select(v => $"'{v.Trim()}'");
                 return $"{field} in ({string.Join(", ", values)})";
             });
 
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*!=\s*\{\s*\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} is not null");
+
+        input = Regex.Replace(input,
+            @"#\{([^}]+)\}\s*=\s*\{\s*\}",
+            m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} is null");
+
+        // Add/expand field mappings for all fields in the CSV
         var simpleReplacements = new Dictionary<string, string>
         {
             ["#{account}"] = $"{primaryAlias}.acct_id",
@@ -89,6 +101,17 @@ public static class PlaceholderMapper
             ["#{d.related_parties}"] = "d.related_parties",
             ["#{s.related_parties}"] = "s.related_parties",
             ["#{asset_type}"] = "t.asset_type",
+            ["#{business_type}"] = $"{primaryAlias}.business_type",
+            ["#{reference}"] = $"{primaryAlias}.reference",
+            ["#{empl_status}"] = $"{primaryAlias}.empl_status",
+            ["#{d.business_type}"] = "d.business_type",
+            ["#{s.business_type}"] = "s.business_type",
+            ["#{d.reference}"] = "d.reference",
+            ["#{s.reference}"] = "s.reference",
+            ["#{d.addr_country}"] = "d.addr_country",
+            ["#{s.addr_country}"] = "s.addr_country",
+            ["#{d.acct_type}"] = "d.acct_type",
+            ["#{s.acct_type}"] = "s.acct_type",
             ["{dest}"] = "'Destination'",
             ["{source}"] = "'Source'",
             ["{location}"] = "t.location",
@@ -97,7 +120,29 @@ public static class PlaceholderMapper
             ["{Transfer}"] = "'Transfer'",
             ["{AssetPurchase}"] = "'AssetPurchase'",
             ["{ATMWithdrawal}"] = "'ATMWithdrawal'",
+            ["{ATMDeposit}"] = "'ATMDeposit'",
+            ["{Payment}"] = "'Payment'",
+            ["{AssetSale}"] = "'AssetSale'",
+            ["{Withdrawal}"] = "'Withdrawal'",
+            ["{LoanRepayment}"] = "'LoanRepayment'",
+            ["{Bet}"] = "'Bet'",
             ["{High}"] = "'High'",
+            ["{Cash}"] = "'Cash'",
+            ["{PreciousMetal}"] = "'PreciousMetal'",
+            ["{Artwork}"] = "'Artwork'",
+            ["{Jewelry}"] = "'Jewelry'",
+            ["{PreciousStones}"] = "'PreciousStones'",
+            ["{Crypto}"] = "'Crypto'",
+            ["{CryptoSale}"] = "'CryptoSale'",
+            ["{CryptoPurchase}"] = "'CryptoPurchase'",
+            ["{CryptoCurrency}"] = "'CryptoCurrency'",
+            ["{InsuranceSurrender}"] = "'InsuranceSurrender'",
+            ["{WalletAddr}"] = "'WalletAddr'",
+            ["{LoanAcct}"] = "'LoanAcct'",
+            ["{AuctionHighRisk}"] = "'AuctionHighRisk'",
+            ["{AuctionLuxury}"] = "'AuctionLuxury'",
+            ["{AuctionGeneral}"] = "'AuctionGeneral'",
+            ["{AuctionMetal}"] = "'AuctionMetal'",
         };
 
         foreach (var kvp in simpleReplacements)
@@ -108,10 +153,12 @@ public static class PlaceholderMapper
         input = Regex.Replace(input, @"(\S)AND(\S)", "$1 AND $2");
 
         return input
-            .Replace("in {monitored_keywords_high}", "in (SELECT value FROM ref_list_items WHERE risk_level = 'High')")
-            .Replace("in {monitored_keywords_prohibited}", "in (SELECT value FROM ref_list_items WHERE risk_level = 'Prohibited')")
-            .Replace("in {country_risk_high}", "in (SELECT value FROM ref_list_items WHERE risk_level = 'High')")
-            .Replace("in {country_risk_prohibited}", "in (SELECT value FROM ref_list_items WHERE risk_level = 'Prohibited')");
+            .Replace("in {monitored_keywords_high}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'monitored_keywords')")
+            .Replace("in {monitored_keywords_prohibited}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'monitored_keywords')")
+            .Replace("in {country_risk_high}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'country_risk')")
+            .Replace("in {country_risk_prohibited}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'country_risk')")
+            .Replace("in {wallet_address_blacklist}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = '' AND r.name = 'wallet_address_blacklist')")
+            .Replace("in {ip_blacklist}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = '' AND r.name = 'ip_blacklist')");
     }
 
     private static string GetFieldMapping(string field, string primaryAlias = "a")
@@ -137,6 +184,17 @@ public static class PlaceholderMapper
             ["d.related_parties"] = "d.related_parties",
             ["s.related_parties"] = "s.related_parties",
             ["asset_type"] = "t.asset_type",
+            ["business_type"] = $"{primaryAlias}.business_type",
+            ["reference"] = $"{primaryAlias}.reference",
+            ["empl_status"] = $"{primaryAlias}.empl_status",
+            ["d.business_type"] = "d.business_type",
+            ["s.business_type"] = "s.business_type",
+            ["d.reference"] = "d.reference",
+            ["s.reference"] = "s.reference",
+            ["d.addr_country"] = "d.addr_country",
+            ["s.addr_country"] = "s.addr_country",
+            ["d.acct_type"] = "d.acct_type",
+            ["s.acct_type"] = "s.acct_type",
         };
 
         return fieldMappings.TryGetValue(field, out var mapping) ? mapping : $"t.{field}";
