@@ -5,21 +5,16 @@ namespace ExamPortal.Business.AntlrGrammar.Visitors;
 
 public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
 {
-    private bool _hasPreExpression = false;
     private string _preExpressionRole = "";
-
     private bool RequiresDualJoin => _preExpressionRole == "{dest}" || _preExpressionRole == "{source}";
 
     public override string VisitAggregateQuery([NotNull] PseudoQueryExpressionParser.AggregateQueryContext context)
     {
         var aggregates = VisitAggregateList(context.aggregateList());
 
-        // Gather all text from whereClause for dual join detection
         var whereClauseText = context.whereClause()?.GetText() ?? string.Empty;
         var preText = context.whereClause()?.preExpression()?.GetText() ?? string.Empty;
-        var exprText = context.whereClause()?.expression()?.GetText() ?? string.Empty;
 
-        // Enhanced dual-join detection: check for both s. and d. references
         bool hasS = whereClauseText.Contains("#{s.") || whereClauseText.Contains("s.");
         bool hasD = whereClauseText.Contains("#{d.") || whereClauseText.Contains("d.");
         bool hasSRelated = whereClauseText.Contains("#{s.related_parties}") || whereClauseText.Contains("s.related_parties");
@@ -48,16 +43,18 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
         if (RequiresDualJoin)
         {
             sql = $@"SELECT {aggregates} 
-        FROM cust_trans_info d
-            JOIN transactions t ON d.trans_id = t.id AND d.trans_acct_type = 'Destination'
-            JOIN cust_trans_info s ON s.trans_id = t.id AND s.trans_acct_type = 'Source'
-        WHERE 
-            COALESCE(t.env, 0) = %(env_var)d AND
-            t.tenant_id = %(tenant_id)s AND (
-                {GetPrimaryAlias()}.tenant_id = %(tenant_id)s AND {GetPrimaryAlias()}.acct_id = %(acct_id)s AND
-                COALESCE({GetPrimaryAlias()}.env, 0) = %(env_var)d AND COALESCE({GetSecondaryAlias()}.env, 0) = %(env_var)d
-                {whereClause}
-        );";
+    FROM cust_trans_info d
+        JOIN transactions t
+        ON d.trans_id = t.id
+        AND d.trans_acct_type = 'Destination'
+        JOIN cust_trans_info s
+        ON s.trans_id = t.id
+        AND s.trans_acct_type = 'Source'
+    WHERE 
+    COALESCE(t.env, 0) = %(env_var)d AND
+    t.tenant_id = %(tenant_id)s AND (
+    s.tenant_id = %(tenant_id)s AND s.acct_id = %(acct_id)s AND COALESCE(s.env, 0) = %(env_var)d AND COALESCE(d.env, 0) = %(env_var)d{whereClause}
+);";
         }
         else
         {
@@ -137,7 +134,6 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
         var expressionText = context?.expression()?.GetText() ?? "";
         var mainExpressionSql = string.IsNullOrWhiteSpace(expressionText) ? "" : PlaceholderMapper.ReplacePlaceholders(expressionText, GetPrimaryAlias());
 
-        // Remove redundant acct_type conditions in dual join
         if (RequiresDualJoin)
         {
             preExpressionSql = preExpressionSql
@@ -158,7 +154,16 @@ public class PseudoQueryToSqlVisitor : PseudoQueryExpressionBaseVisitor<string>
         if (!conditions.Any()) return "";
 
         var combined = string.Join(" AND ", conditions);
-        return RequiresDualJoin ? $" AND {combined}" : $" AND (\n    {combined}\n)";
+
+        // For dual join, we need to handle the where clause differently
+        if (RequiresDualJoin)
+        {
+            return $" AND {combined}";
+        }
+        else
+        {
+            return $" AND (\n    {combined}\n)";
+        }
     }
 
     private string GetPrimaryAlias()

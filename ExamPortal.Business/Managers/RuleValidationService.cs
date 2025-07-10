@@ -94,8 +94,9 @@ public class RuleValidationService : IRuleValidationService
             Console.WriteLine(asql);
         }
 
-        var results = PseudoSqlTestService.RunAllTests(@"E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\AntlrGrammar\all_pseudo_queries.txt",
-    @"E:\OpenApi Related\ExamPortalWebApi\ExamPortal.Business\AntlrGrammar\all_sqls.txt");
+     var results = PseudoSqlTestService.RunAllTests(
+    @"..\..\ExamPortal.Business\AntlrGrammar\all_pseudo_queries.txt",
+    @"..\..\ExamPortal.Business\AntlrGrammar\all_sqls.txt");
 
         var failed = results.Where(r => !r.Passed).ToList();
 
@@ -113,11 +114,7 @@ public class RuleValidationService : IRuleValidationService
 
     }
 
-    // input = input
-    // .Replace("in {monitored_keywords_high}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'monitored_keywords')")
-    // .Replace("in {monitored_keywords_prohibited}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'monitored_keywords')")
-    // .Replace("in {country_risk_high}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'High' AND r.name = 'country_risk')")
-    // .Replace("in {country_risk_prohibited}", "in (SELECT c.value FROM ref_list_items c JOIN ref_list r ON c.reference_id = r.id WHERE c.tenant_id = %(tenant_id)s AND c.risk_level = 'Prohibited' AND r.name = 'country_risk')");
+
 
     #endregion
 

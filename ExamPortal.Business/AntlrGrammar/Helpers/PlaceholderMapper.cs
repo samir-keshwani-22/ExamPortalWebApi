@@ -79,7 +79,7 @@ public static class PlaceholderMapper
             @"#\{([^}]+)\}\s*=\s*\{\s*\}",
             m => $"{GetFieldMapping(m.Groups[1].Value, primaryAlias)} is null");
 
-        // Add/expand field mappings for all fields in the CSV
+       
         var simpleReplacements = new Dictionary<string, string>
         {
             ["#{account}"] = $"{primaryAlias}.acct_id",
@@ -149,6 +149,9 @@ public static class PlaceholderMapper
         {
             input = input.Replace(kvp.Key, kvp.Value);
         }
+
+        // Handle special case for #{s.addr_country} != {location}
+        input = Regex.Replace(input, @"s\.addr_country\s*!=\s*t\.location", "s.addr_country != t.location");
 
         input = Regex.Replace(input, @"(\S)AND(\S)", "$1 AND $2");
 
