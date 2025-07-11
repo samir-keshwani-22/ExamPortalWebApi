@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
+
 namespace ExamPortal.API.Implementations;
 
 /// <summary>
@@ -61,20 +62,31 @@ public class ExamController : ExamApiController
     {
         if (!ModelState.IsValid)
         {
+            _logger.LogWarning("AddExam - ModelState is invalid . Payload {@Payload}", examCreate);
             return BadRequest(ModelState);
         }
         try
         {
+            _logger.LogInformation("AddExam - Creating exam with title: {Title}", examCreate.Title);
             bool result = await _examService.CreateExamAsync(examCreate);
-            return result ? StatusCode(201) : BadRequest(new Error
+            if (result)
             {
-                Code = "BadRequest",
-                Message = "Failed to create exam."
-            });
+                _logger.LogInformation("AddExam - Successfully created exam: {Title}", examCreate.Title);
+                return StatusCode(201);
+            }
+            else
+            {
+                _logger.LogWarning("AddExam - Failed to create exam: {Title}", examCreate.Title);
+                return BadRequest(new Error
+                {
+                    Code = "BadRequest",
+                    Message = "Failed to create exam."
+                });
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating exam");
+            _logger.LogError(ex, "AddExam - Error creating exam: {Title}", examCreate.Title);
             return StatusCode(500, new Error
             {
                 Code = "InternalServerError",
@@ -100,11 +112,16 @@ public class ExamController : ExamApiController
     {
         try
         {
+            _logger.LogInformation("DeleteExam - Deleting the exam with id: {id}", id);
             bool result = await _examService.DeleteExamAsync(id);
             if (result)
+            {
+                _logger.LogInformation("DeleteExam - Deleted the exam with id :{id}", id);
                 return NoContent();
+            }
             else
             {
+                _logger.LogWarning("DeleteExam - Exam with the required id not found");
                 return NotFound(new Error
                 {
                     Code = "NotFound",
@@ -114,6 +131,7 @@ public class ExamController : ExamApiController
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "DeleteExam - Error deleting exam");
             return StatusCode(500, new Error
             {
                 Code = "InternalServerError",
@@ -137,19 +155,23 @@ public class ExamController : ExamApiController
 
         try
         {
+            _logger.LogInformation("GetExamById - Started getting the exam with the id:{id}", id);
             API.Models.Exam? exam = await _examService.GetExamByIdAsync(id);
             if (exam == null)
             {
+                _logger.LogWarning("GetExamById - Exam with the given id :{id} not found ", id);
                 return NotFound(new Error
                 {
                     Code = "NotFound",
                     Message = "Exam not found"
                 });
             }
+            _logger.LogInformation("GetExamById - Exam with the given id found");
             return Ok(exam);
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "GetExamById - Error getting the exam with id : {id}", id);
             return StatusCode(500, new Error
             {
                 Code = "InternalServerError",
@@ -168,6 +190,7 @@ public class ExamController : ExamApiController
     {
         try
         {
+            _logger.LogInformation("ListExams - Getting the list of exams ");
             PagedResponse<API.Models.Exam> result = await _examService.ListExamsAsync(
                 pageIndex ?? 1,
                 pageSize ?? 10,
@@ -204,20 +227,32 @@ public class ExamController : ExamApiController
     {
         if (!ModelState.IsValid)
         {
+            _logger.LogWarning("UpdateExam - ModalState is invalid . Payload {@Payload}", examUpdate);
             return BadRequest(ModelState);
         }
         try
         {
+            _logger.LogInformation("UpdateExam - Updating exam with the id:{id}", id);
             bool result = await _examService.UpdateExamAsync(id, examUpdate);
-            return result ? Ok() : NotFound(new Error
+            if (result)
             {
-                Code = "NotFound",
-                Message = "Exam not found or update failed"
-            });
+                _logger.LogInformation("UpdateExam - Successfully updated exam with id :{id}", id);
+                return Ok();
+            }
+            else
+            {
+                _logger.LogWarning("UpdateExam - Failed to update exam with  id {id}", id);
+                return NotFound(new Error
+                {
+                    Code = "NotFound",
+                    Message = "Exam not found or update failed"
+                });
+            }
+
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating exam");
+            _logger.LogError(ex, "Error updating exam with id :{id}", id);
             return StatusCode(500, new Error
             {
                 Code = "InternalServerError",
@@ -275,7 +310,7 @@ public class ExamController : ExamApiController
     #endregion
 
 
-#pragma warning disable CS1998
+    #pragma warning disable CS1998
     /// <summary>
     /// Check for a rules value 
     /// </summary>
@@ -296,7 +331,7 @@ public class ExamController : ExamApiController
             return BadRequest(new Error { Code = "InvalidInput", Message = ex.Message });
         }
     }
-#pragma warning restore CS1998
+    #pragma warning restore CS1998
 
     #endregion
 }

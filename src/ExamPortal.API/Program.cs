@@ -1,5 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Exceptions;
 
 namespace ExamPortal.API
 {
@@ -13,17 +17,34 @@ namespace ExamPortal.API
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
+        { 
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                    .AddEnvironmentVariables()
+                    .Build())
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("Starting up ExamPortal API...");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application startup failed");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
-        /// <summary>
-        /// Create the host builder.
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns>IHostBuilder</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog() 
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
